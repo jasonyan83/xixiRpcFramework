@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/aopalliance-1.0-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/asm-3.3.1-jar.jar"/>
 	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/bonecp-0.7.1.RELEASE-bundle.jar"/>
 	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/bsh-2.0b4-jar.jar"/>
 	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/cglib-2.2.2-jar.jar"/>
