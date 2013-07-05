@@ -1,0 +1,281 @@
+2013-07-05 11:03:09 [ main:0 ] - [ INFO ] Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@17588d5: startup date [Fri Jul 05 11:03:09 CST 2013]; root of context hierarchy
+ 2013-07-05 11:03:10 [ main:125 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiTestModuleA/bin/spring/applicationContext.xml]
+ 2013-07-05 11:03:10 [ main:125 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:03:10 [ main:187 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:03:10 [ main:203 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:03:10 [ main:250 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiCodecKryo/bin/spring/applicationContext.xml]
+ 2013-07-05 11:03:10 [ main:265 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:03:10 [ main:265 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:03:10 [ main:265 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:03:10 [ main:265 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiRpc/bin/spring/applicationContext.xml]
+ 2013-07-05 11:03:10 [ main:265 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:03:10 [ main:265 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:03:10 [ main:281 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:03:10 [ main:281 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiLauncher/bin/spring/applicationContext.xml]
+ 2013-07-05 11:03:10 [ main:281 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:03:10 [ main:281 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:03:10 [ main:296 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:03:10 [ main:296 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiTransport/bin/spring/applicationContext.xml]
+ 2013-07-05 11:03:10 [ main:296 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:03:10 [ main:296 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:03:10 [ main:312 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:03:10 [ main:312 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiRouter/bin/spring/applicationContext.xml]
+ 2013-07-05 11:03:10 [ main:312 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:03:10 [ main:312 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:03:10 [ main:312 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:03:10 [ main:312 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiRegister/bin/spring/applicationContext.xml]
+ 2013-07-05 11:03:10 [ main:312 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:03:10 [ main:328 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:03:10 [ main:328 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:03:10 [ main:328 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiNettyTransport/bin/spring/applicationContext.xml]
+ 2013-07-05 11:03:10 [ main:328 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:03:10 [ main:359 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:03:10 [ main:359 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:03:10 [ main:359 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiRpcDefault/bin/spring/applicationContext.xml]
+ 2013-07-05 11:03:10 [ main:359 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:03:10 [ main:375 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:03:10 [ main:375 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:03:10 [ main:375 ] - [ DEBUG ] Loaded 21 bean definitions from location pattern [classpath*:/spring/applicationContext.xml]
+ 2013-07-05 11:03:10 [ main:375 ] - [ DEBUG ] Bean factory for org.springframework.context.support.ClassPathXmlApplicationContext@17588d5: org.springframework.beans.factory.support.DefaultListableBeanFactory@a2bfd5: defining beans [loginService,accountService,kryoCoder,proxyFactory,bizLogger,propertyConfigurer,beanFactoryUtil,defaultServerChannelHandler,defaultClientChannelHandler,eventActor,invokerRegister,invokerBus,nettyserver,nettyclient,serverPipelineFactory,clientPipelineFactory,xixiNettyDecoder,xixiNettyEncoder,defaultXixiClientInvoker,defaultClientMessageDipatcher,defaultServerMessageDipatcher]; root of factory hierarchy
+ 2013-07-05 11:03:10 [ main:484 ] - [ DEBUG ] Creating shared instance of singleton bean 'propertyConfigurer'
+ 2013-07-05 11:03:10 [ main:484 ] - [ DEBUG ] Creating instance of bean 'propertyConfigurer'
+ 2013-07-05 11:03:10 [ main:531 ] - [ DEBUG ] Eagerly caching bean 'propertyConfigurer' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:609 ] - [ DEBUG ] Finished creating instance of bean 'propertyConfigurer'
+ 2013-07-05 11:03:10 [ main:609 ] - [ INFO ] Loading properties file from URL [file:/E:/github/xixiRpcFramework/xixiTestModuleA/bin/app.properties]
+ 2013-07-05 11:03:10 [ main:609 ] - [ INFO ] Loading properties file from URL [file:/E:/github/xixiRpcFramework/xixiLauncher/bin/app.properties]
+ 2013-07-05 11:03:10 [ main:609 ] - [ DEBUG ] Creating shared instance of singleton bean 'beanFactoryUtil'
+ 2013-07-05 11:03:10 [ main:609 ] - [ DEBUG ] Creating instance of bean 'beanFactoryUtil'
+ 2013-07-05 11:03:10 [ main:609 ] - [ DEBUG ] Eagerly caching bean 'beanFactoryUtil' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:609 ] - [ INFO ] Bean 'beanFactoryUtil' of type [class xixi.common.spring.BeanFactoryUtil] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+ 2013-07-05 11:03:10 [ main:609 ] - [ DEBUG ] Finished creating instance of bean 'beanFactoryUtil'
+ 2013-07-05 11:03:10 [ main:609 ] - [ DEBUG ] Creating shared instance of singleton bean 'eventActor'
+ 2013-07-05 11:03:10 [ main:625 ] - [ DEBUG ] Creating instance of bean 'eventActor'
+ 2013-07-05 11:03:10 [ main:625 ] - [ DEBUG ] Eagerly caching bean 'eventActor' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:625 ] - [ DEBUG ] Creating shared instance of singleton bean 'invokerRegister'
+ 2013-07-05 11:03:10 [ main:625 ] - [ DEBUG ] Creating instance of bean 'invokerRegister'
+ 2013-07-05 11:03:10 [ main:625 ] - [ DEBUG ] Eagerly caching bean 'invokerRegister' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:625 ] - [ DEBUG ] Creating shared instance of singleton bean 'invokerBus'
+ 2013-07-05 11:03:10 [ main:625 ] - [ DEBUG ] Creating instance of bean 'invokerBus'
+ 2013-07-05 11:03:10 [ main:625 ] - [ DEBUG ] Eagerly caching bean 'invokerBus' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:625 ] - [ INFO ] Bean 'invokerBus' of type [class xixi.register.eventBus.InvokerBus] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+ 2013-07-05 11:03:10 [ main:625 ] - [ DEBUG ] Finished creating instance of bean 'invokerBus'
+ 2013-07-05 11:03:10 [ main:625 ] - [ INFO ] Bean 'invokerRegister' of type [class xixi.register.eventBus.InvokerRegister] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+ 2013-07-05 11:03:10 [ main:625 ] - [ DEBUG ] Finished creating instance of bean 'invokerRegister'
+ 2013-07-05 11:03:10 [ main:640 ] - [ DEBUG ] Finished creating instance of bean 'eventActor'
+ 2013-07-05 11:03:10 [ main:640 ] - [ DEBUG ] Unable to locate MessageSource with name 'messageSource': using default [org.springframework.context.support.DelegatingMessageSource@471b39]
+ 2013-07-05 11:03:10 [ main:656 ] - [ DEBUG ] Unable to locate ApplicationEventMulticaster with name 'applicationEventMulticaster': using default [org.springframework.context.event.SimpleApplicationEventMulticaster@10cffe0]
+ 2013-07-05 11:03:10 [ main:656 ] - [ INFO ] Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@a2bfd5: defining beans [loginService,accountService,kryoCoder,proxyFactory,bizLogger,propertyConfigurer,beanFactoryUtil,defaultServerChannelHandler,defaultClientChannelHandler,eventActor,invokerRegister,invokerBus,nettyserver,nettyclient,serverPipelineFactory,clientPipelineFactory,xixiNettyDecoder,xixiNettyEncoder,defaultXixiClientInvoker,defaultClientMessageDipatcher,defaultServerMessageDipatcher]; root of factory hierarchy
+ 2013-07-05 11:03:10 [ main:656 ] - [ DEBUG ] Creating shared instance of singleton bean 'loginService'
+ 2013-07-05 11:03:10 [ main:656 ] - [ DEBUG ] Creating instance of bean 'loginService'
+ 2013-07-05 11:03:10 [ main:656 ] - [ DEBUG ] Eagerly caching bean 'loginService' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:656 ] - [ DEBUG ] Creating shared instance of singleton bean 'accountService'
+ 2013-07-05 11:03:10 [ main:656 ] - [ DEBUG ] Creating instance of bean 'accountService'
+ 2013-07-05 11:03:10 [ main:718 ] - [ DEBUG ] Creating shared instance of singleton bean 'proxyFactory'
+ 2013-07-05 11:03:10 [ main:718 ] - [ DEBUG ] Creating instance of bean 'proxyFactory'
+ 2013-07-05 11:03:10 [ main:718 ] - [ DEBUG ] Eagerly caching bean 'proxyFactory' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:718 ] - [ DEBUG ] Creating shared instance of singleton bean 'defaultXixiClientInvoker'
+ 2013-07-05 11:03:10 [ main:718 ] - [ DEBUG ] Creating instance of bean 'defaultXixiClientInvoker'
+ 2013-07-05 11:03:10 [ main:718 ] - [ DEBUG ] Eagerly caching bean 'defaultXixiClientInvoker' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:718 ] - [ DEBUG ] Finished creating instance of bean 'defaultXixiClientInvoker'
+ 2013-07-05 11:03:10 [ main:718 ] - [ DEBUG ] Finished creating instance of bean 'proxyFactory'
+ 2013-07-05 11:03:10 [ main:828 ] - [ DEBUG ] Eagerly caching bean 'accountService' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:828 ] - [ DEBUG ] Finished creating instance of bean 'accountService'
+ 2013-07-05 11:03:10 [ main:843 ] - [ DEBUG ] Finished creating instance of bean 'loginService'
+ 2013-07-05 11:03:10 [ main:843 ] - [ DEBUG ] Returning cached instance of singleton bean 'accountService'
+ 2013-07-05 11:03:10 [ main:843 ] - [ DEBUG ] Returning cached instance of singleton bean 'proxyFactory'
+ 2013-07-05 11:03:10 [ main:843 ] - [ DEBUG ] Returning cached instance of singleton bean 'propertyConfigurer'
+ 2013-07-05 11:03:10 [ main:843 ] - [ DEBUG ] Returning cached instance of singleton bean 'beanFactoryUtil'
+ 2013-07-05 11:03:10 [ main:843 ] - [ DEBUG ] Returning cached instance of singleton bean 'eventActor'
+ 2013-07-05 11:03:10 [ main:843 ] - [ DEBUG ] Returning cached instance of singleton bean 'invokerRegister'
+ 2013-07-05 11:03:10 [ main:843 ] - [ DEBUG ] Returning cached instance of singleton bean 'invokerBus'
+ 2013-07-05 11:03:10 [ main:843 ] - [ DEBUG ] Returning cached instance of singleton bean 'defaultXixiClientInvoker'
+ 2013-07-05 11:03:10 [ main:843 ] - [ DEBUG ] Unable to locate LifecycleProcessor with name 'lifecycleProcessor': using default [org.springframework.context.support.DefaultLifecycleProcessor@1cf1d17]
+ 2013-07-05 11:03:10 [ main:843 ] - [ DEBUG ] Returning cached instance of singleton bean 'lifecycleProcessor'
+ 2013-07-05 11:03:10 [ main:859 ] - [ DEBUG ] Creating shared instance of singleton bean 'nettyserver'
+ 2013-07-05 11:03:10 [ main:859 ] - [ DEBUG ] Creating instance of bean 'nettyserver'
+ 2013-07-05 11:03:10 [ main:921 ] - [ DEBUG ] Eagerly caching bean 'nettyserver' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:921 ] - [ DEBUG ] Creating shared instance of singleton bean 'defaultServerChannelHandler'
+ 2013-07-05 11:03:10 [ main:921 ] - [ DEBUG ] Creating instance of bean 'defaultServerChannelHandler'
+ 2013-07-05 11:03:10 [ main:921 ] - [ DEBUG ] Eagerly caching bean 'defaultServerChannelHandler' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:921 ] - [ DEBUG ] Creating shared instance of singleton bean 'defaultServerMessageDipatcher'
+ 2013-07-05 11:03:10 [ main:921 ] - [ DEBUG ] Creating instance of bean 'defaultServerMessageDipatcher'
+ 2013-07-05 11:03:10 [ main:921 ] - [ DEBUG ] Eagerly caching bean 'defaultServerMessageDipatcher' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:921 ] - [ DEBUG ] Returning cached instance of singleton bean 'invokerBus'
+ 2013-07-05 11:03:10 [ main:921 ] - [ DEBUG ] Finished creating instance of bean 'defaultServerMessageDipatcher'
+ 2013-07-05 11:03:10 [ main:937 ] - [ DEBUG ] Finished creating instance of bean 'defaultServerChannelHandler'
+ 2013-07-05 11:03:10 [ main:953 ] - [ DEBUG ] Creating shared instance of singleton bean 'serverPipelineFactory'
+ 2013-07-05 11:03:10 [ main:953 ] - [ DEBUG ] Creating instance of bean 'serverPipelineFactory'
+ 2013-07-05 11:03:10 [ main:953 ] - [ DEBUG ] Eagerly caching bean 'serverPipelineFactory' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:953 ] - [ DEBUG ] Creating shared instance of singleton bean 'xixiNettyDecoder'
+ 2013-07-05 11:03:10 [ main:953 ] - [ DEBUG ] Creating instance of bean 'xixiNettyDecoder'
+ 2013-07-05 11:03:10 [ main:953 ] - [ DEBUG ] Eagerly caching bean 'xixiNettyDecoder' to allow for resolving potential circular references
+ 2013-07-05 11:03:10 [ main:953 ] - [ DEBUG ] Creating shared instance of singleton bean 'kryoCoder'
+ 2013-07-05 11:03:10 [ main:953 ] - [ DEBUG ] Creating instance of bean 'kryoCoder'
+ 2013-07-05 11:03:11 [ main:1187 ] - [ DEBUG ] Eagerly caching bean 'kryoCoder' to allow for resolving potential circular references
+ 2013-07-05 11:03:11 [ main:1187 ] - [ DEBUG ] Finished creating instance of bean 'kryoCoder'
+ 2013-07-05 11:03:11 [ main:1203 ] - [ DEBUG ] Finished creating instance of bean 'xixiNettyDecoder'
+ 2013-07-05 11:03:11 [ main:1218 ] - [ DEBUG ] Creating shared instance of singleton bean 'xixiNettyEncoder'
+ 2013-07-05 11:03:11 [ main:1218 ] - [ DEBUG ] Creating instance of bean 'xixiNettyEncoder'
+ 2013-07-05 11:03:11 [ main:1218 ] - [ DEBUG ] Eagerly caching bean 'xixiNettyEncoder' to allow for resolving potential circular references
+ 2013-07-05 11:03:11 [ main:1218 ] - [ DEBUG ] Returning cached instance of singleton bean 'kryoCoder'
+ 2013-07-05 11:03:11 [ main:1218 ] - [ DEBUG ] Finished creating instance of bean 'xixiNettyEncoder'
+ 2013-07-05 11:03:11 [ main:1218 ] - [ DEBUG ] Finished creating instance of bean 'serverPipelineFactory'
+ 2013-07-05 11:03:11 [ main:1218 ] - [ DEBUG ] Finished creating instance of bean 'nettyserver'
+ 2013-07-05 11:03:11 [ main:1484 ] - [ DEBUG ] Creating instance of bean 'nettyclient'
+ 2013-07-05 11:03:11 [ main:1546 ] - [ DEBUG ] Creating shared instance of singleton bean 'defaultClientChannelHandler'
+ 2013-07-05 11:03:11 [ main:1546 ] - [ DEBUG ] Creating instance of bean 'defaultClientChannelHandler'
+ 2013-07-05 11:03:11 [ main:1546 ] - [ DEBUG ] Eagerly caching bean 'defaultClientChannelHandler' to allow for resolving potential circular references
+ 2013-07-05 11:03:11 [ main:1546 ] - [ DEBUG ] Creating shared instance of singleton bean 'defaultClientMessageDipatcher'
+ 2013-07-05 11:03:11 [ main:1546 ] - [ DEBUG ] Creating instance of bean 'defaultClientMessageDipatcher'
+ 2013-07-05 11:03:11 [ main:1546 ] - [ DEBUG ] Eagerly caching bean 'defaultClientMessageDipatcher' to allow for resolving potential circular references
+ 2013-07-05 11:03:11 [ main:1546 ] - [ DEBUG ] Finished creating instance of bean 'defaultClientMessageDipatcher'
+ 2013-07-05 11:03:11 [ main:1562 ] - [ DEBUG ] Finished creating instance of bean 'defaultClientChannelHandler'
+ 2013-07-05 11:03:11 [ main:1562 ] - [ DEBUG ] Creating shared instance of singleton bean 'clientPipelineFactory'
+ 2013-07-05 11:03:11 [ main:1562 ] - [ DEBUG ] Creating instance of bean 'clientPipelineFactory'
+ 2013-07-05 11:03:11 [ main:1562 ] - [ DEBUG ] Eagerly caching bean 'clientPipelineFactory' to allow for resolving potential circular references
+ 2013-07-05 11:03:11 [ main:1562 ] - [ DEBUG ] Returning cached instance of singleton bean 'xixiNettyDecoder'
+ 2013-07-05 11:03:11 [ main:1562 ] - [ DEBUG ] Returning cached instance of singleton bean 'xixiNettyEncoder'
+ 2013-07-05 11:03:11 [ main:1578 ] - [ DEBUG ] Finished creating instance of bean 'clientPipelineFactory'
+ 2013-07-05 11:03:11 [ main:1578 ] - [ DEBUG ] Finished creating instance of bean 'nettyclient'
+ 2013-07-05 11:03:11 [ main:1671 ] - [ DEBUG ] Returning cached instance of singleton bean 'loginService'
+ 2013-07-05 11:30:45 [ main:0 ] - [ INFO ] Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@1721a26: startup date [Fri Jul 05 11:30:45 CST 2013]; root of context hierarchy
+ 2013-07-05 11:30:45 [ main:156 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiTestModuleA/bin/spring/applicationContext.xml]
+ 2013-07-05 11:30:45 [ main:156 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:30:45 [ main:203 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:30:45 [ main:235 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:30:45 [ main:266 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiCodecKryo/bin/spring/applicationContext.xml]
+ 2013-07-05 11:30:45 [ main:266 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:30:45 [ main:266 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:30:45 [ main:281 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:30:45 [ main:281 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiRpc/bin/spring/applicationContext.xml]
+ 2013-07-05 11:30:45 [ main:281 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:30:45 [ main:281 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:30:45 [ main:297 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:30:45 [ main:297 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiLauncher/bin/spring/applicationContext.xml]
+ 2013-07-05 11:30:45 [ main:297 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:30:45 [ main:297 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:30:45 [ main:313 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:30:45 [ main:313 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiTransport/bin/spring/applicationContext.xml]
+ 2013-07-05 11:30:45 [ main:313 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:30:45 [ main:313 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:30:45 [ main:328 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:30:45 [ main:328 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiRouter/bin/spring/applicationContext.xml]
+ 2013-07-05 11:30:45 [ main:328 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:30:45 [ main:328 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:30:45 [ main:328 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:30:45 [ main:328 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiRegister/bin/spring/applicationContext.xml]
+ 2013-07-05 11:30:45 [ main:344 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:30:45 [ main:344 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:30:45 [ main:344 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:30:45 [ main:344 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiNettyTransport/bin/spring/applicationContext.xml]
+ 2013-07-05 11:30:45 [ main:344 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:30:45 [ main:344 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:30:45 [ main:391 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:30:45 [ main:391 ] - [ INFO ] Loading XML bean definitions from URL [file:/E:/github/xixiRpcFramework/xixiRpcDefault/bin/spring/applicationContext.xml]
+ 2013-07-05 11:30:45 [ main:391 ] - [ DEBUG ] Using JAXP provider [com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl]
+ 2013-07-05 11:30:45 [ main:391 ] - [ DEBUG ] Found beans DTD [http://www.springframework.org/dtd/spring-beans-2.0.dtd] in classpath: spring-beans-2.0.dtd
+ 2013-07-05 11:30:45 [ main:391 ] - [ DEBUG ] Loading bean definitions
+ 2013-07-05 11:30:45 [ main:391 ] - [ DEBUG ] Loaded 21 bean definitions from location pattern [classpath*:/spring/applicationContext.xml]
+ 2013-07-05 11:30:45 [ main:391 ] - [ DEBUG ] Bean factory for org.springframework.context.support.ClassPathXmlApplicationContext@1721a26: org.springframework.beans.factory.support.DefaultListableBeanFactory@d15e01: defining beans [loginService,accountService,kryoCoder,proxyFactory,bizLogger,propertyConfigurer,beanFactoryUtil,defaultServerChannelHandler,defaultClientChannelHandler,eventActor,invokerRegister,invokerBus,nettyserver,nettyclient,serverPipelineFactory,clientPipelineFactory,xixiNettyDecoder,xixiNettyEncoder,defaultXixiClientInvoker,defaultClientMessageDipatcher,defaultServerMessageDipatcher]; root of factory hierarchy
+ 2013-07-05 11:30:45 [ main:516 ] - [ DEBUG ] Creating shared instance of singleton bean 'propertyConfigurer'
+ 2013-07-05 11:30:45 [ main:516 ] - [ DEBUG ] Creating instance of bean 'propertyConfigurer'
+ 2013-07-05 11:30:45 [ main:563 ] - [ DEBUG ] Eagerly caching bean 'propertyConfigurer' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:610 ] - [ DEBUG ] Finished creating instance of bean 'propertyConfigurer'
+ 2013-07-05 11:30:46 [ main:610 ] - [ INFO ] Loading properties file from URL [file:/E:/github/xixiRpcFramework/xixiTestModuleA/bin/app.properties]
+ 2013-07-05 11:30:46 [ main:610 ] - [ INFO ] Loading properties file from URL [file:/E:/github/xixiRpcFramework/xixiLauncher/bin/app.properties]
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Creating shared instance of singleton bean 'beanFactoryUtil'
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Creating instance of bean 'beanFactoryUtil'
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Eagerly caching bean 'beanFactoryUtil' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:625 ] - [ INFO ] Bean 'beanFactoryUtil' of type [class xixi.common.spring.BeanFactoryUtil] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Finished creating instance of bean 'beanFactoryUtil'
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Creating shared instance of singleton bean 'eventActor'
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Creating instance of bean 'eventActor'
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Eagerly caching bean 'eventActor' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Creating shared instance of singleton bean 'invokerRegister'
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Creating instance of bean 'invokerRegister'
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Eagerly caching bean 'invokerRegister' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Creating shared instance of singleton bean 'invokerBus'
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Creating instance of bean 'invokerBus'
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Eagerly caching bean 'invokerBus' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:625 ] - [ INFO ] Bean 'invokerBus' of type [class xixi.register.eventBus.InvokerBus] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+ 2013-07-05 11:30:46 [ main:625 ] - [ DEBUG ] Finished creating instance of bean 'invokerBus'
+ 2013-07-05 11:30:46 [ main:641 ] - [ INFO ] Bean 'invokerRegister' of type [class xixi.register.eventBus.InvokerRegister] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+ 2013-07-05 11:30:46 [ main:641 ] - [ DEBUG ] Finished creating instance of bean 'invokerRegister'
+ 2013-07-05 11:30:46 [ main:641 ] - [ DEBUG ] Finished creating instance of bean 'eventActor'
+ 2013-07-05 11:30:46 [ main:656 ] - [ DEBUG ] Unable to locate MessageSource with name 'messageSource': using default [org.springframework.context.support.DelegatingMessageSource@15ef3ab]
+ 2013-07-05 11:30:46 [ main:656 ] - [ DEBUG ] Unable to locate ApplicationEventMulticaster with name 'applicationEventMulticaster': using default [org.springframework.context.event.SimpleApplicationEventMulticaster@c60ee2]
+ 2013-07-05 11:30:46 [ main:656 ] - [ INFO ] Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@d15e01: defining beans [loginService,accountService,kryoCoder,proxyFactory,bizLogger,propertyConfigurer,beanFactoryUtil,defaultServerChannelHandler,defaultClientChannelHandler,eventActor,invokerRegister,invokerBus,nettyserver,nettyclient,serverPipelineFactory,clientPipelineFactory,xixiNettyDecoder,xixiNettyEncoder,defaultXixiClientInvoker,defaultClientMessageDipatcher,defaultServerMessageDipatcher]; root of factory hierarchy
+ 2013-07-05 11:30:46 [ main:656 ] - [ DEBUG ] Creating shared instance of singleton bean 'loginService'
+ 2013-07-05 11:30:46 [ main:656 ] - [ DEBUG ] Creating instance of bean 'loginService'
+ 2013-07-05 11:30:46 [ main:656 ] - [ DEBUG ] Eagerly caching bean 'loginService' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:656 ] - [ DEBUG ] Creating shared instance of singleton bean 'accountService'
+ 2013-07-05 11:30:46 [ main:656 ] - [ DEBUG ] Creating instance of bean 'accountService'
+ 2013-07-05 11:30:46 [ main:672 ] - [ DEBUG ] Creating shared instance of singleton bean 'proxyFactory'
+ 2013-07-05 11:30:46 [ main:672 ] - [ DEBUG ] Creating instance of bean 'proxyFactory'
+ 2013-07-05 11:30:46 [ main:672 ] - [ DEBUG ] Eagerly caching bean 'proxyFactory' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:672 ] - [ DEBUG ] Creating shared instance of singleton bean 'defaultXixiClientInvoker'
+ 2013-07-05 11:30:46 [ main:672 ] - [ DEBUG ] Creating instance of bean 'defaultXixiClientInvoker'
+ 2013-07-05 11:30:46 [ main:672 ] - [ DEBUG ] Eagerly caching bean 'defaultXixiClientInvoker' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:672 ] - [ DEBUG ] Finished creating instance of bean 'defaultXixiClientInvoker'
+ 2013-07-05 11:30:46 [ main:688 ] - [ DEBUG ] Finished creating instance of bean 'proxyFactory'
+ 2013-07-05 11:30:46 [ main:719 ] - [ DEBUG ] Eagerly caching bean 'accountService' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:719 ] - [ DEBUG ] Finished creating instance of bean 'accountService'
+ 2013-07-05 11:30:46 [ main:735 ] - [ DEBUG ] Finished creating instance of bean 'loginService'
+ 2013-07-05 11:30:46 [ main:735 ] - [ DEBUG ] Returning cached instance of singleton bean 'accountService'
+ 2013-07-05 11:30:46 [ main:735 ] - [ DEBUG ] Returning cached instance of singleton bean 'proxyFactory'
+ 2013-07-05 11:30:46 [ main:735 ] - [ DEBUG ] Returning cached instance of singleton bean 'propertyConfigurer'
+ 2013-07-05 11:30:46 [ main:735 ] - [ DEBUG ] Returning cached instance of singleton bean 'beanFactoryUtil'
+ 2013-07-05 11:30:46 [ main:735 ] - [ DEBUG ] Returning cached instance of singleton bean 'eventActor'
+ 2013-07-05 11:30:46 [ main:735 ] - [ DEBUG ] Returning cached instance of singleton bean 'invokerRegister'
+ 2013-07-05 11:30:46 [ main:735 ] - [ DEBUG ] Returning cached instance of singleton bean 'invokerBus'
+ 2013-07-05 11:30:46 [ main:735 ] - [ DEBUG ] Returning cached instance of singleton bean 'defaultXixiClientInvoker'
+ 2013-07-05 11:30:46 [ main:735 ] - [ DEBUG ] Unable to locate LifecycleProcessor with name 'lifecycleProcessor': using default [org.springframework.context.support.DefaultLifecycleProcessor@c13c17]
+ 2013-07-05 11:30:46 [ main:735 ] - [ DEBUG ] Returning cached instance of singleton bean 'lifecycleProcessor'
+ 2013-07-05 11:30:46 [ main:750 ] - [ DEBUG ] Creating shared instance of singleton bean 'nettyserver'
+ 2013-07-05 11:30:46 [ main:750 ] - [ DEBUG ] Creating instance of bean 'nettyserver'
+ 2013-07-05 11:30:46 [ main:813 ] - [ DEBUG ] Eagerly caching bean 'nettyserver' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:813 ] - [ DEBUG ] Creating shared instance of singleton bean 'defaultServerChannelHandler'
+ 2013-07-05 11:30:46 [ main:813 ] - [ DEBUG ] Creating instance of bean 'defaultServerChannelHandler'
+ 2013-07-05 11:30:46 [ main:813 ] - [ DEBUG ] Eagerly caching bean 'defaultServerChannelHandler' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:813 ] - [ DEBUG ] Creating shared instance of singleton bean 'defaultServerMessageDipatcher'
+ 2013-07-05 11:30:46 [ main:813 ] - [ DEBUG ] Creating instance of bean 'defaultServerMessageDipatcher'
+ 2013-07-05 11:30:46 [ main:813 ] - [ DEBUG ] Eagerly caching bean 'defaultServerMessageDipatcher' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:813 ] - [ DEBUG ] Returning cached instance of singleton bean 'invokerBus'
+ 2013-07-05 11:30:46 [ main:828 ] - [ DEBUG ] Finished creating instance of bean 'defaultServerMessageDipatcher'
+ 2013-07-05 11:30:46 [ main:828 ] - [ DEBUG ] Finished creating instance of bean 'defaultServerChannelHandler'
+ 2013-07-05 11:30:46 [ main:844 ] - [ DEBUG ] Creating shared instance of singleton bean 'serverPipelineFactory'
+ 2013-07-05 11:30:46 [ main:844 ] - [ DEBUG ] Creating instance of bean 'serverPipelineFactory'
+ 2013-07-05 11:30:46 [ main:844 ] - [ DEBUG ] Eagerly caching bean 'serverPipelineFactory' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:906 ] - [ DEBUG ] Creating shared instance of singleton bean 'xixiNettyDecoder'
+ 2013-07-05 11:30:46 [ main:906 ] - [ DEBUG ] Creating instance of bean 'xixiNettyDecoder'
+ 2013-07-05 11:30:46 [ main:906 ] - [ DEBUG ] Eagerly caching bean 'xixiNettyDecoder' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:906 ] - [ DEBUG ] Creating shared instance of singleton bean 'kryoCoder'
+ 2013-07-05 11:30:46 [ main:906 ] - [ DEBUG ] Creating instance of bean 'kryoCoder'
+ 2013-07-05 11:30:46 [ main:1031 ] - [ DEBUG ] Eagerly caching bean 'kryoCoder' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:1031 ] - [ DEBUG ] Finished creating instance of bean 'kryoCoder'
+ 2013-07-05 11:30:46 [ main:1047 ] - [ DEBUG ] Finished creating instance of bean 'xixiNettyDecoder'
+ 2013-07-05 11:30:46 [ main:1047 ] - [ DEBUG ] Creating shared instance of singleton bean 'xixiNettyEncoder'
+ 2013-07-05 11:30:46 [ main:1047 ] - [ DEBUG ] Creating instance of bean 'xixiNettyEncoder'
+ 2013-07-05 11:30:46 [ main:1047 ] - [ DEBUG ] Eagerly caching bean 'xixiNettyEncoder' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:1047 ] - [ DEBUG ] Returning cached instance of singleton bean 'kryoCoder'
+ 2013-07-05 11:30:46 [ main:1063 ] - [ DEBUG ] Finished creating instance of bean 'xixiNettyEncoder'
+ 2013-07-05 11:30:46 [ main:1063 ] - [ DEBUG ] Finished creating instance of bean 'serverPipelineFactory'
+ 2013-07-05 11:30:46 [ main:1063 ] - [ DEBUG ] Finished creating instance of bean 'nettyserver'
+ 2013-07-05 11:30:46 [ main:1266 ] - [ DEBUG ] Creating instance of bean 'nettyclient'
+ 2013-07-05 11:30:46 [ main:1266 ] - [ DEBUG ] Creating shared instance of singleton bean 'defaultClientChannelHandler'
+ 2013-07-05 11:30:46 [ main:1266 ] - [ DEBUG ] Creating instance of bean 'defaultClientChannelHandler'
+ 2013-07-05 11:30:46 [ main:1266 ] - [ DEBUG ] Eagerly caching bean 'defaultClientChannelHandler' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:1266 ] - [ DEBUG ] Creating shared instance of singleton bean 'defaultClientMessageDipatcher'
+ 2013-07-05 11:30:46 [ main:1266 ] - [ DEBUG ] Creating instance of bean 'defaultClientMessageDipatcher'
+ 2013-07-05 11:30:46 [ main:1266 ] - [ DEBUG ] Eagerly caching bean 'defaultClientMessageDipatcher' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:1266 ] - [ DEBUG ] Finished creating instance of bean 'defaultClientMessageDipatcher'
+ 2013-07-05 11:30:46 [ main:1266 ] - [ DEBUG ] Finished creating instance of bean 'defaultClientChannelHandler'
+ 2013-07-05 11:30:46 [ main:1281 ] - [ DEBUG ] Creating shared instance of singleton bean 'clientPipelineFactory'
+ 2013-07-05 11:30:46 [ main:1281 ] - [ DEBUG ] Creating instance of bean 'clientPipelineFactory'
+ 2013-07-05 11:30:46 [ main:1281 ] - [ DEBUG ] Eagerly caching bean 'clientPipelineFactory' to allow for resolving potential circular references
+ 2013-07-05 11:30:46 [ main:1281 ] - [ DEBUG ] Returning cached instance of singleton bean 'xixiNettyDecoder'
+ 2013-07-05 11:30:46 [ main:1281 ] - [ DEBUG ] Returning cached instance of singleton bean 'xixiNettyEncoder'
+ 2013-07-05 11:30:46 [ main:1281 ] - [ DEBUG ] Finished creating instance of bean 'clientPipelineFactory'
+ 2013-07-05 11:30:46 [ main:1281 ] - [ DEBUG ] Finished creating instance of bean 'nettyclient'
+ 2013-07-05 11:30:46 [ main:1313 ] - [ DEBUG ] Returning cached instance of singleton bean 'loginService'
+ 

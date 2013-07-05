@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resource"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiCodecApi"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiCodecKryo"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiLauncher"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiNettyTransport"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiRegister"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiRouter"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiRpc"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiRpcDefault"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiTransport"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiTestInterfaceModuleB"/>
+	<classpathentry kind="lib" path="/xixiLauncher/lib/commons-logging-1.1.1-jar.jar"/>
+	<classpathentry kind="lib" path="/xixiLauncher/lib/logback-classic-1.0.0-jar.jar"/>
+	<classpathentry kind="lib" path="/xixiLauncher/lib/logback-core-1.0.0-jar.jar"/>
+	<classpathentry kind="lib" path="/xixiLauncher/lib/slf4j-api-1.6.5.jar"/>
+	<classpathentry kind="lib" path="E:/tongyi/publicLib/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="lib" path="E:/tongyi/publicLib/log4j-1.2.16.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

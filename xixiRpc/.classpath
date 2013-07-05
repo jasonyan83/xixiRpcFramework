@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resource"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiCommon"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-lang-2.6-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-logging-1.1.1-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/logback-classic-1.0.0-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/logback-core-1.0.0-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/slf4j-api-1.6.5.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

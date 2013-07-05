@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+    <bean id="proxyFactory"
+        class="xixi.rpc.proxy.ProxyFactory">
+       <!-- property name="invoker" 	ref="defaultXixiClientInvoker" / -->  
+      <property name="invoker" 	ref="${rpc.client.invoker}" />
+    </bean>
+    
+    <bean id="bizLogger"
+        class="xixi.rpc.filter.BizLoggerFilter" lazy-init="true">
+    </bean>
+    
+</beans>

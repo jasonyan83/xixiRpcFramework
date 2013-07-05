@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resource"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiCommon"/>
+	<classpathentry kind="lib" path="/xixiNettyTransport/kryo-2.20-all.jar" sourcepath="F:/googleDownload/kryo-2.20/kryo-2.20/java"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiCodecApi"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiRpc"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiTestInterfaceModuleB"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

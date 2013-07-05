@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+    <bean id="defaultXixiClientInvoker"
+        class="xixi.rpc.invoker.xixi.XixiClientInvoker">
+    </bean>
+    
+   <bean id="defaultClientMessageDipatcher"
+        class="xixi.rpc.dispatcher.xixi.ClientMessageDispatcher" lazy-init="true">
+    </bean>
+    
+    <bean id="defaultServerMessageDipatcher"
+        class="xixi.rpc.dispatcher.xixi.ServerMessageDispatcher" lazy-init="true">
+        <property name="eventBus" 		ref="${eventBus}" /> 
+        
+    </bean>
+    
+</beans>

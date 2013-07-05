@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/main/resource"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiTransport"/>
+	<classpathentry kind="lib" path="kryo-2.20-all.jar" sourcepath="/kryo2"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiRpc"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiCodecApi"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-pool-1.5.6-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-beanutils-1.8.3-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-codec-1.5-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-collections-3.2.1-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-dbutils-1.4-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-io-2.1-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-lang-2.6-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-logging-1.1.1-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/logback-classic-1.0.0-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/logback-core-1.0.0-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/netty-4.0.0.Alpha1-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/slf4j-api-1.6.5.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

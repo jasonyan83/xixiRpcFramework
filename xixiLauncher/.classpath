@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resource"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiTransport"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiRouter"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1-jar.jar"/>
+	<classpathentry kind="lib" path="lib/logback-classic-1.0.0-jar.jar"/>
+	<classpathentry kind="lib" path="lib/logback-core-1.0.0-jar.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.6.5.jar"/>
+	<classpathentry kind="lib" path="lib/spring-aop-3.0.6.RELEASE-jar.jar"/>
+	<classpathentry kind="lib" path="lib/spring-asm-3.0.6.RELEASE-jar.jar"/>
+	<classpathentry kind="lib" path="lib/spring-beans-3.0.6.RELEASE-jar.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context-3.0.6.RELEASE-jar.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context-support-3.0.6.RELEASE-jar.jar"/>
+	<classpathentry kind="lib" path="lib/spring-core-3.0.6.RELEASE-jar.jar"/>
+	<classpathentry kind="lib" path="lib/spring-expression-3.0.6.RELEASE-jar.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

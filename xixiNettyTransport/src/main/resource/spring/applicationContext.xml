@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+    <bean id="nettyserver"
+        class="xixi.transport.netty.server.NettyTcpServer" lazy-init="true">
+        <property name="channelHandler" ref="${channel.handler.server}"/>
+         <property name="pipelineFactory" ref="serverPipelineFactory"/>
+    </bean>
+    
+    <bean id="nettyclient"
+        class="xixi.transport.netty.client.NettyTcpClient" lazy-init="true" scope="prototype">
+        <property name="channelHandler" ref="${channel.handler.client}"/>
+         <property name="pipelineFactory" ref="clientPipelineFactory"/>
+    </bean>
+    
+     <bean id="serverPipelineFactory"
+        class="xixi.transport.netty.pipeline.TcpServerPipelineFactory" lazy-init="true">
+        <property name="tcpRequestDecoder" ref="xixiNettyDecoder"/>
+        <property name="tcpResponseEncoder" ref="xixiNettyEncoder"/>
+    </bean>
+    
+     <bean id="clientPipelineFactory"
+        class="xixi.transport.netty.pipeline.TcpClientPipelineFactory" lazy-init="true">
+        <property name="tcpResponseDecoder" ref="xixiNettyDecoder"/>
+         <property name="tcpRequestEncoder" ref="xixiNettyEncoder"/>
+    </bean>
+    
+     <bean id="xixiNettyDecoder"
+        class="xixi.transport.netty.coder.XixiNettyDecoder" lazy-init="true">
+        <property name="coder" ref="${tcp.coder}"/>
+    </bean>
+    
+      <bean id="xixiNettyEncoder"
+        class="xixi.transport.netty.coder.XixiNettyEncoder" lazy-init="true">
+        <property name="coder" ref="${tcp.coder}"/>
+    </bean>
+    
+</beans>
