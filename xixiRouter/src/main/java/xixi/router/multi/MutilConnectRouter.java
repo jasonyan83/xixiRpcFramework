@@ -2,6 +2,10 @@ package xixi.router.multi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +15,20 @@ import xixi.router.schedule.RouterSchedule;
 import xixi.rpc.bean.RpcMessage;
 import xixi.transport.client.TcpClient;
 
-public class MutilConnectRouter extends AbstractRouter{
+public class MutilConnectRouter extends AbstractRouter {
 
-	private static final Logger logger = 
-	        	LoggerFactory.getLogger(MutilConnectRouter.class);
-	   
+	private static ScheduledExecutorService exe = Executors
+			.newSingleThreadScheduledExecutor(new ThreadFactory() {
+				@Override
+				public Thread newThread(Runnable r) {
+					return new Thread(r, "MultiRouterCleanThread");
+				}
+
+			});
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(MutilConnectRouter.class);
+
 	public static MutilConnectRouter getOrAddRouter(short moduleId) {
 		if (moduleId < 0) {
 			return null;
@@ -31,11 +44,11 @@ public class MutilConnectRouter extends AbstractRouter{
 		}
 		return router;
 	}
-	
+
 	private final List<TcpClient> clientList = new ArrayList<TcpClient>();
-	
+
 	private RouterSchedule schedule;
-	
+
 	public MutilConnectRouter(int moduleId) {
 		super(moduleId);
 	}
@@ -55,18 +68,33 @@ public class MutilConnectRouter extends AbstractRouter{
 
 	@Override
 	protected TcpClient getTcpClient() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void removeTcpClient(String ipAddress) {
-		for(TcpClient client : clientList){
-			if(ipAddress.equals(client.getDestIpAddress())){
-				
+		for (TcpClient client : clientList) {
+			if (ipAddress.equals(client.getDestIpAddress())) {
+				logger.debug("Preparing to remove client:" + client);
+				exe.schedule(new RouterCleanTask(client), 5000, TimeUnit.MILLISECONDS);
 			}
 		}
-		
 	}
+
+	private static class RouterCleanTask implements Runnable {
+
+		private final TcpClient client;
+
+		public RouterCleanTask(TcpClient client) {
+			this.client = client;
+		}
+
+		@Override
+		public void run() {
+			logger.debug("Stopping the client:" + client);
+			client.stop();
+		}
+	}
+
 
 }

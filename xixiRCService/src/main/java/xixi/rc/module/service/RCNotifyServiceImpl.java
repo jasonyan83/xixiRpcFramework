@@ -44,6 +44,7 @@ public class RCNotifyServiceImpl implements RCNotifyService {
 				TcpClient client = TransportFacade.initClient(
 						ModuleStringUtil.getIp(ipAddress),
 						ModuleStringUtil.getPort(ipAddress));
+				logger.debug("Adding new client{0} to Router {1}", client,r);
 				r.addTcpClient(client);
 			}
 		}

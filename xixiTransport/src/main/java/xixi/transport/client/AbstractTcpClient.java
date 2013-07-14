@@ -132,4 +132,8 @@ public abstract class AbstractTcpClient implements TcpClient {
 	public void setDestPort(int port) {
 		this.destPort = port;
 	}
+	@Override
+	public String getDestIpAddress() {
+		return this.destIp + ":" + this.destPort;
+	}
 }
