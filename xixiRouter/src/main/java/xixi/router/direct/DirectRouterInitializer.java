@@ -19,15 +19,18 @@ public class DirectRouterInitializer implements RouterInitializer{
 	
 	protected String routerAddresses;
 	
+	protected String[] routerAddressArray = new String[]{};
+	
 	public DirectRouterInitializer(){
 		routerAddresses = ConfigUtils.getProperty(
 				Constants.DIRECT_ROUTER_ADDRESSES_KEY, "");
+		if (routerAddresses != null && !"".equals(routerAddresses)) {
+			routerAddressArray = routerAddresses.split(",");
+		}
 	}
 	public void init() {
 		logger.debug("Initializing DirectRouter, routerAddresses=" + routerAddresses);
-		if (routerAddresses != null && !"".equals(routerAddresses)) {
-			String[] routerAddress = routerAddresses.split(",");
-			for (String moduleString : routerAddress) {
+			for (String moduleString : routerAddressArray) {
 				String moduleId = ModuleStringUtil.getMoudleId(moduleString);
 				String ipAddress = ModuleStringUtil.getIpAddress(moduleString);
 				String ip = ModuleStringUtil.getIp(ipAddress);
@@ -36,6 +39,5 @@ public class DirectRouterInitializer implements RouterInitializer{
 				TcpClient client = TransportFacade.initClient(ip, port);
 				r.addTcpClient(client);
 			}
-		}
 	}
 }

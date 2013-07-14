@@ -26,7 +26,7 @@ public class DefaultRegistry implements Registry{
     private final Map<Short, List<Short>> moduleDependenceMap = new HashMap<Short, List<Short>>();
     
 	@Override
-	public boolean register(short moduleId, String ipAddress,String description) throws Exception {
+	public boolean register(short moduleId, String ipAddress,int weight,String description) throws Exception {
 		boolean succeed = false;
 		if (modulesMap.containsKey(moduleId)) {
 			HashMap<String, ModuleStatusInfo> modulesInstanceMap = modulesMap.get(moduleId);
@@ -46,6 +46,7 @@ public class DefaultRegistry implements Registry{
 				ModuleStatusInfo moduleInfo = new ModuleStatusInfo();
 				moduleInfo.setModuleId(moduleId);
 				moduleInfo.setIpAddress(ipAddress);
+				moduleInfo.setWeight(weight);
 				moduleInfo.setRegisterTime(new Date());
 				moduleInfo.setLastHBTime(new Date());
 				moduleInfo.setLive(true);
@@ -123,10 +124,11 @@ public class DefaultRegistry implements Registry{
 		Map<String, ModuleStatusInfo> map = modulesMap.get(moduleId);
 		List<ModuleInfo> moduleInfoList = new ArrayList<ModuleInfo>();
 		if(!map.isEmpty()){
-			for(String ipAddress: map.keySet()){
+			for(ModuleStatusInfo moduleStatusInfo: map.values()){
 				ModuleInfo m = new ModuleInfo();
-				m.setIpAddress(ipAddress);
+				m.setIpAddress(moduleStatusInfo.getIpAddress());
 				m.setModuleId(moduleId);
+				m.setWeight(moduleStatusInfo.getWeight());
 				moduleInfoList.add(m);
 			}
 		}

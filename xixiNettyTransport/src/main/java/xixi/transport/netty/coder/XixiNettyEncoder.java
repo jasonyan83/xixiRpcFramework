@@ -17,13 +17,12 @@ public class XixiNettyEncoder extends OneToOneEncoder{
 
 	private static final Logger logger = LoggerFactory
 	.getLogger(XixiNettyEncoder.class);
-
 	
 	private Coder coder;
 	
 	@Override
 	protected Object encode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception {
-		// TODO Auto-generated method stub
+
 		if(msg instanceof RpcMessage){
 			int msgSize = Constants.RPC_FIXED_HEAD_SIZE;
 			
@@ -71,5 +70,4 @@ public class XixiNettyEncoder extends OneToOneEncoder{
 	public void setCoder(Coder coder) {
 		this.coder = coder;
 	}
-
 }

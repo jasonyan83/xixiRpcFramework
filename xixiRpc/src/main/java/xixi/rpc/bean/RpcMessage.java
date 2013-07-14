@@ -32,6 +32,9 @@ public class RpcMessage {
 	
 	private int status;
 	
+	public RpcMessage(){
+		
+	}
 	
 	public int getStatus() {
 		return status;

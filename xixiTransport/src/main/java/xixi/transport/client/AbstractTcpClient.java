@@ -10,9 +10,10 @@ import org.jboss.netty.channel.ChannelFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import xixi.common.bean.AbstractLBProperty;
 import xixi.transport.channel.Channel;
 
-public abstract class AbstractTcpClient implements TcpClient {
+public abstract class AbstractTcpClient extends AbstractLBProperty implements TcpClient {
 	private static final Logger logger = LoggerFactory
 			.getLogger(AbstractTcpClient.class);
 

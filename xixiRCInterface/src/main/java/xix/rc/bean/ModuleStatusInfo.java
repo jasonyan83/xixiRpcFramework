@@ -19,6 +19,16 @@ public class ModuleStatusInfo {
 
 	private Date registerTime;
 	
+	private int weight;
+	
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
 	public Date getRegisterTime() {
 		return registerTime;
 	}

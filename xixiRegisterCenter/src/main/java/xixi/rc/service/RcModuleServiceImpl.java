@@ -12,15 +12,15 @@ import xixi.rc.iservice.RCModuleService;
 import xixi.rc.register.RegisterListener;
 import xixi.rc.register.Registry;
 
-public class RcModuleServiceImpl implements RCModuleService{
+public class RcModuleServiceImpl implements RCModuleService {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(RcModuleServiceImpl.class);
-	
+
 	private Registry registry;
-	
+
 	private RegisterListener registerListener;
-	
+
 	public Registry getRegistry() {
 		return registry;
 	}
@@ -30,46 +30,53 @@ public class RcModuleServiceImpl implements RCModuleService{
 	}
 
 	@Override
-	@EventMethod(name="registerModule", filter="rcRegisterFilter")
-	public int registerModule(short moduleId, String ipAddress,
+	@EventMethod(name = "registerModule", filter = "rcRegisterFilter")
+	public int registerModule(short moduleId, String ipAddress, int weight,
 			String description) {
 		boolean ret = false;
 		try {
-			ret = registry.register(moduleId, ipAddress,description);
+			ret = registry.register(moduleId, ipAddress, weight, description);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(ret){
+		if (ret) {
 			registerListener.onRegistered(moduleId, ipAddress);
 			return 0;
+		} else {
+			return -1;
 		}
-		else{
+	}
+
+	public RegisterListener getRegisterListener() {
+		return registerListener;
+	}
+
+	public void setRegisterListener(RegisterListener registerListener) {
+		this.registerListener = registerListener;
+	}
+
+	@Override
+	@EventMethod(name = "unRegisterModule", filter = "rcRegisterFilter")
+	public int unRegisterModule(short moduleId, String ipAddress) {
+		boolean ret = registry.unRegister(moduleId, ipAddress);
+		if (ret) {
+			registerListener.onRegistered(moduleId, ipAddress);
+			return 0;
+		} else {
 			return -1;
 		}
 	}
 
 	@Override
-	@EventMethod(name="unRegisterModule", filter="rcRegisterFilter")
-	public int unRegisterModule(short moduleId, String ipAddress) {
-		boolean ret = registry.unRegister(moduleId, ipAddress);
-		if(ret){
-			registerListener.onRegistered(moduleId, ipAddress);
-			return 0;
-		}
-		else{
-			return -1;
-		}
-	}
-	
-	@Override
-	@EventMethod(name="getInstanceList")
-	public List<ModuleInfo> getInstanceList(short srcModuleId, List<Short> destModuleIdList) {
-		if(destModuleIdList==null||destModuleIdList.size()==0){
+	@EventMethod(name = "getInstanceList")
+	public List<ModuleInfo> getInstanceList(short srcModuleId,
+			List<Short> destModuleIdList) {
+		if (destModuleIdList == null || destModuleIdList.size() == 0) {
 			logger.warn("The DestModuldIdList is empty");
 			return null;
 		}
 		List<ModuleInfo> list = new ArrayList<ModuleInfo>();
-		for(Short destModuleId : destModuleIdList){
+		for (Short destModuleId : destModuleIdList) {
 			list.addAll(registry.getModuleInstances(destModuleId));
 			registry.buildModuleDependencyMap(srcModuleId, destModuleId);
 		}

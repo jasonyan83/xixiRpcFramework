@@ -4,13 +4,13 @@ import xixi.transport.client.TcpClient;
 
 public abstract class AbstractRouter implements Router{
 
-	private int moduleId;
+	private short moduleId;
 	
-	public AbstractRouter(int moduleId){
+	public AbstractRouter(short moduleId){
 		this.moduleId = moduleId;
 	}
 	
-	public int moduleId(){
+	public short moduleId(){
 		return moduleId;
 	}
 	

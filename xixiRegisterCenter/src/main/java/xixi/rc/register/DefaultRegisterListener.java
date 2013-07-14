@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import xix.rc.bean.ModuleInfo;
 import xixi.rc.iservice.RCNotifyService;
-import xixi.transport.channel.Channel;
 
 public class DefaultRegisterListener implements RegisterListener {
 
@@ -19,13 +18,16 @@ public class DefaultRegisterListener implements RegisterListener {
 	
 	@Override
 	public void onRegistered(short moduleId, String ipAddress) {
+		logger.debug("on module registered");
 		List<Short> moduleIdList = registry.getDependentModuleIds(moduleId);
 		if (moduleIdList != null && !moduleIdList.isEmpty()) {
-
+			logger.debug("Module {} has following dependecny module", moduleId, moduleIdList);
 			List<ModuleInfo> selfInstanceList = registry
 					.getModuleInstances(moduleId);
-
-			notifyService.updatedModuleInstances(moduleId, selfInstanceList);
+			for(Short id : moduleIdList){
+				logger.debug("Send module instance registered change notify to module {}", id);
+				notifyService.updatedModuleInstances(id, selfInstanceList);
+			}
 		}
 		else{
 			logger.debug("No module depend on Module {0}-{1}", moduleId, ipAddress);
@@ -34,13 +36,18 @@ public class DefaultRegisterListener implements RegisterListener {
 
 	@Override
 	public void onUnRegistered(short moduleId, String ipAddress) {
+		logger.debug("on module unregistered");
 		List<Short> moduleIdList = registry.getDependentModuleIds(moduleId);
 		if (moduleIdList != null && !moduleIdList.isEmpty()) {
-
-			List<ModuleInfo> selfInstanceList = registry
-					.getModuleInstances(moduleId);
-
-			notifyService.updatedModuleInstances(moduleId, selfInstanceList);
+			if (moduleIdList != null && !moduleIdList.isEmpty()) {
+				logger.debug("Module {} has following dependecny module", moduleId, moduleIdList);
+				List<ModuleInfo> selfInstanceList = registry
+						.getModuleInstances(moduleId);
+				for(Short id : moduleIdList){
+					logger.debug("Send module instance unregistered change notify to module {}", id);
+					notifyService.updatedModuleInstances(id, selfInstanceList);
+				}
+			}
 		}
 		else{
 			logger.debug("No module depend on Module {0}-{1}", moduleId, ipAddress);

@@ -10,12 +10,16 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import xixi.rc.module.repository.ModuleRepository;
 import xixi.router.AbstractRouter;
 import xixi.router.schedule.RouterSchedule;
 import xixi.rpc.bean.RpcMessage;
 import xixi.transport.client.TcpClient;
 
 public class MutilConnectRouter extends AbstractRouter {
+	
+	private static final Logger logger = LoggerFactory
+			.getLogger(MutilConnectRouter.class);
 
 	private static ScheduledExecutorService exe = Executors
 			.newSingleThreadScheduledExecutor(new ThreadFactory() {
@@ -23,11 +27,9 @@ public class MutilConnectRouter extends AbstractRouter {
 				public Thread newThread(Runnable r) {
 					return new Thread(r, "MultiRouterCleanThread");
 				}
-
 			});
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(MutilConnectRouter.class);
+	private ModuleRepository moduleRepository;
 
 	public static MutilConnectRouter getOrAddRouter(short moduleId) {
 		if (moduleId < 0) {
@@ -49,7 +51,7 @@ public class MutilConnectRouter extends AbstractRouter {
 
 	private RouterSchedule schedule;
 
-	public MutilConnectRouter(int moduleId) {
+	public MutilConnectRouter(short moduleId) {
 		super(moduleId);
 	}
 
@@ -57,12 +59,12 @@ public class MutilConnectRouter extends AbstractRouter {
 	public void addTcpClient(TcpClient client) {
 		logger.debug("Add new client for mutilConnectRouter: " + client);
 		clientList.add(client);
+		moduleRepository.addNewInstance(this.moduleId(), client.getDestIpAddress());
 	}
 
 	@Override
 	public void router(RpcMessage message) {
-		int index = schedule.schedule();
-		TcpClient client = clientList.get(index);
+		TcpClient client = schedule.schedule(this.moduleId(), clientList);
 		client.send(message);
 	}
 
@@ -80,6 +82,15 @@ public class MutilConnectRouter extends AbstractRouter {
 			}
 		}
 	}
+	
+	public ModuleRepository getModuleRepository() {
+		return moduleRepository;
+	}
+
+	public void setModuleRepository(ModuleRepository moduleRepository) {
+		this.moduleRepository = moduleRepository;
+	}
+
 
 	private static class RouterCleanTask implements Runnable {
 
@@ -92,9 +103,9 @@ public class MutilConnectRouter extends AbstractRouter {
 		@Override
 		public void run() {
 			logger.debug("Stopping the client:" + client);
+			
 			client.stop();
 		}
 	}
-
 
 }

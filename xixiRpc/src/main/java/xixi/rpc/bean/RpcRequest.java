@@ -3,6 +3,11 @@ package xixi.rpc.bean;
 
 public class RpcRequest extends RpcMessage{
 
+	public RpcRequest(){
+		super();
+		this.setType((byte)1);
+	}
+	
 	public RpcResponse copytoResponse(){
 	
 		RpcResponse response = new RpcResponse();

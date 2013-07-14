@@ -43,6 +43,10 @@ public class Constants {
 	   
 	   public static final String LOCAL_PORT_KEY ="local.prot";;
 	   public static int LOCAL_PORT;
+	   
+	   public static final String DESCRIPTION = "description";
+	   public static final String WEIGHT = "server.weight";
+	   
 	   //router.addresses=100-127.0.0.1:8080,100-127.0.0.1:8090
 	   public static final String DIRECT_ROUTER_ADDRESSES_KEY = "direct.router.addresses";
 	   public static final String MUTIL_RC_ROUTER_ADDRESSES_KEY = "mutil.router.addresses";

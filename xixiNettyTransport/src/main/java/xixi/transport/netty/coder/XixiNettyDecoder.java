@@ -1,6 +1,5 @@
 package xixi.transport.netty.coder;
 
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -9,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xixi.codec.api.Coder;
+import xixi.rpc.bean.RpcNotify;
 import xixi.rpc.bean.RpcRequest;
 import xixi.rpc.bean.RpcResponse;
 
@@ -28,8 +28,9 @@ public class XixiNettyDecoder extends FrameDecoder {
 			ChannelBuffer buffer) throws Exception {
 
 		if (buffer.readableBytes() < FIXED_HEAD_SIZE) {
-			logger.debug("readable byte size  {} is less than fixed Head Size{}", buffer.readableBytes(),
-					FIXED_HEAD_SIZE);
+			logger.debug(
+					"readable byte size  {} is less than fixed Head Size{}",
+					buffer.readableBytes(), FIXED_HEAD_SIZE);
 			return null;
 		}
 
@@ -57,53 +58,65 @@ public class XixiNettyDecoder extends FrameDecoder {
 		long firstTransactionId = buffer.getLong(buffer.readerIndex() + 9);
 		long secondTransactionId = buffer.getLong(buffer.readerIndex() + 17);
 		byte messageType = buffer.getByte(buffer.readerIndex() + 25);
-		//int msgLength = buffer.getInt(buffer.readerIndex() + 26);
-
-		//buffer.readerIndex(26);
 
 		byte interfaceNameLength = buffer.getByte(26);
 		buffer.readerIndex(27);
 		byte[] interfaceNameByte = new byte[interfaceNameLength];
 		buffer.readBytes(interfaceNameByte);
 		String interfaceName = new String(interfaceNameByte, "utf-8");
-		
+
 		byte methodNameLength = buffer.getByte(buffer.readerIndex());
 		buffer.readerIndex(buffer.readerIndex() + 1);
 		byte[] methodNameByte = new byte[methodNameLength];
 		buffer.readBytes(methodNameByte);
 		String methodName = new String(methodNameByte, "utf-8");
-		
+
 		int msgLength = buffer.getInt(buffer.readerIndex());
 
 		buffer.readerIndex(buffer.readerIndex() + 4);
-		
+
 		byte[] msgBody = new byte[msgLength];
 		buffer.readBytes(msgBody);
 
-		if(messageType==1){
+		if (messageType == 1) {
 			RpcRequest request = new RpcRequest();
-			request.setBasicVer(version).setLength(packageLength).setSrcModule(
-					srcModule).setDstModule(dstModule).setFirstTransaction(
-					firstTransactionId).setSecondTransaction(secondTransactionId)
-					.setType(messageType).setMessageLength(msgLength)
+			request.setBasicVer(version).setLength(packageLength)
+					.setSrcModule(srcModule).setDstModule(dstModule)
+					.setFirstTransaction(firstTransactionId)
+					.setSecondTransaction(secondTransactionId)
+					.setMessageLength(msgLength)
 					.setInterfaceName(interfaceName).setMethodName(methodName);
 
 			request.setData(coder.decode(msgBody));
+			logger.debug("The requst is " + request);
 			return request;
-		}
-		else if(messageType==2){
+		} else if (messageType == 2) {
 			RpcResponse response = new RpcResponse();
-			
-			response.setBasicVer(version).setLength(packageLength).setSrcModule(
-					srcModule).setDstModule(dstModule).setFirstTransaction(
-					firstTransactionId).setSecondTransaction(secondTransactionId)
-					.setType(messageType).setMessageLength(msgLength)
+
+			response.setBasicVer(version).setLength(packageLength)
+					.setSrcModule(srcModule).setDstModule(dstModule)
+					.setFirstTransaction(firstTransactionId)
+					.setSecondTransaction(secondTransactionId)
+					.setMessageLength(msgLength)
 					.setInterfaceName(interfaceName).setMethodName(methodName);
 			response.setData(coder.decode(msgBody));
-			
+			logger.debug("The response is " + response);
 			return response;
+		} else if (messageType == 3) {
+			RpcNotify notify = new RpcNotify();
+
+			notify.setBasicVer(version).setLength(packageLength)
+					.setSrcModule(srcModule).setDstModule(dstModule)
+					.setFirstTransaction(firstTransactionId)
+					.setSecondTransaction(secondTransactionId)
+					.setMessageLength(msgLength)
+					.setInterfaceName(interfaceName).setMethodName(methodName);
+			notify.setData(coder.decode(msgBody));
+			logger.debug("The notify is " + notify);
+			return notify;
 		}
-		else{
+
+		else {
 			logger.warn("Unsupport message type");
 			return null;
 		}

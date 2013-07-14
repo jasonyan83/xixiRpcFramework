@@ -40,13 +40,14 @@ public class MutilRouterInitializer implements RouterInitializer {
 		List<ModuleInfo> modulesInfo = moduleService.getInstanceList(
 				Constants.SOURCE_MODULEID, destMoudleIdList);
 
-		logger.debug("Get Dependency ModuleInfo list " + modulesInfo);
+		logger.debug("Get Dependency ModuleInfo list from RC: " + modulesInfo);
 
 		if (modulesInfo != null && modulesInfo.size() > 0) {
 			for (ModuleInfo m : modulesInfo) {
 				Router r = MutilConnectRouter.getOrAddRouter(m.getModuleId());
 				TcpClient client = TransportFacade.initClient(m.getIp(),
 						m.getPort());
+				client.setWeight(m.getWeight());
 				r.addTcpClient(client);
 			}
 		}

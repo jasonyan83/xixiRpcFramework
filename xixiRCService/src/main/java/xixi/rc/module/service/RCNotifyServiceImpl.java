@@ -28,34 +28,44 @@ public class RCNotifyServiceImpl implements RCNotifyService {
 	public void updatedModuleInstances(short moduleId,
 			List<ModuleInfo> instancesList) {
 		List<String> newInstanceList = new ArrayList<String>();
-		for (ModuleInfo m : instancesList) {
-			newInstanceList.add(m.getIpAddress());
-		}
+		if(instancesList!=null&&!instancesList.isEmpty()){
+			short destModuleId = instancesList.get(0).getModuleId();
+			logger.debug("Updating Module {0} instances", destModuleId);
+			for (ModuleInfo m : instancesList) {
+				newInstanceList.add(m.getIpAddress());
+			}
+			
+			List<String> addedInstanceList = repository.getAddedInstanceList(
+					destModuleId, newInstanceList);
+			List<String> removedInstanceList = repository.getRemovedInstanceList(
+					destModuleId, newInstanceList);
 
-		List<String> addedInstanceList = repository.getAddedInstanceList(
-				moduleId, newInstanceList);
-		List<String> removedInstanceList = repository.getRemovedInstanceList(
-				moduleId, newInstanceList);
+			if (addedInstanceList != null && !addedInstanceList.isEmpty()) {
+				for (String ipAddress : addedInstanceList) {
+					logger.debug("Module {0} got new service instance: {1}", destModuleId,ipAddress);
+					for(ModuleInfo m : instancesList){
+						if(m.getIpAddress().equals(ipAddress)){
+							Router r = MutilConnectRouter.getOrAddRouter(destModuleId);
+							TcpClient client = TransportFacade.initClient(
+									ModuleStringUtil.getIp(ipAddress),
+									ModuleStringUtil.getPort(ipAddress));
+							client.setWeight(m.getWeight());
+							logger.debug("Adding new client{0} to Router {1}", client,r);
+							r.addTcpClient(client);
+						}
+					}
+				}
+			}
 
-		if (addedInstanceList != null && !addedInstanceList.isEmpty()) {
-			for (String ipAddress : addedInstanceList) {
-				logger.debug("Module {0} got new service instance: {1}", moduleId,ipAddress);
-				Router r = MutilConnectRouter.getOrAddRouter(moduleId);
-				TcpClient client = TransportFacade.initClient(
-						ModuleStringUtil.getIp(ipAddress),
-						ModuleStringUtil.getPort(ipAddress));
-				logger.debug("Adding new client{0} to Router {1}", client,r);
-				r.addTcpClient(client);
+			if (removedInstanceList != null && !removedInstanceList.isEmpty()) {
+				for (String ipAddress : removedInstanceList) {
+					logger.debug("Module {0} has instance to remove: {1}", destModuleId, ipAddress);
+					Router r = MutilConnectRouter.getOrAddRouter(destModuleId);
+					r.removeTcpClient(ipAddress);
+				}
 			}
 		}
-
-		if (removedInstanceList != null && !removedInstanceList.isEmpty()) {
-			for (String ipAddress : removedInstanceList) {
-				logger.debug("Module {0} has instance to remove: {1}", moduleId, ipAddress);
-				Router r = MutilConnectRouter.getOrAddRouter(moduleId);
-				r.removeTcpClient(ipAddress);
-			}
-		}
+		
 	}
 
 	public ModuleRepository getRepository() {

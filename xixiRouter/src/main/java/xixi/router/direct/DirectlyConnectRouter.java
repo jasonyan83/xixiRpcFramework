@@ -25,7 +25,7 @@ public class DirectlyConnectRouter extends AbstractRouter {
 
 	private TcpClient tcpClient;
 
-	private DirectlyConnectRouter(int moduleId) {
+	private DirectlyConnectRouter(short moduleId) {
 		super(moduleId);
 	}
 
