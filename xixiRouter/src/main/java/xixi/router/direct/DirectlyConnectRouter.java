@@ -49,4 +49,9 @@ public class DirectlyConnectRouter extends AbstractRouter {
 	public void destory() {
 		getTcpClient().stop();
 	}
+
+	@Override
+	public void removeTcpClient(String ipAddress) {
+		throw new UnsupportedOperationException("Not Implemented");
+	}
 }

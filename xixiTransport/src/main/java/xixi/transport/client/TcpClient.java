@@ -9,4 +9,5 @@ public interface TcpClient {
     public void send(Object msg);
     public void setDestIp(String ip);
     public void setDestPort(int port);
+    public String getDestIpAddress();
 }

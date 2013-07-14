@@ -4,12 +4,13 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 
 import xixi.common.constants.Constants;
+import xixi.rpc.AbstractInvocation;
 import xixi.rpc.IRpcInvocation;
 import xixi.rpc.future.DefaultFuture;
 import xixi.rpc.future.Future;
 import xixi.rpc.future.RpcFuture;
 
-public class RpcInvocation implements IRpcInvocation {
+public class RpcInvocation extends AbstractInvocation implements IRpcInvocation {
 	
 	private RpcFuture future;
 

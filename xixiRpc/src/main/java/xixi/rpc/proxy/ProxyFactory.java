@@ -12,6 +12,7 @@ import java.util.Map;
 
 import xixi.common.annotation.EventService;
 import xixi.common.constants.Constants;
+import xixi.common.respository.DependencyModuleRepository;
 import xixi.common.spring.BeanFactoryUtil;
 import xixi.common.util.ConfigUtils;
 import xixi.rpc.RpcInvoker;
@@ -24,7 +25,6 @@ import xixi.rpc.future.RpcFuture;
 public class ProxyFactory {
 
 	private final Map<Class<?>, Object> proxyRepository = new HashMap<Class<?>, Object>();
-
 	//TODO: the invoker is singltion this time ,to make sure the thread safe
 	private RpcInvoker invoker;
 	
@@ -69,7 +69,12 @@ public class ProxyFactory {
 		Object proxy =  Proxy.newProxyInstance(serviceInterface.getClassLoader(),
 				new Class<?>[] { serviceInterface }, new DefaultInvocationHandler(invoker));
 		proxyRepository.put(serviceInterface, proxy);
-		//proxyInterfaceMap.put(proxy, serviceInterface);
+		
+		EventService annotation = serviceInterface.getAnnotation(EventService.class);
+		if(annotation!=null){
+			DependencyModuleRepository.addDepedentModuleId(annotation.moduleId());
+		}
+		
 		return proxy;
 	}
 

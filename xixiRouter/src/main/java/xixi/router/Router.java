@@ -14,6 +14,8 @@ public interface Router{
 	
 	void addTcpClient(TcpClient client);
 	
+	void removeTcpClient(String ipAddress);
+	
 	int moduleId();
 	
 	public void router(RpcMessage message);

@@ -14,7 +14,9 @@ import java.lang.annotation.RetentionPolicy;
 public @interface EventService {
 	 public abstract String name();
 	 
-	 public abstract short moduleId();
+	 //if moduleId=1, it means it is a broadcast message. it will send 
+	 // message to all the modules it is depend to.
+	 public abstract short moduleId() default -1;
 	 
 	 public abstract String version();
 }

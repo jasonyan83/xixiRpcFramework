@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiCommon"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-lang-2.6-jar.jar" sourcepath="C:/Documents and Settings/ThinkPad/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6-sources.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiTransport"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
