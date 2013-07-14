@@ -77,7 +77,7 @@ public class DefaultFuture  extends AbstractRpcFuture{
 		public void run() {
 			for(DefaultFuture f : FUTURES.values()){
 				if((System.currentTimeMillis() - f.futureStartTime())>= f.timeout()){
-					//if timeout, invoke the setValue immiditely, so that the get() operationi will not be blocked.
+					//if timeout, invoke the setValue immiditely, so that the get() operation will not be blocked.
 					RpcResponse response = new RpcResponse();
 					response.setTransactionId(f.id()).setStatus(RpcResponse.TIMEOUT);
 					response.setStatus(RpcResponse.TIMEOUT);

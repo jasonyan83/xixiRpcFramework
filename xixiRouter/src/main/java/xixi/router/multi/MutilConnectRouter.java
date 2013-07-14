@@ -23,7 +23,6 @@ public class MutilConnectRouter extends AbstractRouter {
 				public Thread newThread(Runnable r) {
 					return new Thread(r, "MultiRouterCleanThread");
 				}
-
 			});
 
 	private static final Logger logger = LoggerFactory
@@ -49,7 +48,7 @@ public class MutilConnectRouter extends AbstractRouter {
 
 	private RouterSchedule schedule;
 
-	public MutilConnectRouter(int moduleId) {
+	public MutilConnectRouter(short moduleId) {
 		super(moduleId);
 	}
 
@@ -61,8 +60,7 @@ public class MutilConnectRouter extends AbstractRouter {
 
 	@Override
 	public void router(RpcMessage message) {
-		int index = schedule.schedule();
-		TcpClient client = clientList.get(index);
+		TcpClient client = schedule.schedule(this.moduleId(), clientList);
 		client.send(message);
 	}
 

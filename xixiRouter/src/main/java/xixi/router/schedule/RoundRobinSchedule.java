@@ -1,11 +1,26 @@
 package xixi.router.schedule;
 
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+import xixi.common.util.AtomicPositiveInteger;
+import xixi.transport.client.TcpClient;
+
 public class RoundRobinSchedule implements RouterSchedule {
 
+	private final ConcurrentMap<Short, AtomicPositiveInteger> sequences = new ConcurrentHashMap<Short, AtomicPositiveInteger>();
+	
 	@Override
-	public int schedule() {
-		// TODO Auto-generated method stub
-		return 0;
+	public TcpClient schedule(Short moduleId, List<TcpClient> clientList) {
+		AtomicPositiveInteger sequence = sequences.get(moduleId);
+		if(sequence==null){
+			sequences.putIfAbsent(moduleId, new AtomicPositiveInteger());
+			sequence = sequences.get(moduleId);
+		}
+		
+		return clientList.get(sequence.getAndIncrement()%clientList.size());
 	}
+
 
 }
