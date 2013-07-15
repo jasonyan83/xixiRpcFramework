@@ -3,6 +3,7 @@ package xixi.rc.register;
 import java.util.List;
 
 import xix.rc.bean.ModuleInfo;
+import xix.rc.bean.ModuleStatusInfo;
 import xixi.transport.channel.Channel;
 
 public interface Registry {
@@ -22,4 +23,6 @@ public interface Registry {
 	public Channel getChannelByInstance(String ipAddress);
 	
 	public String getInstanceIpByChannel(Channel channel);
+	
+	public ModuleStatusInfo getModuleStatusInfo(short moduleId, String ipAddress);
 }

@@ -1,4 +1,4 @@
-package xixi.rc.module.repository;
+package xixi.router.multi;
 
 import java.util.ArrayList;
 import java.util.HashMap;

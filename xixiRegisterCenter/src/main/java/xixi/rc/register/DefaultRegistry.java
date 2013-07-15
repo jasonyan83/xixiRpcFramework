@@ -135,6 +135,16 @@ public class DefaultRegistry implements Registry{
 		return moduleInfoList;
 	}
 
+	public ModuleStatusInfo getModuleStatusInfo(short moduleId, String ipAddress){
+		HashMap<String,ModuleStatusInfo> instanceMap = modulesMap.get(moduleId);
+		if(instanceMap!=null){
+			return instanceMap.get(ipAddress);
+		}
+		else{
+			return null;
+		}
+	}
+	
 	public Channel getChannelByInstance(String ipAddress){
 		return this.instanceChannelMap.get(ipAddress);
 	}

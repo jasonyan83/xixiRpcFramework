@@ -4,8 +4,8 @@ import xixi.common.constants.Constants;
 import xixi.common.util.ConfigUtils;
 import xixi.router.RouterInitializer;
 import xixi.router.direct.DirectRouterInitializer;
-import xixi.router.direct.RCRouterInitializer;
 import xixi.router.multi.MutilRouterInitializer;
+import xixi.router.rc.RCRouterInitializer;
 
 public class RouterFacade {
 

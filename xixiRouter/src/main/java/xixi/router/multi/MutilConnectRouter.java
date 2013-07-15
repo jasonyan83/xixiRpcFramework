@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xixi.rc.module.repository.ModuleRepository;
 import xixi.router.AbstractRouter;
 import xixi.router.schedule.RouterSchedule;
 import xixi.rpc.bean.RpcMessage;
