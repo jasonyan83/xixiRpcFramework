@@ -5,14 +5,14 @@ import org.slf4j.LoggerFactory;
 
 import xixi.rpc.Invoker;
 
-public class ClientStatInfoFilter extends AbstractStatInfoFilter {
+public class ServerStatInfoFilter extends AbstractStatInfoFilter {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(ClientStatInfoFilter.class);
-
-	private String name = "clientstat";
+			.getLogger(ServerStatInfoFilter.class);
 	
-	public ClientStatInfoFilter(String filterName){
+	private String name = "serverstat";
+	
+	public ServerStatInfoFilter(String filterName){
 		name = filterName;
 	}
 
@@ -22,6 +22,7 @@ public class ClientStatInfoFilter extends AbstractStatInfoFilter {
 	}
 
 	protected String getKey(Invoker service){
-		return "client-" + service.toString();
+		return "server-" + service.toString();
 	}
+	
 }

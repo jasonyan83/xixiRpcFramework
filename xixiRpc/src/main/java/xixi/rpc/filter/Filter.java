@@ -12,6 +12,6 @@ import xixi.rpc.Invoker;
  */
 public interface Filter {
 
-	void doFilter(Invoker service,Invocation inv);
-	String filterName();
+	public void doFilter(Invoker service,Invocation inv);
+     String filterName();
 }
