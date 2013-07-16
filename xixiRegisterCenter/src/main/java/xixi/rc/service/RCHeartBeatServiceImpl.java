@@ -1,6 +1,7 @@
 package xixi.rc.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
@@ -20,7 +21,7 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 	private static final Logger logger = LoggerFactory
 			.getLogger(RCHeartBeatServiceImpl.class);
 	
-	private Registry registry;
+	private static Registry registry;
 	
 	@Override
 	@EventMethod(name = "rcheartbeat")
@@ -33,7 +34,7 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 		m.setHeartBeatInteval(heartbeat.getInterval());	
 	}
 	
-	public Registry getRegistry() {
+	public  Registry getRegistry() {
 		return registry;
 	}
 	public void setRegistry(Registry registry) {
@@ -44,21 +45,44 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
+			for(HashMap<String,ModuleStatusInfo> modules : registry.getModulesMap().values()){
+				for (ModuleStatusInfo moduleInfo : modules.values()) {
+					if (!moduleInfo.isLive()) {
+						logger.debug("Instance {0} is down. Non't need to check the heartbeat", moduleInfo.getModuleId() + "-" + moduleInfo.getIpAddress());
+						continue;
+					}
+					if (isHeartbeatTimeout(moduleInfo)) {
+						logger.debug("Module {0} heartbeat TIMEOUT for the {1} times!", moduleInfo, moduleInfo.getHeartBeatInteval() +1);
+						if(moduleInfo.getHeartBeatRetryTimes()<3){
+							//if the retry time doesn't exceed the system config times, then wait for retry
+							moduleInfo.setLastHBTime(new Date());
+							moduleInfo.setHeartBeatRetryTimes(moduleInfo.getHeartBeatRetryTimes()+1);
+						}
+						else{
+							logger.debug("Set the instane to unactive");
+							moduleInfo.setLive(false);
+						}
+					}
+					else{
+						moduleInfo.setHeartBeatRetryTimes(0);
+					}
+				}
+			}
 			
+		}
+		private boolean isHeartbeatTimeout(ModuleStatusInfo moduleInfo) {
+			long duration = System.currentTimeMillis() - moduleInfo.getLastHBTime().getTime();
+			return (duration >= moduleInfo.getHeartBeatInteval());
 		}
 		
 	}
 	static{
-
 		ScheduledExecutorService exe = Executors
 				.newSingleThreadScheduledExecutor(new ThreadFactory() {
-
 					@Override
 					public Thread newThread(Runnable r) {
 						return new Thread(r, "HeartBeat check Thread");
 					}
-
 				});
 		
 		exe.scheduleWithFixedDelay(new HeartBeatCheckTask(), 5000,5000, TimeUnit.MILLISECONDS);

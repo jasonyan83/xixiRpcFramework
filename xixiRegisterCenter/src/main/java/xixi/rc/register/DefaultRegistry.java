@@ -145,6 +145,9 @@ public class DefaultRegistry implements Registry{
 		}
 	}
 	
+	public Map<Short, HashMap<String,  ModuleStatusInfo>> getModulesMap(){
+		return this.modulesMap;
+	}
 	public Channel getChannelByInstance(String ipAddress){
 		return this.instanceChannelMap.get(ipAddress);
 	}

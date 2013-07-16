@@ -21,6 +21,22 @@ public class ModuleStatusInfo {
 	
 	private int weight;
 	
+	private boolean live;
+	
+	private Date lastHBTime;
+	
+	private long heartBeatInteval;
+	
+	private int heartBeatRetryTimes = 0;
+	
+	public int getHeartBeatRetryTimes() {
+		return heartBeatRetryTimes;
+	}
+
+	public void setHeartBeatRetryTimes(int heartBeatRetryTimes) {
+		this.heartBeatRetryTimes = heartBeatRetryTimes;
+	}
+
 	public int getWeight() {
 		return weight;
 	}
@@ -60,12 +76,6 @@ public class ModuleStatusInfo {
 	public void setAverageTaskExecTime(long averageTaskExecTime) {
 		this.averageTaskExecTime = averageTaskExecTime;
 	}
-
-	private boolean live;
-	
-	private Date lastHBTime;
-	
-	private long heartBeatInteval;
 	
 	public long getHeartBeatInteval() {
 		return heartBeatInteval;

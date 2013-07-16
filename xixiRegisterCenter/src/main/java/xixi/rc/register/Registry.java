@@ -1,6 +1,8 @@
 package xixi.rc.register;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import xix.rc.bean.ModuleInfo;
 import xix.rc.bean.ModuleStatusInfo;
@@ -25,4 +27,6 @@ public interface Registry {
 	public String getInstanceIpByChannel(Channel channel);
 	
 	public ModuleStatusInfo getModuleStatusInfo(short moduleId, String ipAddress);
+	
+	public Map<Short, HashMap<String,  ModuleStatusInfo>> getModulesMap();
 }

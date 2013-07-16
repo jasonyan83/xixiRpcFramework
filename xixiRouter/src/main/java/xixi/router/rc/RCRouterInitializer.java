@@ -20,27 +20,7 @@ public class RCRouterInitializer extends DirectRouterInitializer {
 	private static final Logger logger = LoggerFactory
 			.getLogger(RCRouterInitializer.class);
 
-	private final ScheduledExecutorService hbScheduleService = Executors
-			.newSingleThreadScheduledExecutor(new ThreadFactory() {
-
-				@Override
-				public Thread newThread(Runnable r) {
-					return new Thread(r, "HeartBeat Thread");
-				}
-
-			});
-
 	private RCModuleService rcModuleService;
-
-	private RCHeartBeatService hbService;
-
-	public RCHeartBeatService getHbService() {
-		return hbService;
-	}
-
-	public void setHbService(RCHeartBeatService hbService) {
-		this.hbService = hbService;
-	}
 
 	public RCModuleService getRcModuleService() {
 		return rcModuleService;
@@ -72,22 +52,6 @@ public class RCRouterInitializer extends DirectRouterInitializer {
 		} else {
 			logger.info("Register RC {0} SUCCEED!", super.routerAddresses);
 		}
-
-		hbScheduleService.scheduleWithFixedDelay(new HeartBeatTask(), 5000,
-				10000, TimeUnit.MILLISECONDS);
 	}
 
-	private void sendHeartBeat() {
-		HeartBeat heartBeat = new HeartBeat(Constants.SOURCE_MODULEID,
-				Constants.LOCAL_IP + ":" + Constants.LOCAL_PORT, 10000);
-		hbService.heartBeat(heartBeat);
-	}
-
-	private class HeartBeatTask implements Runnable {
-		@Override
-		public void run() {
-			sendHeartBeat();
-		}
-
-	}
 }
