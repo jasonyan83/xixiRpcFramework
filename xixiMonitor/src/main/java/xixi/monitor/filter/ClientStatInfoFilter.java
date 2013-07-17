@@ -21,7 +21,8 @@ public class ClientStatInfoFilter extends AbstractStatInfoFilter {
 		return name;
 	}
 
-	protected String getKey(Invoker service){
-		return "client-" + service.toString();
+	@Override
+	protected String prefix() {
+		return "client";
 	}
 }

@@ -68,11 +68,6 @@ public class MutilConnectRouter extends AbstractRouter {
 	}
 
 	@Override
-	protected TcpClient getTcpClient() {
-		return null;
-	}
-
-	@Override
 	public void removeTcpClient(String ipAddress) {
 		for (TcpClient client : clientList) {
 			if (ipAddress.equals(client.getDestIpAddress())) {

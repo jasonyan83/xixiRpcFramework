@@ -7,4 +7,6 @@ import xixi.transport.client.TcpClient;
 public interface RouterSchedule {
 
 	public TcpClient schedule(Short moduleId, List<TcpClient> clientList);
+	
+	public void setModuleScheduleType(Short moduleId, String type);
 }

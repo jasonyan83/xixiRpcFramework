@@ -16,6 +16,8 @@ public class ModuleStatusInfo {
 	private long lastMinuteTaskCount;
 
 	private long averageTaskExecTime;
+	
+	private long lastMinuteTaskExecTime;
 
 	private Date registerTime;
 	
@@ -124,5 +126,12 @@ public class ModuleStatusInfo {
 	}
 
 
+	public long getLastMinuteTaskExecTime() {
+		return lastMinuteTaskExecTime;
+	}
+
+	public void setLastMinuteTaskExecTime(long lastMinuteTaskExecTime) {
+		this.lastMinuteTaskExecTime = lastMinuteTaskExecTime;
+	}
 
 }

@@ -20,6 +20,8 @@ public abstract class AbstractStatInfoFilter implements Filter{
 	@Override
 	public abstract String filterName();
 
+	protected abstract String prefix();
+	
 	@Override
 	public void doFilter(Invoker service,Invocation inv) {
 		Long currentTime = System.currentTimeMillis();
@@ -34,16 +36,14 @@ public abstract class AbstractStatInfoFilter implements Filter{
 					logger.debug("transaction time for this {} is {}", this.toString(),
 							transTime);
 					
-					dashBoard.addSucceedTransaction(getKey(service));
-					dashBoard.addTranactionTime(getKey(service), transTime);
+					dashBoard.getDashBoard(prefix()).addSucceedTransaction(service.toString());
+					dashBoard.getDashBoard(prefix()).addTranactionTime(service.toString(), transTime);
 				}
 			} catch (TimeoutException e) {
-				dashBoard.addFaildeTransaction(getKey(service));
+				dashBoard.getDashBoard(prefix()).addFaildeTransaction(service.toString());
 			}
 		}
 	}
-
-	protected abstract String getKey(Invoker service);
 	
 	public DashBoard getDashBoard() {
 		return dashBoard;

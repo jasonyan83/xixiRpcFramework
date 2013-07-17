@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentMap;
 import xixi.common.util.AtomicPositiveInteger;
 import xixi.transport.client.TcpClient;
 
-public class RoundRobinSchedule implements RouterSchedule {
+public class RoundRobinSchedule extends AbstractRouterSchedule implements RouterSchedule {
 
 	private final ConcurrentMap<Short, AtomicPositiveInteger> sequences = new ConcurrentHashMap<Short, AtomicPositiveInteger>();
 	

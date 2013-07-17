@@ -20,9 +20,9 @@ public class ServerStatInfoFilter extends AbstractStatInfoFilter {
 	public String filterName(){
 		return name;
 	}
-
-	protected String getKey(Invoker service){
-		return "server-" + service.toString();
-	}
 	
+	@Override
+	protected String prefix() {
+		return "client";
+	}
 }

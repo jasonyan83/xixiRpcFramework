@@ -30,11 +30,6 @@ public class DirectlyConnectRouter extends AbstractRouter {
 	}
 
 	@Override
-	protected TcpClient getTcpClient() {
-		return tcpClient;
-	}
-
-	@Override
 	public void addTcpClient(TcpClient client) {
 		this.tcpClient = client;
 	}

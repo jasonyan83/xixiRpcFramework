@@ -28,7 +28,7 @@ public class BizLoggerFilter implements Filter {
 
 	@Override
 	public void doFilter(Invoker service, Invocation inv) {
-		bizLogger.log(new Date().toLocaleString(), service.toString());
+		bizLogger.log(new Date().toLocaleString(), service.toString(),inv.getArgs());
 		service.invoke(inv);
 	}
 
