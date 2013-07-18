@@ -3,6 +3,7 @@ package xixi.rc.filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import xix.rc.bean.ModuleInfo;
 import xixi.rc.register.Registry;
 import xixi.rpc.Callback;
 import xixi.rpc.Invocation;
@@ -43,11 +44,13 @@ public class RCRegisterFilter implements Filter {
 					if (result) {
 						Channel channel = (Channel) inv.getProperty("channel");
 						Object[] args = inv.getArgs();
-						if (args.length != 3) {
+						if (args.length != 1) {
 							logger.error("This is not a valid module register request");
 						}
-						short moduleId = (short) args[0];
-						String ipAddress = (String) args[1];
+						ModuleInfo moduleInfo = (ModuleInfo)args[0];
+						
+						short moduleId = moduleInfo.getModuleId();
+						String ipAddress = moduleInfo.getIpAddress();
 						if (moduleId != 0 && ipAddress != null) {
 							logger.debug(
 									"Building relatetionship for module {0}, ipAddress {1} and channel {2}",

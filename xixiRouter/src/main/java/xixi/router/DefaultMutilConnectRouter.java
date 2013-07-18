@@ -1,4 +1,4 @@
-package xixi.router.multi;
+package xixi.router;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xixi.router.AbstractRouter;
-import xixi.router.schedule.RouterSchedule;
+import xixi.router.multi.ModuleRepository;
+import xixi.router.schedule.RouterSchedules;
 import xixi.rpc.bean.RpcMessage;
 import xixi.transport.client.TcpClient;
 
-public class MutilConnectRouter extends AbstractRouter {
+public class DefaultMutilConnectRouter extends AbstractRouter {
 	
 	private static final Logger logger = LoggerFactory
-			.getLogger(MutilConnectRouter.class);
+			.getLogger(DefaultMutilConnectRouter.class);
 
 	private static ScheduledExecutorService exe = Executors
 			.newSingleThreadScheduledExecutor(new ThreadFactory() {
@@ -30,15 +30,15 @@ public class MutilConnectRouter extends AbstractRouter {
 
 	private ModuleRepository moduleRepository;
 
-	public static MutilConnectRouter getOrAddRouter(short moduleId) {
+	public static DefaultMutilConnectRouter getOrAddRouter(short moduleId) {
 		if (moduleId < 0) {
 			return null;
 		}
-		MutilConnectRouter router = (MutilConnectRouter) ROUTERMAP
+		DefaultMutilConnectRouter router = (DefaultMutilConnectRouter) ROUTERMAP
 				.get(moduleId);
 		if (router == null) {
-			MutilConnectRouter r = new MutilConnectRouter(moduleId);
-			router = (MutilConnectRouter) ROUTERMAP.putIfAbsent(moduleId, r);
+			DefaultMutilConnectRouter r = new DefaultMutilConnectRouter(moduleId);
+			router = (DefaultMutilConnectRouter) ROUTERMAP.putIfAbsent(moduleId, r);
 			if (router == null) {
 				router = r;
 			}
@@ -48,9 +48,7 @@ public class MutilConnectRouter extends AbstractRouter {
 
 	private final List<TcpClient> clientList = new ArrayList<TcpClient>();
 
-	private RouterSchedule schedule;
-
-	public MutilConnectRouter(short moduleId) {
+	public DefaultMutilConnectRouter(short moduleId) {
 		super(moduleId);
 	}
 
@@ -63,7 +61,7 @@ public class MutilConnectRouter extends AbstractRouter {
 
 	@Override
 	public void router(RpcMessage message) {
-		TcpClient client = schedule.schedule(this.moduleId(), clientList);
+		TcpClient client = RouterSchedules.schedule(this.moduleId(), clientList);
 		client.send(message);
 	}
 

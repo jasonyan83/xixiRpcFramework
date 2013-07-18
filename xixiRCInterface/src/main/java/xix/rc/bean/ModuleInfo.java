@@ -10,6 +10,26 @@ public class ModuleInfo {
 
 	private int weight;
 	
+	private String routerScheduleType;
+	
+	private String description;
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getRouterScheduleType() {
+		return routerScheduleType;
+	}
+
+	public void setRouterScheduleType(String routerScheduleType) {
+		this.routerScheduleType = routerScheduleType;
+	}
+
 	public int getWeight() {
 		return weight;
 	}

@@ -31,16 +31,15 @@ public class RcModuleServiceImpl implements RCModuleService {
 
 	@Override
 	@EventMethod(name = "registerModule", filter = "rcRegisterFilter")
-	public int registerModule(short moduleId, String ipAddress, int weight,
-			String description) {
+	public int registerModule(ModuleInfo moduleInfo) {
 		boolean ret = false;
 		try {
-			ret = registry.register(moduleId, ipAddress, weight, description);
+			ret = registry.register(moduleInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if (ret) {
-			registerListener.onRegistered(moduleId, ipAddress);
+			registerListener.onRegistered(moduleInfo.getModuleId(), moduleInfo.getIp());
 			return 0;
 		} else {
 			return -1;

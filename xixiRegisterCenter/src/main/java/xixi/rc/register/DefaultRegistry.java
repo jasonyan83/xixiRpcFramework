@@ -26,42 +26,43 @@ public class DefaultRegistry implements Registry{
     private final Map<Short, List<Short>> moduleDependenceMap = new HashMap<Short, List<Short>>();
     
 	@Override
-	public boolean register(short moduleId, String ipAddress,int weight,String description) throws Exception {
+	public boolean register(ModuleInfo moduleInfo) throws Exception {
 		boolean succeed = false;
-		if (modulesMap.containsKey(moduleId)) {
-			HashMap<String, ModuleStatusInfo> modulesInstanceMap = modulesMap.get(moduleId);
-			ModuleStatusInfo module = modulesInstanceMap.get(ipAddress);
+		if (modulesMap.containsKey(moduleInfo.getModuleId())) {
+			HashMap<String, ModuleStatusInfo> modulesInstanceMap = modulesMap.get(moduleInfo.getModuleId());
+			ModuleStatusInfo module = modulesInstanceMap.get(moduleInfo.getIpAddress());
 			if (module!=null) {
 				if(!module.isLive()){
 					module.setLive(true);
-					logger.warn("模块{}对应的ip{},恢复服务", moduleId,ipAddress);
+					logger.warn("模块{}对应的ip{},恢复服务", moduleInfo.getModuleId(),moduleInfo.getIpAddress());
 					succeed = true;
 				}
 				else{
-					logger.warn("模块{}已经存在相应的IP地址{}，重复注册？", moduleId,ipAddress);
+					logger.warn("模块{}已经存在相应的IP地址{}，重复注册？",  moduleInfo.getModuleId(),moduleInfo.getIpAddress());
 					throw new Exception("duplicate module Address");
 				}
 
 			} else {
-				ModuleStatusInfo moduleInfo = new ModuleStatusInfo();
-				moduleInfo.setModuleId(moduleId);
-				moduleInfo.setIpAddress(ipAddress);
-				moduleInfo.setWeight(weight);
-				moduleInfo.setRegisterTime(new Date());
-				moduleInfo.setLastHBTime(new Date());
-				moduleInfo.setLive(true);
-				modulesInstanceMap.put(ipAddress, moduleInfo);
+				ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo();
+				moduleStatusInfo.setModuleId(moduleInfo.getModuleId());
+				moduleStatusInfo.setIpAddress(moduleInfo.getIpAddress());
+				moduleStatusInfo.setWeight(moduleInfo.getWeight());
+				moduleStatusInfo.setRegisterTime(new Date());
+				moduleStatusInfo.setLastHBTime(new Date());
+				moduleStatusInfo.setLive(true);
+				modulesInstanceMap.put(moduleInfo.getIpAddress(), moduleStatusInfo);
 				succeed = true;
 			}
 		} else {
 			HashMap<String, ModuleStatusInfo> modulesInstanceMap = new HashMap<String, ModuleStatusInfo>();
-			ModuleStatusInfo moduleInfo = new ModuleStatusInfo();
-			moduleInfo.setModuleId(moduleId);
-			moduleInfo.setIpAddress(ipAddress);
-			moduleInfo.setRegisterTime(new Date());
-			moduleInfo.setLastHBTime(new Date());
-			modulesInstanceMap.put(ipAddress, moduleInfo);
-			modulesMap.put(moduleId, modulesInstanceMap);
+			ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo();
+			moduleStatusInfo.setModuleId(moduleInfo.getModuleId());
+			moduleStatusInfo.setIpAddress(moduleInfo.getIpAddress());
+			moduleStatusInfo.setWeight(moduleInfo.getWeight());
+			moduleStatusInfo.setRegisterTime(new Date());
+			moduleStatusInfo.setLastHBTime(new Date());
+			moduleStatusInfo.setLive(true);
+			modulesMap.put(moduleInfo.getModuleId(), modulesInstanceMap);
 			succeed = true;
 		}
 		

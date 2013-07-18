@@ -5,7 +5,7 @@ import java.util.Random;
 
 import xixi.transport.client.TcpClient;
 
-public class WeightSelectSchedule extends AbstractRouterSchedule implements RouterSchedule{
+public class WeightSelectSchedule implements RouterSchedule{
 
     private final Random random = new Random();
     

@@ -6,13 +6,10 @@ import java.util.Map;
 
 import xixi.transport.client.TcpClient;
 
-public interface RouterSchedule {
+public class RouterSchedules{
 
-	public TcpClient schedule(Short moduleId, List<TcpClient> clientList);
-	
-	/*public final Map<Short, RouterSchedule> moduleScheduleMap = new HashMap<Short, RouterSchedule>();
-	//public void setModuleScheduleType(Short moduleId, String type);
-	
+	protected static final Map<Short, RouterSchedule> moduleScheduleMap = new HashMap<Short, RouterSchedule>();
+
 	public static void setModuleScheduleType(Short moduleId, String type) {
 		switch (type) {
 		case "roundrobin":
@@ -22,5 +19,11 @@ public interface RouterSchedule {
 		default:
 			moduleScheduleMap.put(moduleId, new RoundRobinSchedule());
 		}
-	}*/
+	}
+
+	public static TcpClient schedule(Short moduleId, List<TcpClient> clientList) {
+		RouterSchedule schedule = moduleScheduleMap.get(moduleId);
+		return schedule.schedule(moduleId, clientList);
+	}
+	
 }

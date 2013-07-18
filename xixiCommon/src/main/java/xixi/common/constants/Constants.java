@@ -47,10 +47,12 @@ public class Constants {
 	   public static final String DESCRIPTION = "description";
 	   public static final String WEIGHT = "server.weight";
 	   
-	   //router.addresses=100-127.0.0.1:8080,100-127.0.0.1:8090
+	   //router.addresses=100-127.0.0.1:8080-roundrobin,100-127.0.0.1:8090-weight
 	   public static final String DIRECT_ROUTER_ADDRESSES_KEY = "direct.router.addresses";
 	   public static final String MUTIL_RC_ROUTER_ADDRESSES_KEY = "mutil.router.addresses";
 	   public static final String RC_ADDRESSES_KEY = "rc.addresses";
+	   public static final String ROUTER_SCHEDULE_TYPE_KEY="router.schedule.type";
+	   public static final String DEFAULT_ROUTER_SCHEDULE = "roundrobin";
 	   
 	   public static final int DEFAULT_FUTURE_TIMEOUT = 3*1000;
 	   

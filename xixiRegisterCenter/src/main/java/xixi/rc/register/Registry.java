@@ -10,7 +10,7 @@ import xixi.transport.channel.Channel;
 
 public interface Registry {
 
-	public boolean register(short moduleId, String ipAddress,int weight,String description) throws Exception ;
+	public boolean register(ModuleInfo moduleInfo) throws Exception ;
 	
 	public boolean unRegister(short moduleId, String ipAddress);
 	
