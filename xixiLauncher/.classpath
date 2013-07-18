@@ -17,5 +17,7 @@
 	<classpathentry kind="lib" path="lib/spring-context-support-3.0.6.RELEASE-jar.jar"/>
 	<classpathentry kind="lib" path="lib/spring-core-3.0.6.RELEASE-jar.jar"/>
 	<classpathentry kind="lib" path="lib/spring-expression-3.0.6.RELEASE-jar.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiRCInterface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiRCService"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

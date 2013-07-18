@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+   <bean id="rcRegisterDipatcher"
+        class="xixi.rpc.dispatcher.RCRegisterDispatcher">
+           <property name="eventBus" 		ref="${eventBus}" /> 
+    </bean>
+    
+     <bean id="rcRegisterFilter" class="xixi.rc.filter.RCRegisterFilter">
+		<property name="registry" ref="registry" />
+	</bean>
+
+     <bean id="rcRegisterFilter" class="xixi.rc.filter.RCRegisterFilter">
+		<property name="registry" ref="registry" />
+	</bean>
+	    
+	<bean id="rcModuleService" class="xixi.rc.service.RcModuleServiceImpl">
+		<property name="registry" ref="registry" />
+		<property name="registerListener" ref="registerListener" />
+	</bean>
+	     
+	 <bean id="rcHeartBeatServie" class="xixi.rc.service.RCHeartBeatServiceImpl" init-method="init">
+		<property name="registry" ref="registry" />
+	</bean>
+	
+	 <bean id="xixiRCClientInvoker"
+        class="xixi.rpc.invoker.client.XixiRCClientInvoker">
+        <property name="registry" ref="registry" />
+    </bean>
+    
+	<bean id="registerListener" class="xixi.rc.register.DefaultRegistryListener">
+	</bean>
+	
+	 <bean id="registry" class="xixi.rc.register.DefaultRegistry">
+	</bean>
+	    
+</beans>

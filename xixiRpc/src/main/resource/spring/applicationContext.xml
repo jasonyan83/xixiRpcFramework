@@ -8,8 +8,4 @@
       <property name="invoker" 	ref="${rpc.client.invoker}" />
     </bean>
     
-    <bean id="bizLogger"
-        class="xixi.rpc.filter.BizLoggerFilter" lazy-init="true">
-    </bean>
-    
 </beans>

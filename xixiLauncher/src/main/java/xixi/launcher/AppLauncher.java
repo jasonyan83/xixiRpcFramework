@@ -3,7 +3,10 @@ package xixi.launcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import xixi.common.constants.Constants;
 import xixi.common.spring.BeanFactoryUtil;
+import xixi.common.util.ConfigUtils;
+import xixi.rc.service.RCServiceInitializer;
 import xixi.router.facade.RouterFacade;
 import xixi.transport.facade.TransportFacade;
 
@@ -23,6 +26,10 @@ public class AppLauncher {
 		
 		TransportFacade.initServer();
 
+		String routerName = ConfigUtils.getProperty(Constants.ROUTER_NAME);
+		if(routerName!=null&&routerName.endsWith(Constants.RC_ROUTER)){
+			RCServiceInitializer.init();
+		}
 		RouterFacade.initRouter();
 
 	}

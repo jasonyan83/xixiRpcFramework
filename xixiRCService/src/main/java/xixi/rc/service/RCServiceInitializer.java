@@ -11,7 +11,7 @@ public class RCServiceInitializer {
 	private static final Logger logger = LoggerFactory
 			.getLogger(RCServiceInitializer.class);
 	
-	public void init(){
+	public static void init(){
 		logger.info("Initialzing RC related service and job");
 		RCServiceScheduledJob job = (RCServiceScheduledJob)BeanFactoryUtil.getBean("rcServiceScheduleJob");
 		RCNotifyServiceImpl rcNotifyService =(RCNotifyServiceImpl)BeanFactoryUtil.getBean("rcNotifyService");

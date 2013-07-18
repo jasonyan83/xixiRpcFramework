@@ -21,7 +21,7 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 	private static final Logger logger = LoggerFactory
 			.getLogger(RCHeartBeatServiceImpl.class);
 	
-	private static Registry registry;
+	private Registry registry;
 	
 	@Override
 	@EventMethod(name = "rcheartbeat")
@@ -41,7 +41,19 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 		this.registry = registry;
 	}
 	
-	private static class HeartBeatCheckTask implements Runnable{
+	public void init(){
+		ScheduledExecutorService exe = Executors
+				.newSingleThreadScheduledExecutor(new ThreadFactory() {
+					@Override
+					public Thread newThread(Runnable r) {
+						return new Thread(r, "HeartBeat check Thread");
+					}
+				});
+		
+		exe.scheduleWithFixedDelay(new HeartBeatCheckTask(), 5000,5000, TimeUnit.MILLISECONDS);
+	}
+	
+	private class HeartBeatCheckTask implements Runnable{
 
 		@Override
 		public void run() {
@@ -75,16 +87,5 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 			return (duration >= moduleInfo.getHeartBeatInteval());
 		}
 		
-	}
-	static{
-		ScheduledExecutorService exe = Executors
-				.newSingleThreadScheduledExecutor(new ThreadFactory() {
-					@Override
-					public Thread newThread(Runnable r) {
-						return new Thread(r, "HeartBeat check Thread");
-					}
-				});
-		
-		exe.scheduleWithFixedDelay(new HeartBeatCheckTask(), 5000,5000, TimeUnit.MILLISECONDS);
 	}
 }
