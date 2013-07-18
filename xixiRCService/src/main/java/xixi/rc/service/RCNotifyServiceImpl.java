@@ -1,4 +1,4 @@
-package xixi.rc.module.service;
+package xixi.rc.service;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package xixi.rc.jobs;
+package xixi.rc.service.jobs;
 
 import java.util.Date;
 import java.util.concurrent.Executors;

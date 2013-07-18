@@ -4,7 +4,7 @@ import xixi.common.constants.Constants;
 import xixi.common.util.ConfigUtils;
 import xixi.router.RouterInitializer;
 import xixi.router.direct.DirectRouterInitializer;
-import xixi.router.multi.MutilRouterInitializer;
+import xixi.router.multi.MultiRouterInitializer;
 import xixi.router.rc.RCRouterInitializer;
 
 public class RouterFacade {
@@ -20,7 +20,7 @@ public class RouterFacade {
 			case Constants.RC_ROUTER:
 				RouterInitializer rcRouterInitializer = new RCRouterInitializer();
 				rcRouterInitializer.init();
-				routerInitializer = new MutilRouterInitializer();
+				routerInitializer = new MultiRouterInitializer();
 			default:
 				routerInitializer = new DirectRouterInitializer();
 			}

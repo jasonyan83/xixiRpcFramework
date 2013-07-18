@@ -12,13 +12,14 @@ import xixi.rc.iservice.RCModuleService;
 import xixi.router.DefaultMutilConnectRouter;
 import xixi.router.Router;
 import xixi.router.RouterInitializer;
+import xixi.router.schedule.RouterSchedules;
 import xixi.transport.client.TcpClient;
 import xixi.transport.facade.TransportFacade;
 
-public class MutilRouterInitializer implements RouterInitializer {
+public class MultiRouterInitializer implements RouterInitializer {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(MutilRouterInitializer.class);
+			.getLogger(MultiRouterInitializer.class);
 
 	private RCModuleService moduleService;
 
@@ -49,6 +50,7 @@ public class MutilRouterInitializer implements RouterInitializer {
 				TcpClient client = TransportFacade.initClient(m.getIp(),
 						m.getPort());
 				client.setWeight(m.getWeight());
+				RouterSchedules.setModuleScheduleType(Short.valueOf(m.getModuleId()), m.getRouterScheduleType());
 				r.addTcpClient(client);
 			}
 		}
