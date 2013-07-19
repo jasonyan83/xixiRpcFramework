@@ -22,5 +22,10 @@
 	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-context-3.0.6.RELEASE-jar.jar"/>
 	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-context-support-3.0.6.RELEASE-jar.jar"/>
 	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-core-3.0.6.RELEASE-jar.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiNettyTransport"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiCodecApi"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiCodecKryo"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiRpcDefault"/>
+	<classpathentry kind="lib" path="/xixiNettyTransport/kryo-2.20-all.jar" sourcepath="F:/googleDownload/kryo-2.20/kryo-2.20/java"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

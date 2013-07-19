@@ -29,6 +29,15 @@ public class RcModuleServiceImpl implements RCModuleService {
 		this.registry = registry;
 	}
 
+
+	public RegisterListener getRegisterListener() {
+		return registerListener;
+	}
+
+	public void setRegisterListener(RegisterListener registerListener) {
+		this.registerListener = registerListener;
+	}
+	
 	@Override
 	@EventMethod(name = "registerModule", filter = "rcRegisterFilter")
 	public int registerModule(ModuleInfo moduleInfo) {
@@ -48,13 +57,6 @@ public class RcModuleServiceImpl implements RCModuleService {
 		}
 	}
 
-	public RegisterListener getRegisterListener() {
-		return registerListener;
-	}
-
-	public void setRegisterListener(RegisterListener registerListener) {
-		this.registerListener = registerListener;
-	}
 
 	@Override
 	@EventMethod(name = "unRegisterModule", filter = "rcRegisterFilter")

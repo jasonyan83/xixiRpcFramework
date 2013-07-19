@@ -111,17 +111,16 @@ public final class InvokerRegister {
 		
 		Class<?>[] clzs = method.getParameterTypes();
 
-		
-		ArgumentTypeRepository.addArgumentType(method.getReturnType().getCanonicalName(), method.getReturnType());
-		
-		if(clzs.length==1){
-			ArgumentTypeRepository.addArgumentType(instance.getClass().getSimpleName() + "-"
-					+ method.getName() ,clzs[0]);
-		}
-		else{
-			logger.error("Wrong RPC call method parameters, Please double Check!");
+		if(method.getReturnType() != void.class){
+			ArgumentTypeRepository.addArgumentType(method.getReturnType().getCanonicalName(), method.getReturnType());
 		}
 		
+		for(Class<?> clz : clzs){
+			if(clz!=void.class){
+				ArgumentTypeRepository.addArgumentType(instance.getClass().getSimpleName() + "-"
+						+ method.getName() ,clz);
+			}
+		}
 	}
 
 	private boolean isEventTemplate(Class<?> cls) {
@@ -159,7 +158,7 @@ public final class InvokerRegister {
 	private Invoker buildFilterChain(Invoker service, Method method){
 		Invoker serviceWrapper = service;
 		EventMethod annotation = method.getAnnotation(EventMethod.class);
-		if(annotation!=null&&annotation.filter()!=""){
+		if(annotation!=null&&!annotation.filter().equals("")){
 			String[] filterNames  = annotation.filter().split(",");
 			for(String filterName : filterNames){
 				final Filter filter = (Filter)BeanFactoryUtil.getBean(filterName);

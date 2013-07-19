@@ -10,6 +10,22 @@ import xixi.rc.iservice.RCNotifyService;
 
 public class DefaultRegisterListener implements RegisterListener {
 
+	public Registry getRegistry() {
+		return registry;
+	}
+
+	public void setRegistry(Registry registry) {
+		this.registry = registry;
+	}
+
+	public RCNotifyService getNotifyService() {
+		return notifyService;
+	}
+
+	public void setNotifyService(RCNotifyService notifyService) {
+		this.notifyService = notifyService;
+	}
+
 	private static final Logger logger = LoggerFactory
 			.getLogger(DefaultRegisterListener.class);
 	

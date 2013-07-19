@@ -2,15 +2,24 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans>
 
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:app.properties</value>
+			</list>
+		</property>
+	</bean> 
+	
+	 <bean id="beanFactoryUtil"
+        class="xixi.common.spring.BeanFactoryUtil">
+    </bean>
+    
    <bean id="rcRegisterDipatcher"
-        class="xixi.rpc.dispatcher.RCRegisterDispatcher">
+        class="xixi.rc.dispatcher.RCRegisterDispatcher">
            <property name="eventBus" 		ref="${eventBus}" /> 
     </bean>
     
-     <bean id="rcRegisterFilter" class="xixi.rc.filter.RCRegisterFilter">
-		<property name="registry" ref="registry" />
-	</bean>
-
      <bean id="rcRegisterFilter" class="xixi.rc.filter.RCRegisterFilter">
 		<property name="registry" ref="registry" />
 	</bean>
@@ -20,18 +29,25 @@
 		<property name="registerListener" ref="registerListener" />
 	</bean>
 	     
-	 <bean id="rcHeartBeatServie" class="xixi.rc.service.RCHeartBeatServiceImpl" init-method="init">
+	 <bean id="rcHeartBeatServie" class="xixi.rc.service.RCHeartBeatServiceImpl">
 		<property name="registry" ref="registry" />
 	</bean>
 	
 	 <bean id="xixiRCClientInvoker"
-        class="xixi.rpc.invoker.client.XixiRCClientInvoker">
+        class="xixi.rc.invoker.client.XixiRCClientInvoker">
         <property name="registry" ref="registry" />
     </bean>
     
-	<bean id="registerListener" class="xixi.rc.register.DefaultRegistryListener">
+	<bean id="registerListener" class="xixi.rc.register.DefaultRegisterListener">
+	  <property name="registry" ref="registry" />
+	  <property name="notifyService" ref="notifyService" />
+	  	 
 	</bean>
 	
+	 <bean id="notifyService" factory-bean="proxyFactory" factory-method="createProxy">
+       <constructor-arg value="xixi.rc.iservice.RCNotifyService" />
+    </bean>
+    
 	 <bean id="registry" class="xixi.rc.register.DefaultRegistry">
 	</bean>
 	    

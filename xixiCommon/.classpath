@@ -24,7 +24,7 @@
 	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/slf4j-log4j12-1.6.1.jar"/>
 	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-aop-3.0.6.RELEASE-jar.jar"/>
 	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-asm-3.0.6.RELEASE-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-beans-3.0.6.RELEASE-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-beans-3.0.6.RELEASE-jar.jar" sourcepath="C:/Documents and Settings/ThinkPad/.m2/repository/org/springframework/spring-beans/3.0.6.RELEASE/spring-beans-3.0.6.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-context-3.0.6.RELEASE-jar.jar"/>
 	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-context-support-3.0.6.RELEASE-jar.jar"/>
 	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-core-3.0.6.RELEASE-jar.jar"/>
