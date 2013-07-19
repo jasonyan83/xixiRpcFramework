@@ -48,7 +48,9 @@ public class DefaultMutilConnectRouter extends AbstractRouter {
 
 	private final List<TcpClient> clientList = new ArrayList<TcpClient>();
 
+
 	public DefaultMutilConnectRouter(short moduleId) {
+
 		super(moduleId);
 	}
 
@@ -98,6 +100,13 @@ public class DefaultMutilConnectRouter extends AbstractRouter {
 			
 			client.stop();
 		}
+	}
+
+
+	@Override
+	protected TcpClient getTcpClient() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

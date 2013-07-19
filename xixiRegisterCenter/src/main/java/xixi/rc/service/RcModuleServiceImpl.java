@@ -35,11 +35,13 @@ public class RcModuleServiceImpl implements RCModuleService {
 		boolean ret = false;
 		try {
 			ret = registry.register(moduleInfo);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if (ret) {
-			registerListener.onRegistered(moduleInfo.getModuleId(), moduleInfo.getIp());
+			registerListener.onRegistered(moduleInfo.getModuleId(),
+					moduleInfo.getIp());
 			return 0;
 		} else {
 			return -1;

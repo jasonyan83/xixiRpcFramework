@@ -3,6 +3,7 @@ package xixi.router.schedule;
 import java.util.List;
 import java.util.Random;
 
+
 import xixi.transport.client.TcpClient;
 
 public class WeightSelectSchedule implements RouterSchedule{
@@ -41,5 +42,4 @@ public class WeightSelectSchedule implements RouterSchedule{
 		        return clientList.get(random.nextInt(length));
 		}
 	}
-
 }

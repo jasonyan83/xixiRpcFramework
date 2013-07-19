@@ -13,6 +13,8 @@ public abstract class AbstractRouter implements Router{
 	public short moduleId(){
 		return moduleId;
 	}
+	
+	protected abstract TcpClient getTcpClient();
 
 	@Override
 	public void destory() {

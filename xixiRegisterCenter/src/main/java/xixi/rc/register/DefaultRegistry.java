@@ -27,6 +27,7 @@ public class DefaultRegistry implements Registry{
     
 	@Override
 	public boolean register(ModuleInfo moduleInfo) throws Exception {
+
 		boolean succeed = false;
 		if (modulesMap.containsKey(moduleInfo.getModuleId())) {
 			HashMap<String, ModuleStatusInfo> modulesInstanceMap = modulesMap.get(moduleInfo.getModuleId());
@@ -51,6 +52,7 @@ public class DefaultRegistry implements Registry{
 				moduleStatusInfo.setLastHBTime(new Date());
 				moduleStatusInfo.setLive(true);
 				modulesInstanceMap.put(moduleInfo.getIpAddress(), moduleStatusInfo);
+
 				succeed = true;
 			}
 		} else {
