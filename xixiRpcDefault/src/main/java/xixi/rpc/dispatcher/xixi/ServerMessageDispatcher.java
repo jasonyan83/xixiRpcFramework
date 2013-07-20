@@ -8,14 +8,11 @@ import org.slf4j.LoggerFactory;
 
 import xixi.register.eventBus.EventBus;
 import xixi.rpc.Callback;
-import xixi.rpc.bean.RpcMessage;
 import xixi.rpc.bean.RpcRequest;
 import xixi.rpc.bean.RpcResponse;
 import xixi.rpc.client.invoker.RpcInvocation;
 import xixi.rpc.exception.TimeoutException;
-import xixi.rpc.future.AbstractFuture;
 import xixi.rpc.future.DefaultFuture;
-import xixi.rpc.future.Future;
 import xixi.transport.channel.Channel;
 import xixi.transport.dispatcher.Dispatcher;
 
@@ -47,7 +44,7 @@ public class ServerMessageDispatcher implements Dispatcher{
 				inv.future().addCallback(new Callback(){
 					@Override
 					public void invoke(Object resp) {
-						rpcResp.setData(resp).setType((byte)2).setStatus(0);
+						rpcResp.setData(new Object[]{resp}).setType((byte)2).setStatus(0);
 						Channel channel = (Channel)rpcRequest.getProperty("channel");
 						channel.send(rpcResp);
 					}

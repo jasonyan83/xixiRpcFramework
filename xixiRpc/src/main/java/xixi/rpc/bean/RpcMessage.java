@@ -8,7 +8,7 @@ public class RpcMessage {
 
 	private Map<String, Object> properties = new HashMap<String, Object>();
 	
-	private Object data;
+	private Object[] data;
 
 	private byte basicVer = 1;
 
@@ -146,11 +146,11 @@ public class RpcMessage {
 		return this;
 	}
 
-	public Object getData() {
+	public Object[] getData() {
 		return data;
 	}
 
-	public RpcMessage setData(Object data) {
+	public RpcMessage setData(Object[] data) {
 		this.data = data;
 		return this;
 	}

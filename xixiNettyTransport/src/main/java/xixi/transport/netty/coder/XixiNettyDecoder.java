@@ -87,7 +87,7 @@ public class XixiNettyDecoder extends FrameDecoder {
 					.setMessageLength(msgLength)
 					.setInterfaceName(interfaceName).setMethodName(methodName);
 
-			request.setData(coder.decode(msgBody));
+			request.setData((Object[])coder.decode(msgBody));
 			logger.debug("The requst is " + request);
 			return request;
 		} else if (messageType == 2) {
@@ -99,7 +99,7 @@ public class XixiNettyDecoder extends FrameDecoder {
 					.setSecondTransaction(secondTransactionId)
 					.setMessageLength(msgLength)
 					.setInterfaceName(interfaceName).setMethodName(methodName);
-			response.setData(coder.decode(msgBody));
+			response.setData((Object[])coder.decode(msgBody));
 			logger.debug("The response is " + response);
 			return response;
 		} else if (messageType == 3) {
@@ -111,7 +111,7 @@ public class XixiNettyDecoder extends FrameDecoder {
 					.setSecondTransaction(secondTransactionId)
 					.setMessageLength(msgLength)
 					.setInterfaceName(interfaceName).setMethodName(methodName);
-			notify.setData(coder.decode(msgBody));
+			notify.setData((Object[])coder.decode(msgBody));
 			logger.debug("The notify is " + notify);
 			return notify;
 		}

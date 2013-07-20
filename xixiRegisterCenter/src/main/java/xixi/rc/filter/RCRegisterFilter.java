@@ -32,7 +32,7 @@ public class RCRegisterFilter implements Filter {
 
 	@Override
 	public void doFilter(Invoker service, final Invocation inv) {
-		logger.debug("entering RCRegisterFilter");
+		logger.debug("entering RCRegisterFilter with Invocation {}" , inv);
 
 		Future future = service.invoke(inv);
 
@@ -40,8 +40,8 @@ public class RCRegisterFilter implements Filter {
 			future.addCallback(new Callback() {
 				@Override
 				public void invoke(Object resp) {
-					boolean result = (boolean) resp;
-					if (result) {
+					int result = (int) resp;
+					if (result==0) {
 						Channel channel = (Channel) inv.getProperty("channel");
 						Object[] args = inv.getArgs();
 						if (args.length != 1) {
@@ -53,7 +53,7 @@ public class RCRegisterFilter implements Filter {
 						String ipAddress = moduleInfo.getIpAddress();
 						if (moduleId != 0 && ipAddress != null) {
 							logger.debug(
-									"Building relatetionship for module {0}, ipAddress {1} and channel {2}",
+									"Building relatetionship for module {}, ipAddress {} and channel {}",
 									new Object[]{moduleId, ipAddress, channel});
 							registry.buildInstanceChannelMap(moduleId,
 									ipAddress, channel);

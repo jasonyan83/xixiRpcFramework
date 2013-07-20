@@ -60,11 +60,11 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 			for(HashMap<String,ModuleStatusInfo> modules : registry.getModulesMap().values()){
 				for (ModuleStatusInfo moduleInfo : modules.values()) {
 					if (!moduleInfo.isLive()) {
-						logger.debug("Instance {0} is down. Non't need to check the heartbeat", moduleInfo.getModuleId() + "-" + moduleInfo.getIpAddress());
+						logger.debug("Instance {} is down. Non't need to check the heartbeat", moduleInfo.getModuleId() + "-" + moduleInfo.getIpAddress());
 						continue;
 					}
 					if (isHeartbeatTimeout(moduleInfo)) {
-						logger.debug("Module {0} heartbeat TIMEOUT for the {1} times!", moduleInfo, moduleInfo.getHeartBeatInteval() +1);
+						logger.debug("Module {} heartbeat TIMEOUT for the {} times!", moduleInfo, moduleInfo.getHeartBeatInteval() +1);
 						if(moduleInfo.getHeartBeatRetryTimes()<3){
 							//if the retry time doesn't exceed the system config times, then wait for retry
 							moduleInfo.setLastHBTime(new Date());

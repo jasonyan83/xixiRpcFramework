@@ -2,12 +2,19 @@ package xixi.rpc.future;
 
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import xixi.rpc.Callback;
+import xixi.rpc.bean.RpcNotify;
 import xixi.rpc.bean.RpcResponse;
 import xixi.rpc.exception.RpcException;
 import xixi.rpc.exception.TimeoutException;
 
 public abstract class AbstractRpcFuture extends AbstractFuture implements RpcFuture{
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(AbstractRpcFuture.class);
 
 	private final UUID id;
 	
@@ -33,20 +40,35 @@ public abstract class AbstractRpcFuture extends AbstractFuture implements RpcFut
 
 	@Override
 	public Object getValue(int timeout) throws TimeoutException, RpcException{
+		logger.debug("Trying to get value in {}ms", timeout);
 		super.getValue(timeout);
 		if(retValue!=null){
 			if(retValue instanceof RpcResponse){
 				RpcResponse resp = (RpcResponse)retValue;
-				if(resp.getStatus()==RpcResponse.SUCCEED){
-					return ((RpcResponse)retValue).getData();
+			    if(resp.getData().length==1){
+			    	if(resp.getStatus()==RpcResponse.SUCCEED){
+						return resp.getData()[0];
+					}
+					if(resp.getStatus()==RpcResponse.ERROR){
+						return resp.getData()[0];
+					}
+					if(resp.getStatus()==RpcResponse.TIMEOUT){
+						throw new TimeoutException("RPC Future timeout for Response");
+					}
+				   return resp.getData()[0];
+			    }
+			    else{
+			    	throw new RpcException("Invaliate return value, the length for rpcReponse.date is " + resp.getData().length);
+			    }
+			}
+			else if(retValue instanceof RpcNotify){
+				RpcNotify notify = (RpcNotify)retValue;
+				if(notify.getData()!=null&&notify.getData().length==1){
+					return notify.getData()[0];
 				}
-				if(resp.getStatus()==RpcResponse.ERROR){
-					return ((RpcResponse)retValue).getData();
+				else{
+					throw new RpcException("Invaliate RPC Notify value, the length for rpcNotify.date is " + notify.getData().length);
 				}
-				if(resp.getStatus()==RpcResponse.TIMEOUT){
-					throw new TimeoutException("RPC Future timeout for Response");
-				}
-				return ((RpcResponse)retValue).getData();
 			}
 			else{
 				throw new RpcException("Not valid response, except RpcRespose but is " + retValue.getClass().toString() + " actually");

@@ -16,7 +16,7 @@ public class ModuleRepository {
 	private final Map<Short, List<String>> instanceMap = new HashMap<Short, List<String>>();
 
 	public void addNewInstance(short moduleId, String ipAddress) {
-		logger.debug("Adding new instance {0} to module {1}", ipAddress,moduleId);
+		logger.debug("Adding new instance {} to module {}", ipAddress,moduleId);
 		List<String> ipList = instanceMap.get(moduleId);
 		if (ipList != null) {
 			if (ipList.contains(ipAddress)) {
@@ -34,7 +34,7 @@ public class ModuleRepository {
 	}
 
 	public void removeInstance(short moduleId, String ipAddress){
-		logger.debug("Removing instance {0} from module {1}", ipAddress,moduleId);
+		logger.debug("Removing instance {} from module {}", ipAddress,moduleId);
 		List<String> ipList = instanceMap.get(moduleId);
 		if (ipList != null) {
 			if (ipList.contains(ipAddress)) {

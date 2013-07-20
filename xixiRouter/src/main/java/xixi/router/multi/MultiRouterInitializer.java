@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import xix.rc.bean.ModuleInfo;
 import xixi.common.constants.Constants;
 import xixi.common.respository.DependencyModuleRepository;
+import xixi.common.spring.BeanFactoryUtil;
 import xixi.rc.iservice.RCModuleService;
 import xixi.router.DefaultConnectRouter;
 import xixi.router.Router;
@@ -23,14 +24,13 @@ public class MultiRouterInitializer implements RouterInitializer {
 
 	private RCModuleService moduleService;
 
-	public RCModuleService getModuleService() {
-		return moduleService;
+	public MultiRouterInitializer(){
+		moduleService = (RCModuleService)BeanFactoryUtil.getBean("rcModuleService");
+		if(moduleService==null){
+			logger.error("Get RCModuleService Failed");
+		}
 	}
-
-	public void setModuleService(RCModuleService moduleService) {
-		this.moduleService = moduleService;
-	}
-
+	
 	@Override
 	public void init() {
 		logger.debug("Initializing Mutil Router");
@@ -39,6 +39,10 @@ public class MultiRouterInitializer implements RouterInitializer {
 				.getDepentModuleIdList();
 		logger.debug("Get Dependency moduleId list " + destMoudleIdList);
 
+		if(destMoudleIdList!=null&&destMoudleIdList.size()==0){
+			logger.info("Do not have ANY dependency module");
+			return ;
+		}
 		List<ModuleInfo> modulesInfo = moduleService.getInstanceList(
 				Constants.SOURCE_MODULEID, destMoudleIdList);
 

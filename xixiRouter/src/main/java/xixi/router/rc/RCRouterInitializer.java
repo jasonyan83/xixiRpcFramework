@@ -48,10 +48,10 @@ public class RCRouterInitializer extends DirectRouterInitializer {
 		
 		int result = rcModuleService.registerModule(moduleInfo);
 		if (result != 0) {
-			logger.error("Register RC {0} Failed. PLEASE CHECK!",
+			logger.error("Register RC {} Failed. PLEASE CHECK!",
 					super.routerAddresses);
 		} else {
-			logger.info("Register RC {0} SUCCEED!", routerAddresses);
+			logger.info("Register RC {} SUCCEED!", routerAddresses);
 		}
 	}
 

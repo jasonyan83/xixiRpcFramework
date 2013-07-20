@@ -36,11 +36,11 @@ public class XixiRCClientInvoker extends AbstractClientInvoker {
 			
 		    notify.setData(inv.getArgs());	
 		    
-		    logger.debug("Building notify {0}", notify);
+		    logger.debug("Building notify {}", notify);
 		    
 		    for(ModuleInfo m : instances){
 		    	Channel channel = registry.getChannelByInstance(m.getIpAddress());
-		    	logger.debug("sending notify by instance {0} through channel {1}", m.getIpAddress(), channel);
+		    	logger.debug("sending notify by instance {0} through channel {}", m.getIpAddress(), channel);
 		    	channel.send(notify);
 		    }
 		}

@@ -21,6 +21,7 @@ public class RouterFacade {
 				RouterInitializer rcRouterInitializer = new RCRouterInitializer();
 				rcRouterInitializer.init();
 				routerInitializer = new MultiRouterInitializer();
+				break;
 			default:
 				routerInitializer = new DirectRouterInitializer();
 			}

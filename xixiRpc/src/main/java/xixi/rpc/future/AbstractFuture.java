@@ -1,7 +1,5 @@
 package xixi.rpc.future;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -9,7 +7,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import xixi.common.constants.Constants;
 import xixi.rpc.Callback;
-import xixi.rpc.bean.RpcMessage;
 import xixi.rpc.exception.TimeoutException;
 
 public abstract class AbstractFuture implements Future{

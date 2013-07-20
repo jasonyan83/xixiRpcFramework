@@ -3,15 +3,13 @@ package xixi.rpc.future;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xixi.common.constants.Constants;
 import xixi.rpc.Callback;
+import xixi.rpc.bean.RpcMessage;
 import xixi.rpc.bean.RpcResponse;
 
 public class DefaultFuture  extends AbstractRpcFuture{
@@ -59,7 +57,7 @@ public class DefaultFuture  extends AbstractRpcFuture{
 	}
 	
 	public static void setResult(Object retValue){
-		RpcResponse response = (RpcResponse)retValue;
+		RpcMessage response = (RpcMessage)retValue;
 		DefaultFuture future = FUTURES.get(response.getTransactionId());
 		if(future!=null){
 			future.setValue(response);

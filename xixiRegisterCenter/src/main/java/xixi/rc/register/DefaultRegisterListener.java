@@ -46,7 +46,7 @@ public class DefaultRegisterListener implements RegisterListener {
 			}
 		}
 		else{
-			logger.debug("No module depend on Module {0}-{1}", moduleId, ipAddress);
+			logger.debug("No module depend on Module {}-{}", moduleId, ipAddress);
 		}
 	}
 
@@ -66,7 +66,7 @@ public class DefaultRegisterListener implements RegisterListener {
 			}
 		}
 		else{
-			logger.debug("No module depend on Module {0}-{1}", moduleId, ipAddress);
+			logger.debug("No module depend on Module {}-{}", moduleId, ipAddress);
 		}
 	}
 }

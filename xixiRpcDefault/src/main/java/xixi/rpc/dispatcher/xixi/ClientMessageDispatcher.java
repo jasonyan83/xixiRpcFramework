@@ -13,7 +13,7 @@ public class ClientMessageDispatcher implements Dispatcher {
 			DefaultFuture.setResult(message);
 		}
 		if(message instanceof RpcNotify){
-			
+			DefaultFuture.setResult(message);
 		}
 		else{
 			throw new IllegalArgumentException("message is not RpcResponse");

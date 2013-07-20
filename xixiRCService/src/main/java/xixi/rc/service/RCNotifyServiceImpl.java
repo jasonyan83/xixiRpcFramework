@@ -30,7 +30,7 @@ public class RCNotifyServiceImpl implements RCNotifyService {
 		List<String> newInstanceList = new ArrayList<String>();
 		if(instancesList!=null&&!instancesList.isEmpty()){
 			short destModuleId = instancesList.get(0).getModuleId();
-			logger.debug("Updating Module {0} instances", destModuleId);
+			logger.debug("Updating Module {} instances", destModuleId);
 			for (ModuleInfo m : instancesList) {
 				newInstanceList.add(m.getIpAddress());
 			}
@@ -42,7 +42,7 @@ public class RCNotifyServiceImpl implements RCNotifyService {
 
 			if (addedInstanceList != null && !addedInstanceList.isEmpty()) {
 				for (String ipAddress : addedInstanceList) {
-					logger.debug("Module {0} got new service instance: {1}", destModuleId,ipAddress);
+					logger.debug("Module {} got new service instance: {}", destModuleId,ipAddress);
 					for(ModuleInfo m : instancesList){
 						if(m.getIpAddress().equals(ipAddress)){
 							Router r = DefaultConnectRouter.getOrAddRouter(destModuleId);
@@ -50,7 +50,7 @@ public class RCNotifyServiceImpl implements RCNotifyService {
 									ModuleStringUtil.getIp(ipAddress),
 									ModuleStringUtil.getPort(ipAddress));
 							client.setWeight(m.getWeight());
-							logger.debug("Adding new client{0} to Router {1}", client,r);
+							logger.debug("Adding new client{} to Router {}", client,r);
 							r.addTcpClient(client);
 						}
 					}
@@ -59,7 +59,7 @@ public class RCNotifyServiceImpl implements RCNotifyService {
 
 			if (removedInstanceList != null && !removedInstanceList.isEmpty()) {
 				for (String ipAddress : removedInstanceList) {
-					logger.debug("Module {0} has instance to remove: {1}", destModuleId, ipAddress);
+					logger.debug("Module {} has instance to remove: {}", destModuleId, ipAddress);
 					Router r = DefaultConnectRouter.getOrAddRouter(destModuleId);
 					r.removeTcpClient(ipAddress);
 				}
