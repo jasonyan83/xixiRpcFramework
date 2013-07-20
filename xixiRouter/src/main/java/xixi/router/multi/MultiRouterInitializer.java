@@ -9,7 +9,7 @@ import xix.rc.bean.ModuleInfo;
 import xixi.common.constants.Constants;
 import xixi.common.respository.DependencyModuleRepository;
 import xixi.rc.iservice.RCModuleService;
-import xixi.router.DefaultMutilConnectRouter;
+import xixi.router.DefaultConnectRouter;
 import xixi.router.Router;
 import xixi.router.RouterInitializer;
 import xixi.router.schedule.RouterSchedules;
@@ -46,7 +46,7 @@ public class MultiRouterInitializer implements RouterInitializer {
 
 		if (modulesInfo != null && modulesInfo.size() > 0) {
 			for (ModuleInfo m : modulesInfo) {
-				Router r = DefaultMutilConnectRouter.getOrAddRouter(m.getModuleId());
+				Router r = DefaultConnectRouter.getOrAddRouter(m.getModuleId());
 				TcpClient client = TransportFacade.initClient(m.getIp(),
 						m.getPort());
 				client.setWeight(m.getWeight());

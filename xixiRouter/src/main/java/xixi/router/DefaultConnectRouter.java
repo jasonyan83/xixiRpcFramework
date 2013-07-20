@@ -10,15 +10,16 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import xixi.common.spring.BeanFactoryUtil;
 import xixi.router.multi.ModuleRepository;
 import xixi.router.schedule.RouterSchedules;
 import xixi.rpc.bean.RpcMessage;
 import xixi.transport.client.TcpClient;
 
-public class DefaultMutilConnectRouter extends AbstractRouter {
+public class DefaultConnectRouter extends AbstractRouter {
 	
 	private static final Logger logger = LoggerFactory
-			.getLogger(DefaultMutilConnectRouter.class);
+			.getLogger(DefaultConnectRouter.class);
 
 	private static ScheduledExecutorService exe = Executors
 			.newSingleThreadScheduledExecutor(new ThreadFactory() {
@@ -28,17 +29,19 @@ public class DefaultMutilConnectRouter extends AbstractRouter {
 				}
 			});
 
-	private ModuleRepository moduleRepository;
+	private final ModuleRepository moduleRepository;
 
-	public static DefaultMutilConnectRouter getOrAddRouter(short moduleId) {
+	public static DefaultConnectRouter getOrAddRouter(short moduleId) {
 		if (moduleId < 0) {
 			return null;
 		}
-		DefaultMutilConnectRouter router = (DefaultMutilConnectRouter) ROUTERMAP
+		
+		DefaultConnectRouter router = (DefaultConnectRouter) ROUTERMAP
 				.get(moduleId);
 		if (router == null) {
-			DefaultMutilConnectRouter r = new DefaultMutilConnectRouter(moduleId);
-			router = (DefaultMutilConnectRouter) ROUTERMAP.putIfAbsent(moduleId, r);
+			ModuleRepository moduleRepository = (ModuleRepository)BeanFactoryUtil.getBean("moduleRepository");
+			DefaultConnectRouter r = new DefaultConnectRouter(moduleId,moduleRepository);
+			router = (DefaultConnectRouter) ROUTERMAP.putIfAbsent(moduleId, r);
 			if (router == null) {
 				router = r;
 			}
@@ -48,10 +51,9 @@ public class DefaultMutilConnectRouter extends AbstractRouter {
 
 	private final List<TcpClient> clientList = new ArrayList<TcpClient>();
 
-
-	public DefaultMutilConnectRouter(short moduleId) {
-
+	public DefaultConnectRouter(short moduleId,ModuleRepository moduleRepository) {
 		super(moduleId);
+		this.moduleRepository = moduleRepository;
 	}
 
 	@Override
@@ -77,17 +79,15 @@ public class DefaultMutilConnectRouter extends AbstractRouter {
 		}
 	}
 	
-	public ModuleRepository getModuleRepository() {
-		return moduleRepository;
+	@Override
+	public void destory() {
+		logger.debug("destory the DefaultConnecetRouter. Currently the client number is:" + clientList.size());
+		for (TcpClient client : clientList) {
+			 exe.schedule(new RouterCleanTask(client), 5000, TimeUnit.MILLISECONDS);
+		}
 	}
-
-	public void setModuleRepository(ModuleRepository moduleRepository) {
-		this.moduleRepository = moduleRepository;
-	}
-
 
 	private static class RouterCleanTask implements Runnable {
-
 		private final TcpClient client;
 
 		public RouterCleanTask(TcpClient client) {
@@ -97,16 +97,8 @@ public class DefaultMutilConnectRouter extends AbstractRouter {
 		@Override
 		public void run() {
 			logger.debug("Stopping the client:" + client);
-			
 			client.stop();
 		}
-	}
-
-
-	@Override
-	protected TcpClient getTcpClient() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

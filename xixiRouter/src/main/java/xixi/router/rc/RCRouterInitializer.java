@@ -1,18 +1,12 @@
 package xixi.router.rc;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xix.rc.bean.HeartBeat;
 import xix.rc.bean.ModuleInfo;
 import xixi.common.constants.Constants;
+import xixi.common.spring.BeanFactoryUtil;
 import xixi.common.util.ConfigUtils;
-import xixi.rc.iservice.RCHeartBeatService;
 import xixi.rc.iservice.RCModuleService;
 import xixi.router.direct.DirectRouterInitializer;
 
@@ -23,21 +17,20 @@ public class RCRouterInitializer extends DirectRouterInitializer {
 
 	private RCModuleService rcModuleService;
 
-	public RCModuleService getRcModuleService() {
-		return rcModuleService;
-	}
-
-	public void setRcModuleService(RCModuleService rcModuleService) {
-		this.rcModuleService = rcModuleService;
-	}
-
 	public RCRouterInitializer() {
-		super.routerAddresses = ConfigUtils.getProperty(
+		routerAddresses = ConfigUtils.getProperty(
 				Constants.RC_ADDRESSES_KEY, "");
+		if (routerAddresses != null && !"".equals(routerAddresses)) {
+			routerAddressArray = routerAddresses.split(",");
+		}
+		rcModuleService = (RCModuleService)BeanFactoryUtil.getBean("rcModuleService");
+		if(rcModuleService==null){
+			logger.error("Get RCModuleService Failed");
+		}
 	}
 
 	public void init() {
-		logger.debug("Initializing DirectRouter, routerAddresses="
+		logger.debug("Initializing RCDirectRouter, routerAddresses="
 				+ routerAddresses);
 		super.init();
 
@@ -58,7 +51,7 @@ public class RCRouterInitializer extends DirectRouterInitializer {
 			logger.error("Register RC {0} Failed. PLEASE CHECK!",
 					super.routerAddresses);
 		} else {
-			logger.info("Register RC {0} SUCCEED!", super.routerAddresses);
+			logger.info("Register RC {0} SUCCEED!", routerAddresses);
 		}
 	}
 

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import xixi.common.constants.Constants;
 import xixi.common.util.ConfigUtils;
 import xixi.common.util.ModuleStringUtil;
-import xixi.router.DefaultMutilConnectRouter;
+import xixi.router.DefaultConnectRouter;
 import xixi.router.Router;
 import xixi.router.RouterInitializer;
 import xixi.router.schedule.RouterSchedules;
@@ -36,16 +36,28 @@ public class DirectRouterInitializer implements RouterInitializer{
 				String[] strs =addressConfig.split("-");
 				String moduleString = null;
 				String routerScheduleType = null;
-				if(strs.length==2){
+				if(strs.length==3){
 					moduleString = addressConfig;
 					routerScheduleType = Constants.DEFAULT_ROUTER_SCHEDULE;
+				}
+				else if(strs.length==2){
+					moduleString = addressConfig;
+				}
+				else{
+					logger.equals("Invalidate directRouterAddress property, Initialize DirectRouter FAILED!!");
+					return;
 				}
 				String moduleId = ModuleStringUtil.getMoudleId(moduleString);
 				String ipAddress = ModuleStringUtil.getIpAddress(moduleString);
 				String ip = ModuleStringUtil.getIp(ipAddress);
 				int port = ModuleStringUtil.getPort(ipAddress);
-				Router r = DefaultMutilConnectRouter.getOrAddRouter(Short.parseShort(moduleId));
-				RouterSchedules.setModuleScheduleType(Short.valueOf(moduleId), routerScheduleType);
+				Router r = DefaultConnectRouter.getOrAddRouter(Short.parseShort(moduleId));
+				if(routerScheduleType!=null){
+					//Current not support schedule type set for RegisterCenter, if the routerScheduleType
+					//is not null, then it must be  directlyConnectRouter for biz module server
+					RouterSchedules.setModuleScheduleType(Short.valueOf(moduleId), "default");
+				}
+			
 				TcpClient client = TransportFacade.initClient(ip, port);
 				r.addTcpClient(client);
 			}

@@ -16,13 +16,13 @@
        <constructor-arg value="xixi.rc.iservice.RCStatService" />
     </bean>
     
-    <bean id="rcNotifyService"
-        class="xixi.rc.service.RCNotifyServiceImpl" lazy-init="true">
-       <property name="repository" ref="moduleRepository"/>
+    <bean id="rcModuleService" factory-bean="proxyFactory" factory-method="createProxy" lazy-init="true">
+       <constructor-arg value="xixi.rc.iservice.RCModuleService" />
     </bean>
     
-     <bean id="moduleRepository"
-        class="xixi.router.multi.ModuleRepository" lazy-init="true">
+    <bean id="rcNotifyService"
+        class="xixi.rc.service.RCNotifyServiceImpl" lazy-init="true">
+       <property name="repository" ref="${module.repository}"/>
     </bean>
     
 </beans>

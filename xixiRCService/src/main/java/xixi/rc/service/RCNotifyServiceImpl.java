@@ -10,7 +10,7 @@ import xix.rc.bean.ModuleInfo;
 import xixi.common.annotation.EventMethod;
 import xixi.common.util.ModuleStringUtil;
 import xixi.rc.iservice.RCNotifyService;
-import xixi.router.DefaultMutilConnectRouter;
+import xixi.router.DefaultConnectRouter;
 import xixi.router.Router;
 import xixi.router.multi.ModuleRepository;
 import xixi.transport.client.TcpClient;
@@ -45,7 +45,7 @@ public class RCNotifyServiceImpl implements RCNotifyService {
 					logger.debug("Module {0} got new service instance: {1}", destModuleId,ipAddress);
 					for(ModuleInfo m : instancesList){
 						if(m.getIpAddress().equals(ipAddress)){
-							Router r = DefaultMutilConnectRouter.getOrAddRouter(destModuleId);
+							Router r = DefaultConnectRouter.getOrAddRouter(destModuleId);
 							TcpClient client = TransportFacade.initClient(
 									ModuleStringUtil.getIp(ipAddress),
 									ModuleStringUtil.getPort(ipAddress));
@@ -60,7 +60,7 @@ public class RCNotifyServiceImpl implements RCNotifyService {
 			if (removedInstanceList != null && !removedInstanceList.isEmpty()) {
 				for (String ipAddress : removedInstanceList) {
 					logger.debug("Module {0} has instance to remove: {1}", destModuleId, ipAddress);
-					Router r = DefaultMutilConnectRouter.getOrAddRouter(destModuleId);
+					Router r = DefaultConnectRouter.getOrAddRouter(destModuleId);
 					r.removeTcpClient(ipAddress);
 				}
 			}

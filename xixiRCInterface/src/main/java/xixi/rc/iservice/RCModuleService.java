@@ -5,7 +5,7 @@ import java.util.List;
 import xix.rc.bean.ModuleInfo;
 import xixi.common.annotation.EventService;
 
-@EventService(name="RCModuleService", moduleId=110, version = "1.0")
+@EventService(name="RCModuleService", moduleId=101, version = "1.0")
 public interface RCModuleService {
 
 
