@@ -2,12 +2,15 @@ package xix.rc.bean;
 
 public class HeartBeat {
 
-	private final short moduleId;
+	private short moduleId;
 	
-	private final String ipAddress;
+	private String ipAddress;
 	
-	private final int interval;
+	private int interval;
 
+	public HeartBeat(){
+	}
+	
 	public HeartBeat(short moduleId, String ipAddress, int interval) {
 		this.moduleId = moduleId;
 		this.ipAddress = ipAddress;
@@ -18,14 +21,16 @@ public class HeartBeat {
 		return moduleId;
 	}
 
-
 	public String getIpAddress() {
 		return ipAddress;
 	}
 
-
 	public int getInterval() {
 		return interval;
+	}
+	
+	public String toString(){
+		return this.moduleId + "-" + this.ipAddress + "-" + this.interval;
 	}
 
 }

@@ -6,6 +6,7 @@
         class="xixi.rc.service.jobs.RCServiceScheduledJob" lazy-init="true" init-method="start">
        <property name="hbService" ref="hbService"/>
         <property name="statService" ref="statService"/>
+        <property name="dashBoard" ref="dashBoard"/>
     </bean>
     
     <bean id="hbService" factory-bean="proxyFactory" factory-method="createProxy" lazy-init="true">

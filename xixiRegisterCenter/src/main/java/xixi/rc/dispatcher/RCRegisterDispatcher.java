@@ -40,7 +40,8 @@ public class RCRegisterDispatcher implements Dispatcher {
 				inv.future().addCallback(new Callback() {
 					@Override
 					public void invoke(Object resp) {
-						rpcResp.setData(new Object[]{resp}).setType((byte)3).setStatus(0);
+						logger.debug("Sending response " + resp);
+						rpcResp.setData(new Object[]{resp}).setType((byte)2).setStatus(0);
 						
 						channel.send(rpcResp);
 					}

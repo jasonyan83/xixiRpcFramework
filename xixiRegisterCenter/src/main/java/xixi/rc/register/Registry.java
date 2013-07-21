@@ -29,4 +29,6 @@ public interface Registry {
 	public ModuleStatusInfo getModuleStatusInfo(short moduleId, String ipAddress);
 	
 	public Map<Short, HashMap<String,  ModuleStatusInfo>> getModulesMap();
+	
+	public boolean updateModuleStatusInfo(ModuleStatusInfo moduleStatusInfo);
 }

@@ -27,7 +27,7 @@ public class AppLauncher {
 		TransportFacade.initServer();
 
 		String routerName = ConfigUtils.getProperty(Constants.ROUTER_NAME);
-		if(routerName!=null&&routerName.endsWith(Constants.RC_ROUTER)){
+		if(routerName!=null&&routerName.equals(Constants.RC_ROUTER)){
 			RCServiceInitializer.init();
 		}
 		RouterFacade.initRouter();

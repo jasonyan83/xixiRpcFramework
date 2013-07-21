@@ -7,7 +7,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 
 public class ModuleStatusInfo {
 	
-	private int moduleId;
+	private short moduleId;
 
 	private String ipAddress;
 
@@ -109,11 +109,11 @@ public class ModuleStatusInfo {
 				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
-	public int getModuleId() {
+	public short getModuleId() {
 		return moduleId;
 	}
 
-	public void setModuleId(int moduleId) {
+	public void setModuleId(short moduleId) {
 		this.moduleId = moduleId;
 	}
 

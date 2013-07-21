@@ -5,15 +5,15 @@ import xixi.common.util.ModuleStringUtil;
 public class ModuleInfo {
 
 	private short moduleId;
-	
+
 	private String ipAddress;
 
 	private int weight;
-	
+
 	private String routerScheduleType;
-	
+
 	private String description;
-	
+
 	public String getDescription() {
 		return description;
 	}
@@ -53,22 +53,26 @@ public class ModuleInfo {
 	public void setIpAddress(String ipAddress) {
 		this.ipAddress = ipAddress;
 	}
-	
-	public String getIp(){
-		if(ipAddress!=null&&!"".equals(ipAddress)){
+
+	public String getIp() {
+		if (ipAddress != null && !"".equals(ipAddress)) {
 			return ModuleStringUtil.getIp(ipAddress);
-		}
-		else{
+		} else {
 			return null;
 		}
 	}
-	
-	public int getPort(){
-		if(ipAddress!=null&&!"".equals(ipAddress)){
+
+	public int getPort() {
+		if (ipAddress != null && !"".equals(ipAddress)) {
 			return ModuleStringUtil.getPort(ipAddress);
-		}
-		else{
+		} else {
 			return -1;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return this.moduleId + "-" + this.getIp() + "-" + this.weight + "-"
+				+  (this.getRouterScheduleType()==null?"":this.getRouterScheduleType()) + "-" + this.description;
 	}
 }

@@ -13,33 +13,36 @@ import xix.rc.bean.ModuleInfo;
 import xix.rc.bean.ModuleStatusInfo;
 import xixi.transport.channel.Channel;
 
-public class DefaultRegistry implements Registry{
+public class DefaultRegistry implements Registry {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(DefaultRegistry.class);
-	
-	private final Map<Short, HashMap<String,  ModuleStatusInfo>> modulesMap = new HashMap<Short, HashMap<String, ModuleStatusInfo>>();
-    
-	private final Map<String,Channel> instanceChannelMap = new HashMap<String,Channel>();
-    private final  Map<Channel,String> channelInstanceMap = new HashMap<Channel,String>();
-	
-    private final Map<Short, List<Short>> moduleDependenceMap = new HashMap<Short, List<Short>>();
-    
+
+	private final Map<Short, HashMap<String, ModuleStatusInfo>> modulesMap = new HashMap<Short, HashMap<String, ModuleStatusInfo>>();
+
+	private final Map<String, Channel> instanceChannelMap = new HashMap<String, Channel>();
+	private final Map<Channel, String> channelInstanceMap = new HashMap<Channel, String>();
+
+	private final Map<Short, List<Short>> moduleDependenceMap = new HashMap<Short, List<Short>>();
+
 	@Override
 	public boolean register(ModuleInfo moduleInfo) throws Exception {
-
+		logger.debug("Registering module :" + moduleInfo);
 		boolean succeed = false;
-		if (modulesMap.containsKey(moduleInfo.getModuleId())) {
-			HashMap<String, ModuleStatusInfo> modulesInstanceMap = modulesMap.get(moduleInfo.getModuleId());
-			ModuleStatusInfo module = modulesInstanceMap.get(moduleInfo.getIpAddress());
-			if (module!=null) {
-				if(!module.isLive()){
+		if (modulesMap.get(moduleInfo.getModuleId()) != null) {
+			HashMap<String, ModuleStatusInfo> modulesInstanceMap = modulesMap
+					.get(moduleInfo.getModuleId());
+			ModuleStatusInfo module = modulesInstanceMap.get(moduleInfo
+					.getIpAddress());
+			if (module != null) {
+				if (!module.isLive()) {
 					module.setLive(true);
-					logger.warn("模块{}对应的ip{},恢复服务", moduleInfo.getModuleId(),moduleInfo.getIpAddress());
+					logger.warn("模块{}对应的ip{},恢复服务", moduleInfo.getModuleId(),
+							moduleInfo.getIpAddress());
 					succeed = true;
-				}
-				else{
-					logger.warn("模块{}已经存在相应的IP地址{}，重复注册？",  moduleInfo.getModuleId(),moduleInfo.getIpAddress());
+				} else {
+					logger.warn("模块{}已经存在相应的IP地址{}，重复注册？",
+							moduleInfo.getModuleId(), moduleInfo.getIpAddress());
 					throw new Exception("duplicate module Address");
 				}
 
@@ -51,7 +54,9 @@ public class DefaultRegistry implements Registry{
 				moduleStatusInfo.setRegisterTime(new Date());
 				moduleStatusInfo.setLastHBTime(new Date());
 				moduleStatusInfo.setLive(true);
-				modulesInstanceMap.put(moduleInfo.getIpAddress(), moduleStatusInfo);
+
+				modulesInstanceMap.put(moduleInfo.getIpAddress(),
+						moduleStatusInfo);
 
 				succeed = true;
 			}
@@ -64,47 +69,58 @@ public class DefaultRegistry implements Registry{
 			moduleStatusInfo.setRegisterTime(new Date());
 			moduleStatusInfo.setLastHBTime(new Date());
 			moduleStatusInfo.setLive(true);
+
+			modulesInstanceMap.put(moduleInfo.getIpAddress(), moduleStatusInfo);
+
 			modulesMap.put(moduleInfo.getModuleId(), modulesInstanceMap);
 			succeed = true;
 		}
-		
+
 		return succeed;
 	}
 
 	@Override
 	public boolean unRegister(short moduleId, String ipAddress) {
+		logger.debug("Unregistering module {}-{}" + moduleId, ipAddress);
 		boolean succeed = false;
-		HashMap<String, ModuleStatusInfo> modulesInstanceMap = modulesMap.get(moduleId);
-		if(modulesInstanceMap==null||modulesInstanceMap.get(ipAddress)==null){
-             logger.debug("The module " + moduleId + " with instance" + ipAddress + "is not exsit" );			
-		}
-		else{
+		HashMap<String, ModuleStatusInfo> modulesInstanceMap = modulesMap
+				.get(moduleId);
+		if (modulesInstanceMap == null
+				|| modulesInstanceMap.get(ipAddress) == null) {
+			logger.debug("The module " + moduleId + " with instance"
+					+ ipAddress + "is not exsit");
+		} else {
 			modulesInstanceMap.remove(ipAddress);
-			logger.debug("unRegistering Module " + moduleId + " with instance " + ipAddress );
+			logger.debug("unRegistering Module " + moduleId + " with instance "
+					+ ipAddress);
 			succeed = true;
 		}
 		return succeed;
 	}
-	
-	@Override
-	public void buildInstanceChannelMap(short moduleId, String ipAddress,Channel channel){
-	    
-	    String moduleString = channelInstanceMap.put(channel, moduleId + "-" + ipAddress );
-	    if(moduleString!=null){
-	    	logger.warn(moduleString + " already exsit in the map for channel:" + channel);
-	    }
-	    
-	    Channel ch = instanceChannelMap.put(ipAddress, channel);
-	    if(ch!=null){
-	    	logger.warn(channel + " already exsit in the map for instance:" + moduleString);
-	    }  
-	 }
 
 	@Override
-	public void buildModuleDependencyMap(short srcModuleId, short destModuleId){
-		synchronized(this){
+	public void buildInstanceChannelMap(short moduleId, String ipAddress,
+			Channel channel) {
+
+		String moduleString = channelInstanceMap.put(channel, moduleId + "-"
+				+ ipAddress);
+		if (moduleString != null) {
+			logger.warn(moduleString + " already exsit in the map for channel:"
+					+ channel);
+		}
+
+		Channel ch = instanceChannelMap.put(ipAddress, channel);
+		if (ch != null) {
+			logger.warn(channel + " already exsit in the map for instance:"
+					+ moduleString);
+		}
+	}
+
+	@Override
+	public void buildModuleDependencyMap(short srcModuleId, short destModuleId) {
+		synchronized (this) {
 			List<Short> list = moduleDependenceMap.get(srcModuleId);
-			if(list==null){
+			if (list == null) {
 				list = new ArrayList<Short>();
 				list.add(destModuleId);
 				moduleDependenceMap.put(srcModuleId, list);
@@ -112,22 +128,23 @@ public class DefaultRegistry implements Registry{
 			list.add(destModuleId);
 		}
 	}
-	
+
 	@Override
-	public List<Short> getDependentModuleIds(short moduleId){
-		if(moduleId<=0){
-			logger.error("invalidate moduleId for getDependentModule, moduleId is " + moduleId);
+	public List<Short> getDependentModuleIds(short moduleId) {
+		if (moduleId <= 0) {
+			logger.error("invalidate moduleId for getDependentModule, moduleId is "
+					+ moduleId);
 			return null;
 		}
 		return moduleDependenceMap.get(moduleId);
 	}
-	
+
 	@Override
 	public List<ModuleInfo> getModuleInstances(short moduleId) {
 		Map<String, ModuleStatusInfo> map = modulesMap.get(moduleId);
 		List<ModuleInfo> moduleInfoList = new ArrayList<ModuleInfo>();
-		if(!map.isEmpty()){
-			for(ModuleStatusInfo moduleStatusInfo: map.values()){
+		if (!map.isEmpty()) {
+			for (ModuleStatusInfo moduleStatusInfo : map.values()) {
 				ModuleInfo m = new ModuleInfo();
 				m.setIpAddress(moduleStatusInfo.getIpAddress());
 				m.setModuleId(moduleId);
@@ -138,24 +155,53 @@ public class DefaultRegistry implements Registry{
 		return moduleInfoList;
 	}
 
-	public ModuleStatusInfo getModuleStatusInfo(short moduleId, String ipAddress){
-		HashMap<String,ModuleStatusInfo> instanceMap = modulesMap.get(moduleId);
-		if(instanceMap!=null){
+	public ModuleStatusInfo getModuleStatusInfo(short moduleId, String ipAddress) {
+		HashMap<String, ModuleStatusInfo> instanceMap = modulesMap
+				.get(moduleId);
+		if (instanceMap != null) {
 			return instanceMap.get(ipAddress);
-		}
-		else{
+		} else {
 			return null;
 		}
 	}
-	
-	public Map<Short, HashMap<String,  ModuleStatusInfo>> getModulesMap(){
+
+	public boolean updateModuleStatusInfo(ModuleStatusInfo moduleStatusInfo) {
+		boolean succeed = false;
+
+		if (modulesMap.get(moduleStatusInfo.getModuleId()) != null) {
+			HashMap<String, ModuleStatusInfo> modulesInstanceMap = modulesMap
+					.get(moduleStatusInfo.getModuleId());
+			ModuleStatusInfo module = modulesInstanceMap.get(moduleStatusInfo
+					.getIpAddress());
+			if (module != null) {
+				if (!module.isLive()) {
+					module = moduleStatusInfo;
+					logger.warn("模块{}对应的ip{},恢复服务",
+							moduleStatusInfo.getModuleId(),
+							moduleStatusInfo.getIpAddress());
+					succeed = true;
+				}
+
+			} else {
+				modulesInstanceMap.put(moduleStatusInfo.getIpAddress(),
+						moduleStatusInfo);
+			}
+		} else {
+			logger.error("There is NO exsit moduleInstanceMap");
+			succeed =false;
+		}
+		return succeed;
+	}
+
+	public Map<Short, HashMap<String, ModuleStatusInfo>> getModulesMap() {
 		return this.modulesMap;
 	}
-	public Channel getChannelByInstance(String ipAddress){
+
+	public Channel getChannelByInstance(String ipAddress) {
 		return this.instanceChannelMap.get(ipAddress);
 	}
-	
-	public String getInstanceIpByChannel(Channel channel){
+
+	public String getInstanceIpByChannel(Channel channel) {
 		return this.channelInstanceMap.get(channel);
 	}
 }

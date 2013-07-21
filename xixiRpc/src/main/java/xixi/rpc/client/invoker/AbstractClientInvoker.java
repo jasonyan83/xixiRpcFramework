@@ -1,13 +1,14 @@
 package xixi.rpc.client.invoker;
 
 import xixi.rpc.Invocation;
+import xixi.rpc.InvocationException;
 import xixi.rpc.RpcInvoker;
 import xixi.rpc.future.RpcFuture;
 
 public abstract class AbstractClientInvoker implements RpcInvoker{
 	
 	@Override
-	public RpcFuture invoke(Invocation inv){
+	public RpcFuture invoke(Invocation inv) throws InvocationException{
 		return invoke((RpcInvocation)inv);
 	}
 	

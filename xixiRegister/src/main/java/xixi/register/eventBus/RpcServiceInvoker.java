@@ -7,6 +7,7 @@ import org.apache.commons.collections.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import xixi.common.bean.NullValue;
 import xixi.rpc.Invocation;
 import xixi.rpc.Invoker;
 import xixi.rpc.future.Future;
@@ -52,10 +53,16 @@ public class RpcServiceInvoker implements Invoker {
 				 result = method.invoke(target,inv.getArgs());
 			}
 			
-			if(!result.getClass().equals(Void.class)){
+			if(result==null){
+				f.setValue(new NullValue());
+			}
+			else{
 				f.setValue(result);
 			}
+			//TODO: more test here
+			/*if(result!=null&&!result.getClass().equals(Void.class)){
 
+			}*/
 			f.done();
 
 		} catch (IllegalArgumentException e) {
