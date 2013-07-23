@@ -16,8 +16,10 @@ import com.esotericsoftware.kryo.io.Output;
 public class KryoCoder implements Coder {
 
 	private final static Kryo kryo = new Kryo();
+
+	private boolean classRegisterFlag=false;
 	
-	static {
+	private  void registerClass(){
 		//kryo.setRegistrationRequired(true);
 		Map<String,Class<?>> argClassType =  ArgumentTypeRepository.getAllArgumentType();
 		for(Class<?> clz : argClassType.values()){
@@ -25,28 +27,41 @@ public class KryoCoder implements Coder {
 		}
 		kryo.register(RpcRequest.class);
 		kryo.register(RpcResponse.class);
+		classRegisterFlag=true;
 	}
-
+	
 	public void registerClass(Class<?> clz){
 		kryo.register(clz);
 	}
 	
 	@Override
 	public Object decode(byte[] inData) {
+		if(classRegisterFlag){
+			Input input = new Input(new ByteArrayInputStream(inData));
+			Object ret = kryo.readClassAndObject(input);
+			return ret;
+		}
+		else{
+			registerClass();
+			return decode(inData);
+		}
 
-		Input input = new Input(new ByteArrayInputStream(inData));
-		Object ret = kryo.readClassAndObject(input);
-		return ret;
 		
 	}
 
 	@Override
 	public byte[] encoder(Object outData) {
-		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-		Output output = new Output(outStream);
-		kryo.writeClassAndObject(output, outData);
-		output.flush();
-		return outStream.toByteArray();
+		if(classRegisterFlag){
+			ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+			Output output = new Output(outStream);
+			kryo.writeClassAndObject(output, outData);
+			output.flush();
+			return outStream.toByteArray();
+		}
+		else{
+			registerClass();
+			return encoder(outData);
+		}
 
 	}
 
