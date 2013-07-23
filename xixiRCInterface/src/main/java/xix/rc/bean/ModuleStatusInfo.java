@@ -31,6 +31,16 @@ public class ModuleStatusInfo {
 	
 	private int heartBeatRetryTimes = 0;
 	
+	private String routerScheduleType;
+	
+	public String getRouterScheduleType() {
+		return routerScheduleType;
+	}
+
+	public void setRouterScheduleType(String routerScheduleType) {
+		this.routerScheduleType = routerScheduleType;
+	}
+
 	public int getHeartBeatRetryTimes() {
 		return heartBeatRetryTimes;
 	}

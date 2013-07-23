@@ -10,9 +10,9 @@ public class ModuleInfo {
 
 	private int weight;
 
-	private String routerScheduleType;
+	private String routerScheduleType="";
 
-	private String description;
+	private String description="";
 
 	public String getDescription() {
 		return description;
@@ -72,7 +72,7 @@ public class ModuleInfo {
 
 	@Override
 	public String toString() {
-		return this.moduleId + "-" + this.getIp() + "-" + this.weight + "-"
+		return this.moduleId + "-" + this.getIpAddress() + "-" + this.weight + "-"
 				+  (this.getRouterScheduleType()==null?"":this.getRouterScheduleType()) + "-" + this.description;
 	}
 }

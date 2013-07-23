@@ -24,6 +24,10 @@
 		<property name="registry" ref="registry" />
 	</bean>
 	    
+    <bean id="rcStatServiceImpl" class="xixi.rc.service.RCStatServiceImpl">
+		<property name="registry" ref="registry" />
+	</bean>
+	
 	<bean id="rcModuleService" class="xixi.rc.service.RcModuleServiceImpl">
 		<property name="registry" ref="registry" />
 		<property name="registerListener" ref="registerListener" />

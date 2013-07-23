@@ -20,5 +20,8 @@
 	<classpathentry kind="lib" path="/xixiLauncher/lib/slf4j-api-1.6.5.jar"/>
 	<classpathentry kind="lib" path="E:/tongyi/publicLib/slf4j-log4j12-1.6.1.jar"/>
 	<classpathentry kind="lib" path="E:/tongyi/publicLib/log4j-1.2.16.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiMonitor"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiRCService"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiRCInterface"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
