@@ -54,5 +54,15 @@
     
 	 <bean id="registry" class="xixi.rc.register.DefaultRegistry">
 	</bean>
+	
+	<bean id="jmxExporter"
+		class="org.springframework.jmx.export.MBeanExporter">
+		<property name="beans">
+			<map>
+				<entry key="public:app=RegisterCenter,class=monitor,group=${biz.name},name=registry"
+					value-ref="registry" />	
+			</map>
+		</property>
+	</bean>
 	    
 </beans>

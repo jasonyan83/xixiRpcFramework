@@ -3,6 +3,9 @@ package xixi.rpc.client.invoker;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 import xixi.common.constants.Constants;
 import xixi.rpc.AbstractInvocation;
 import xixi.rpc.IRpcInvocation;
@@ -73,6 +76,11 @@ public class RpcInvocation extends AbstractInvocation implements IRpcInvocation 
 	@Override
 	public void setModuleId(short moduleId) {
 		this.moduleId = moduleId;
+	}
+	
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 }

@@ -68,4 +68,9 @@ public class NettyChannel extends AbstractChannel{
 	public boolean isConnected() {
 		return channel.isConnected();
 	}
+	
+	@Override
+	public String toString(){
+		return channel.toString();
+	}
 }

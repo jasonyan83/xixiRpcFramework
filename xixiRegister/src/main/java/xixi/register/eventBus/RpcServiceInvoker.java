@@ -32,6 +32,7 @@ public class RpcServiceInvoker implements Invoker {
 
 	@Override
 	public Future invoke(Invocation inv) {
+		logger.debug("Invoking with Invocation {}" , inv);
 		if(canceled){
 			//TODO:more logic code here
 			logger.warn("sever stop");

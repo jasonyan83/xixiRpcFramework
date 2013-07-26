@@ -33,7 +33,6 @@ public class RCRegisterFilter implements Filter {
 	@Override
 	public void doFilter(Invoker service, final Invocation inv) {
 		logger.debug("entering RCRegisterFilter with Invocation {}" , inv);
-
 		Future future = service.invoke(inv);
 
 		try {

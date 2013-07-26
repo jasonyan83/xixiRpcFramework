@@ -114,7 +114,6 @@ public class ModuleStatusInfo {
 	}
 
 	public String toString() {
-
 		return ToStringBuilder.reflectionToString(this,
 				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
@@ -134,14 +133,24 @@ public class ModuleStatusInfo {
 	public void setIpAddress(String ipAddress) {
 		this.ipAddress = ipAddress;
 	}
-
-
+	
 	public long getLastMinuteTaskExecTime() {
 		return lastMinuteTaskExecTime;
 	}
 
 	public void setLastMinuteTaskExecTime(long lastMinuteTaskExecTime) {
 		this.lastMinuteTaskExecTime = lastMinuteTaskExecTime;
+	}
+	
+	public ModuleStatusInfo buildOrUpdateModuleStatusInfo(ModuleInfo moduleInfo){
+		this.setModuleId(moduleInfo.getModuleId());
+		this.setIpAddress(moduleInfo.getIpAddress());
+		this.setWeight(moduleInfo.getWeight());
+		this.setRegisterTime(new Date());
+		this.setLastHBTime(new Date());
+		this.setLive(true);
+		this.setRouterScheduleType(moduleInfo.getRouterScheduleType());	
+		return this;
 	}
 
 }

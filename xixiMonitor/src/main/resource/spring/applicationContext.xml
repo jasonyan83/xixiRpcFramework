@@ -20,4 +20,15 @@
 		lazy-init="true">
 	</bean>
 	
+	<bean id="jmxExporter"
+		class="xixi.monitor.jmx.PrefixableMBeanExporter">
+		<constructor-arg value="public:app=${biz.name}," />
+		<property name="beans">
+			<map>
+				<entry key="prefix:class=monitor,group=${biz.name},name=dashboard"
+					value-ref="dashBoard" />	
+			</map>
+		</property>
+	</bean>
+	
 </beans>

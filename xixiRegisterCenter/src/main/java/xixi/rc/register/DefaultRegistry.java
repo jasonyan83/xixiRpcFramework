@@ -1,7 +1,6 @@
 package xixi.rc.register;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,15 +46,8 @@ public class DefaultRegistry implements Registry {
 				}
 
 			} else {
-				ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo();
-				moduleStatusInfo.setModuleId(moduleInfo.getModuleId());
-				moduleStatusInfo.setIpAddress(moduleInfo.getIpAddress());
-				moduleStatusInfo.setWeight(moduleInfo.getWeight());
-				moduleStatusInfo.setRegisterTime(new Date());
-				moduleStatusInfo.setLastHBTime(new Date());
-				moduleStatusInfo.setLive(true);
-				moduleStatusInfo.setRouterScheduleType(moduleInfo.getRouterScheduleType());
-
+				ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo()
+						.buildOrUpdateModuleStatusInfo(moduleInfo);
 				modulesInstanceMap.put(moduleInfo.getIpAddress(),
 						moduleStatusInfo);
 
@@ -63,20 +55,14 @@ public class DefaultRegistry implements Registry {
 			}
 		} else {
 			HashMap<String, ModuleStatusInfo> modulesInstanceMap = new HashMap<String, ModuleStatusInfo>();
-			ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo();
-			moduleStatusInfo.setModuleId(moduleInfo.getModuleId());
-			moduleStatusInfo.setIpAddress(moduleInfo.getIpAddress());
-			moduleStatusInfo.setWeight(moduleInfo.getWeight());
-			moduleStatusInfo.setRegisterTime(new Date());
-			moduleStatusInfo.setLastHBTime(new Date());
-			moduleStatusInfo.setLive(true);
-			moduleStatusInfo.setRouterScheduleType(moduleInfo.getRouterScheduleType());
+			ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo()
+					.buildOrUpdateModuleStatusInfo(moduleInfo);
 			modulesInstanceMap.put(moduleInfo.getIpAddress(), moduleStatusInfo);
 
 			modulesMap.put(moduleInfo.getModuleId(), modulesInstanceMap);
 			succeed = true;
 		}
-
+		logger.debug("The result of registering module is:" + (succeed==true?"SUCCEED!":"FAILED"));
 		return succeed;
 	}
 
@@ -102,7 +88,8 @@ public class DefaultRegistry implements Registry {
 	@Override
 	public void buildInstanceChannelMap(short moduleId, String ipAddress,
 			Channel channel) {
-		logger.debug("Build instance channle map for {}-{}", moduleId, ipAddress);
+		logger.debug("Build instance channle map for {}-{}", moduleId,
+				ipAddress);
 		String moduleString = channelInstanceMap.put(channel, moduleId + "-"
 				+ ipAddress);
 		if (moduleString != null) {
@@ -119,6 +106,9 @@ public class DefaultRegistry implements Registry {
 
 	@Override
 	public void buildModuleDependencyMap(short srcModuleId, short destModuleId) {
+		logger.debug(
+				"build module dependency map for source module {}, dest module {}",
+				srcModuleId, destModuleId);
 		synchronized (this) {
 			List<Short> list = moduleDependenceMap.get(srcModuleId);
 			if (list == null) {
@@ -146,13 +136,14 @@ public class DefaultRegistry implements Registry {
 		logger.debug("Get module instance for moduleId {}", moduleId);
 		Map<String, ModuleStatusInfo> map = modulesMap.get(moduleId);
 		List<ModuleInfo> moduleInfoList = new ArrayList<ModuleInfo>();
-		if (map!=null&&!map.isEmpty()) {
+		if (map != null && !map.isEmpty()) {
 			for (ModuleStatusInfo moduleStatusInfo : map.values()) {
 				ModuleInfo m = new ModuleInfo();
 				m.setIpAddress(moduleStatusInfo.getIpAddress());
 				m.setModuleId(moduleId);
 				m.setWeight(moduleStatusInfo.getWeight());
-				m.setRouterScheduleType(moduleStatusInfo.getRouterScheduleType());
+				m.setRouterScheduleType(moduleStatusInfo
+						.getRouterScheduleType());
 				moduleInfoList.add(m);
 			}
 		}
@@ -180,8 +171,10 @@ public class DefaultRegistry implements Registry {
 					.getIpAddress());
 			if (module != null) {
 				if (!module.isLive()) {
-					//TODO: if the service is down , it will lose all the stat infomation currently
-					//and when it is up again, the register center will see the empty stat info.
+					// TODO: if the service is down , it will lose all the stat
+					// infomation currently
+					// and when it is up again, the register center will see the
+					// empty stat info.
 					module = moduleStatusInfo;
 					logger.warn("模块{}对应的ip{},恢复服务",
 							moduleStatusInfo.getModuleId(),
@@ -189,8 +182,7 @@ public class DefaultRegistry implements Registry {
 					modulesInstanceMap.put(moduleStatusInfo.getIpAddress(),
 							moduleStatusInfo);
 					succeed = true;
-				}
-				else{
+				} else {
 					modulesInstanceMap.put(moduleStatusInfo.getIpAddress(),
 							moduleStatusInfo);
 					succeed = true;
@@ -199,17 +191,13 @@ public class DefaultRegistry implements Registry {
 			} else {
 				modulesInstanceMap.put(moduleStatusInfo.getIpAddress(),
 						moduleStatusInfo);
-				succeed =true;
+				succeed = true;
 			}
 		} else {
 			logger.error("There is NO exsit moduleInstanceMap");
-			succeed =false;
+			succeed = false;
 		}
 		return succeed;
-	}
-
-	public Map<Short, HashMap<String, ModuleStatusInfo>> getModulesMap() {
-		return this.modulesMap;
 	}
 
 	public Channel getChannelByInstance(String ipAddress) {
@@ -218,5 +206,55 @@ public class DefaultRegistry implements Registry {
 
 	public String getInstanceIpByChannel(Channel channel) {
 		return this.channelInstanceMap.get(channel);
+	}
+	
+	public Map<Short, HashMap<String,  ModuleStatusInfo>> getModulesMap(){
+		return this.modulesMap;
+	}
+	
+	public Map<String,List<String>> getModulesMapInfo(){
+		Map<String,List<String>> retMap = new HashMap<String,List<String>>();
+		for(Short key : modulesMap.keySet()){
+			if(retMap.get(key.toString())!=null){
+				List<String> statusInfoList = retMap.get(key.toString());
+				HashMap<String,ModuleStatusInfo> statusInfoMap = modulesMap.get(key);
+			    for(ModuleStatusInfo statusInfo : statusInfoMap.values()){
+			    	statusInfoList.add(statusInfo.toString());
+			    }
+			    retMap.put(key.toString(), statusInfoList);
+			}
+			else{
+				List<String> statusInfoList = new ArrayList<String>();
+				HashMap<String,ModuleStatusInfo> statusInfoMap = modulesMap.get(key);
+				 for(ModuleStatusInfo statusInfo : statusInfoMap.values()){
+				    	statusInfoList.add(statusInfo.toString());
+				    }
+			
+				retMap.put(key.toString(), statusInfoList);
+			}
+		}
+		return retMap;
+	}
+	
+	
+
+	public Map<String, String> getInstanceChannelMap() {
+		Map<String,String> retMap = new HashMap<String,String>();
+		for(String key:instanceChannelMap.keySet()){
+			retMap.put(key, instanceChannelMap.get(key).toString());
+		}
+		return retMap;
+	}
+
+	public Map<String, String> getChannelInstanceMap() {
+		Map<String,String> retMap = new HashMap<String,String>();
+		for(Channel key:channelInstanceMap.keySet()){
+			retMap.put(key.toString(), channelInstanceMap.get(key));
+		}
+		return retMap;
+	}
+
+	public Map<Short, List<Short>> getModuleDependenceMap() {
+		return moduleDependenceMap;
 	}
 }

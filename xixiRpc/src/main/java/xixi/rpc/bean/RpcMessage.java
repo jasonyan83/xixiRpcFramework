@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 public class RpcMessage {
 
 	private Map<String, Object> properties = new HashMap<String, Object>();
@@ -33,7 +36,11 @@ public class RpcMessage {
 	private int status;
 	
 	public RpcMessage(){
-		
+	}
+	
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 	
 	public int getStatus() {

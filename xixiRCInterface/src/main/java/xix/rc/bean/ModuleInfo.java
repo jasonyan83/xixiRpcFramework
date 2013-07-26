@@ -1,5 +1,8 @@
 package xix.rc.bean;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 import xixi.common.util.ModuleStringUtil;
 
 public class ModuleInfo {
@@ -72,7 +75,7 @@ public class ModuleInfo {
 
 	@Override
 	public String toString() {
-		return this.moduleId + "-" + this.getIpAddress() + "-" + this.weight + "-"
-				+  (this.getRouterScheduleType()==null?"":this.getRouterScheduleType()) + "-" + this.description;
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 }

@@ -21,7 +21,7 @@ public class RCRegisterDispatcher implements Dispatcher {
 
 	@Override
 	public void dispatcher(Object message) {
-
+		logger.debug("Dispatchering message {}", message);
 		if (message instanceof RpcRequest) {
 			final RpcRequest rpcRequest = (RpcRequest) message;
 			final RpcInvocation inv = new RpcInvocation(
