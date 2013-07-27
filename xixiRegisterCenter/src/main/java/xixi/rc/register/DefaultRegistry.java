@@ -91,8 +91,10 @@ public class DefaultRegistry implements Registry {
 	@Override
 	public void buildInstanceChannelMap(short moduleId, String ipAddress,
 			Channel channel) {
-		logger.debug("Build instance channle map for {}-{}", moduleId,
-				ipAddress);
+
+
+		logger.debug("Build instance channle map for {}-{}", moduleId, ipAddress);
+
 		String moduleString = channelInstanceMap.put(channel, moduleId + "-"
 				+ ipAddress);
 		if (moduleString != null) {
@@ -139,7 +141,8 @@ public class DefaultRegistry implements Registry {
 		logger.debug("Get module instance for moduleId {}", moduleId);
 		Map<String, ModuleStatusInfo> map = modulesMap.get(moduleId);
 		List<ModuleInfo> moduleInfoList = new ArrayList<ModuleInfo>();
-		if (map != null && !map.isEmpty()) {
+
+		if (map!=null&&!map.isEmpty()) {
 			for (ModuleStatusInfo moduleStatusInfo : map.values()) {
 				ModuleInfo m = new ModuleInfo();
 				m.setIpAddress(moduleStatusInfo.getIpAddress());
@@ -174,10 +177,8 @@ public class DefaultRegistry implements Registry {
 					.getIpAddress());
 			if (module != null) {
 				if (!module.isLive()) {
-					// TODO: if the service is down , it will lose all the stat
-					// infomation currently
-					// and when it is up again, the register center will see the
-					// empty stat info.
+					//TODO: if the service is down , it will lose all the stat infomation currently
+					//and when it is up again, the register center will see the empty stat info.
 					module = moduleStatusInfo;
 					logger.warn("模块{}对应的ip{},恢复服务",
 							moduleStatusInfo.getModuleId(),
@@ -185,7 +186,9 @@ public class DefaultRegistry implements Registry {
 					modulesInstanceMap.put(moduleStatusInfo.getIpAddress(),
 							moduleStatusInfo);
 					succeed = true;
-				} else {
+
+				}
+				else{
 					modulesInstanceMap.put(moduleStatusInfo.getIpAddress(),
 							moduleStatusInfo);
 					succeed = true;
@@ -195,6 +198,7 @@ public class DefaultRegistry implements Registry {
 				modulesInstanceMap.put(moduleStatusInfo.getIpAddress(),
 						moduleStatusInfo);
 				succeed = true;
+
 			}
 		} else {
 			logger.error("There is NO exsit moduleInstanceMap");

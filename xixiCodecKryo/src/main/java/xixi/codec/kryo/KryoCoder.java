@@ -45,15 +45,15 @@ public class KryoCoder implements Coder {
 				logger.warn("Class {} does not have a user-defined Id, will use class.toString.hashcode insteand.", clz.toString());
 			}
 
-			logger.debug("Registering class {}");
+			logger.debug("Registering class {}", clz);
 		}
 		
-		kryo.register(RpcRequest.class, 300301);
-		kryo.register(RpcResponse.class, 300302);
-		classRegisterFlag = true;
+		kryo.register(RpcRequest.class, 300101);
+		kryo.register(RpcResponse.class, 300102);
 	}
 
-	public void registerClass(Class<?> clz) {
+	
+	public void registerClass(Class<?> clz){
 		kryo.register(clz);
 	}
 
@@ -68,6 +68,7 @@ public class KryoCoder implements Coder {
 			Object ret = kryo.readClassAndObject(input);
 			return ret;
 		} else {
+
 			registerClass();
 			return decode(inData);
 		}
@@ -83,6 +84,7 @@ public class KryoCoder implements Coder {
 			output.flush();
 			return outStream.toByteArray();
 		} else {
+
 			registerClass();
 			return encoder(outData);
 		}

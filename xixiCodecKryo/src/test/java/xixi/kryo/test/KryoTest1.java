@@ -1,7 +1,5 @@
 package xixi.kryo.test;
 
-import java.util.Arrays;
-
 import xixi.codec.kryo.KryoCoder;
 import xixi.testModuleB.test.Account;
 
