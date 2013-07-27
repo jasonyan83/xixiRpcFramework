@@ -3,6 +3,9 @@ package xix.rc.bean;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import xixi.common.annotation.XixiBean;
+
+@XixiBean(id=300101)
 public class HeartBeat {
 
 	private short moduleId;

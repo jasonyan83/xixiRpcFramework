@@ -9,5 +9,11 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiCodecApi"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiRpc"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiTestInterfaceModuleB"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/logback-classic-1.0.0-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/logback-core-1.0.0-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/slf4j-api-1.6.5.jar" sourcepath="C:/Documents and Settings/ThinkPad/.m2/repository/org/slf4j/slf4j-api/1.6.5/slf4j-api-1.6.5-sources.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-logging-1.1.1-jar.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/log4j-1.2.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

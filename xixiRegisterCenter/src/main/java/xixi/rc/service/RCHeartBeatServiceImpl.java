@@ -24,7 +24,7 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 	private Registry registry;
 	
 	@Override
-	@EventMethod(name = "rcheartbeat")
+	@EventMethod(name = "heartBeat")
 	public void heartBeat(HeartBeat heartbeat) {
 		logger.debug("Recieved HeartBeat " + heartbeat);
 		short moduleId = heartbeat.getModuleId();

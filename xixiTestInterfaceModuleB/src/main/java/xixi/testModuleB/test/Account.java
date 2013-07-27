@@ -1,5 +1,8 @@
 package xixi.testModuleB.test;
 
+import xixi.common.annotation.XixiBean;
+
+@XixiBean(id=302001)
 public class Account {
 
 	private Integer id;

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xixi.codec.api.Coder;
+import xixi.common.util.ByteUtils;
 import xixi.rpc.bean.RpcNotify;
 import xixi.rpc.bean.RpcRequest;
 import xixi.rpc.bean.RpcResponse;
@@ -76,6 +77,7 @@ public class XixiNettyDecoder extends FrameDecoder {
 		buffer.readerIndex(buffer.readerIndex() + 4);
 
 		byte[] msgBody = new byte[msgLength];
+		logger.debug("MSG BODY is " +  ByteUtils.bytesAsHexString(msgBody, msgBody.length));
 		buffer.readBytes(msgBody);
 
 		if (messageType == 1) {
@@ -86,9 +88,9 @@ public class XixiNettyDecoder extends FrameDecoder {
 					.setSecondTransaction(secondTransactionId)
 					.setMessageLength(msgLength)
 					.setInterfaceName(interfaceName).setMethodName(methodName);
-
+			logger.debug("The requst is without data is " + request);
 			request.setData((Object[])coder.decode(msgBody));
-			logger.debug("The requst is " + request);
+			logger.debug("The requst with data is " + request);
 			return request;
 		} else if (messageType == 2) {
 			RpcResponse response = new RpcResponse();
@@ -111,8 +113,9 @@ public class XixiNettyDecoder extends FrameDecoder {
 					.setSecondTransaction(secondTransactionId)
 					.setMessageLength(msgLength)
 					.setInterfaceName(interfaceName).setMethodName(methodName);
+			logger.debug("The notify without data is " + notify);
 			notify.setData((Object[])coder.decode(msgBody));
-			logger.debug("The notify is " + notify);
+			logger.debug("The notify with data is " + notify);
 			return notify;
 		}
 

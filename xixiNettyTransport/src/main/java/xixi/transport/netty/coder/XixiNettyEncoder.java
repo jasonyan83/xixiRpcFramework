@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import xixi.codec.api.Coder;
 import xixi.common.constants.Constants;
+import xixi.common.util.ByteUtils;
 import xixi.rpc.bean.RpcMessage;
 
 public class XixiNettyEncoder extends OneToOneEncoder{
@@ -22,7 +23,7 @@ public class XixiNettyEncoder extends OneToOneEncoder{
 	
 	@Override
 	protected Object encode(ChannelHandlerContext ctx, Channel channel, Object msg) throws Exception {
-
+		logger.debug("The encoded message is {}", msg);
 		if(msg instanceof RpcMessage){
 			int msgSize = Constants.RPC_FIXED_HEAD_SIZE;
 			
@@ -30,6 +31,7 @@ public class XixiNettyEncoder extends OneToOneEncoder{
 	    	
 	    	byte[] msgBody = coder.encoder(message.getData());
 	    	
+	    	logger.debug("MSG BODY is " +  ByteUtils.bytesAsHexString(msgBody, msgBody.length));
 	    	String interfaceName = message.getInterfaceName();
 	    	String methodName = message.getMethodName();
 	    	byte[] interfaceNameByte = interfaceName.getBytes("utf-8");

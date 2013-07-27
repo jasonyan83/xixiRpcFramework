@@ -3,8 +3,10 @@ package xix.rc.bean;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import xixi.common.annotation.XixiBean;
 import xixi.common.util.ModuleStringUtil;
 
+@XixiBean(id=300102)
 public class ModuleInfo {
 
 	private short moduleId;
