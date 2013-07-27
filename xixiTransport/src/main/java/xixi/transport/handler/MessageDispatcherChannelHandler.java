@@ -13,7 +13,6 @@ public class MessageDispatcherChannelHandler extends ExecutorChannelHandler{
 			public void run() {	
 				messageDispatcher.dispatcher(message);
 			}
-			
 		});
 
 	}

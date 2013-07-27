@@ -33,7 +33,7 @@
 		<property name="registerListener" ref="registerListener" />
 	</bean>
 	     
-	 <bean id="rcHeartBeatServie" class="xixi.rc.service.RCHeartBeatServiceImpl">
+	 <bean id="rcHeartBeatServie" class="xixi.rc.service.RCHeartBeatServiceImpl" init-method="init">
 		<property name="registry" ref="registry" />
 	</bean>
 	

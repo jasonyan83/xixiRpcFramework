@@ -31,7 +31,7 @@ public class XixiNettyEncoder extends OneToOneEncoder{
 	    	
 	    	byte[] msgBody = coder.encoder(message.getData());
 	    	
-	    	logger.debug("MSG BODY is " +  ByteUtils.bytesAsHexString(msgBody, msgBody.length));
+	    	logger.trace("MSG BODY is " +  ByteUtils.bytesAsHexString(msgBody, msgBody.length));
 	    	String interfaceName = message.getInterfaceName();
 	    	String methodName = message.getMethodName();
 	    	byte[] interfaceNameByte = interfaceName.getBytes("utf-8");

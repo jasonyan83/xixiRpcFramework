@@ -31,4 +31,8 @@ public interface Registry {
 	public Map<Short, HashMap<String,  ModuleStatusInfo>> getModulesMap();
 	
 	public boolean updateModuleStatusInfo(ModuleStatusInfo moduleStatusInfo);
+	
+	public void removeInstance(short moduleId, String ipAddress);
+	
+	public void removeInstanceAndUnactive(Channel channel);
 }

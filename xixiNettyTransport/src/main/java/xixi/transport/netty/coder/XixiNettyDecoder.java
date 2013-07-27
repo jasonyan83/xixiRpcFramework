@@ -29,7 +29,7 @@ public class XixiNettyDecoder extends FrameDecoder {
 			ChannelBuffer buffer) throws Exception {
 
 		if (buffer.readableBytes() < FIXED_HEAD_SIZE) {
-			logger.debug(
+			logger.trace(
 					"readable byte size  {} is less than fixed Head Size{}",
 					buffer.readableBytes(), FIXED_HEAD_SIZE);
 			return null;
@@ -77,7 +77,7 @@ public class XixiNettyDecoder extends FrameDecoder {
 		buffer.readerIndex(buffer.readerIndex() + 4);
 
 		byte[] msgBody = new byte[msgLength];
-		logger.debug("MSG BODY is " +  ByteUtils.bytesAsHexString(msgBody, msgBody.length));
+		logger.trace("MSG BODY is " +  ByteUtils.bytesAsHexString(msgBody, msgBody.length));
 		buffer.readBytes(msgBody);
 
 		if (messageType == 1) {

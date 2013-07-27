@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import xix.rc.bean.ModuleInfo;
 import xix.rc.bean.ModuleStatusInfo;
+import xixi.common.util.ModuleStringUtil;
 import xixi.transport.channel.Channel;
 
 public class DefaultRegistry implements Registry {
@@ -62,7 +63,7 @@ public class DefaultRegistry implements Registry {
 			modulesMap.put(moduleInfo.getModuleId(), modulesInstanceMap);
 			succeed = true;
 		}
-		logger.debug("The result of registering module is:" + (succeed==true?"SUCCEED!":"FAILED"));
+		logger.debug("The result of registry is:" + (succeed==true?"SUCCEED!":"FAILED"));
 		return succeed;
 	}
 
@@ -77,10 +78,12 @@ public class DefaultRegistry implements Registry {
 			logger.debug("The module " + moduleId + " with instance"
 					+ ipAddress + "is not exsit");
 		} else {
-			modulesInstanceMap.remove(ipAddress);
+			ModuleStatusInfo m = modulesInstanceMap.remove(ipAddress);
 			logger.debug("unRegistering Module " + moduleId + " with instance "
 					+ ipAddress);
 			succeed = true;
+			this.removeInstance(moduleId, ipAddress);
+
 		}
 		return succeed;
 	}
@@ -235,9 +238,42 @@ public class DefaultRegistry implements Registry {
 		}
 		return retMap;
 	}
-	
-	
 
+	private void unActiveInstance(short moduleId, String ipAddress){
+		Map<String, ModuleStatusInfo> map = this.modulesMap.get(moduleId);
+		if(map!=null){
+			ModuleStatusInfo m = map.get(ipAddress);
+			if(m!=null){
+				m.setLive(false);
+				logger.debug("Setting instance {}-{} to unactive", moduleId, ipAddress);
+			}
+			else{
+				logger.debug("No Module Instance info for {}-{}", moduleId, ipAddress);
+			}
+		}
+		else{
+			logger.debug("No Module Info for module {}", moduleId);
+		}
+	}
+	
+	public void removeInstance(short moduleId, String ipAddress){
+		String moduleString = moduleId + "-" + ipAddress;
+		Channel channel = this.instanceChannelMap.get(moduleString);
+		if(channel!=null){
+			this.channelInstanceMap.remove(channel);
+		}
+		this.instanceChannelMap.remove(moduleString);
+	}
+	
+	public void removeInstanceAndUnactive(Channel channel){
+		String  moduleString = this.channelInstanceMap.get(channel);
+		if(moduleString!=null){
+			this.instanceChannelMap.remove(moduleString);
+		}
+		this.channelInstanceMap.remove(channel);
+		this.unActiveInstance(Short.valueOf(ModuleStringUtil.getMoudleId(moduleString)),ModuleStringUtil.getIpAddress(moduleString));
+	}
+	
 	public Map<String, String> getInstanceChannelMap() {
 		Map<String,String> retMap = new HashMap<String,String>();
 		for(String key:instanceChannelMap.keySet()){

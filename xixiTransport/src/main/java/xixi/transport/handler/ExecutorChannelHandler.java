@@ -11,7 +11,7 @@ public class ExecutorChannelHandler extends AbstractChannelHandler{
 		@Override
 		public Thread newThread(Runnable r) {
 			//TODO: specific ThreadFactory
-			return new Thread(r,"ShardThreadPool");
+			return new Thread(r,"BizShardThreadPool");
 		}
 	});
 

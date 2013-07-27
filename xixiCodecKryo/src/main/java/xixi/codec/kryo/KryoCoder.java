@@ -42,7 +42,7 @@ public class KryoCoder implements Coder {
 				}
 			} else {
 				kryo.register(clz, Math.abs(clz.toString().hashCode()));
-				logger.warn("Do not have a user-defined Id, will use class.toString.hashcode insteand.");
+				logger.warn("Class {} does not have a user-defined Id, will use class.toString.hashcode insteand.", clz.toString());
 			}
 
 			logger.debug("Registering class {}");
