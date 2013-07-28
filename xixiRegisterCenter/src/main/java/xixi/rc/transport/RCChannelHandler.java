@@ -22,10 +22,11 @@ public class RCChannelHandler extends MessageDispatcherChannelHandler {
 		this.registry = registry;
 	}
 
+	//once instance is down, update registry info,but do not need to send status update notify to dependent modules, 
+	// module instance itself will handle the disconnect event.
 	@Override
 	public void onChannelDisconntected(Channel channel){
 		logger.debug("Channel disconnect for channel {}", channel);
-		registry.removeInstanceAndUnactive(channel);
-		
+		registry.removeInstanceAndDeactive(channel);
 	}
 }

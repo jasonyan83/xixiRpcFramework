@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import xix.rc.bean.ModuleInfo;
 import xixi.rc.iservice.RCNotifyService;
 
-public class DefaultRegisterListener implements RegisterListener {
+public class DefaultModuleInstanceListener implements ModuleInstanceListener {
 
 	public Registry getRegistry() {
 		return registry;
@@ -27,21 +27,21 @@ public class DefaultRegisterListener implements RegisterListener {
 	}
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(DefaultRegisterListener.class);
+			.getLogger(DefaultModuleInstanceListener.class);
 	
 	private Registry registry;
 	private RCNotifyService notifyService;
 	
 	@Override
 	public void onRegistered(short moduleId, String ipAddress) {
-		logger.debug("on module registered");
+		logger.debug("On module registered: {}-{}", moduleId, ipAddress);
 		List<Short> moduleIdList = registry.getDependentModuleIds(moduleId);
 		if (moduleIdList != null && !moduleIdList.isEmpty()) {
-			logger.debug("Module {} has following dependecny module", moduleId, moduleIdList);
+			logger.debug("Module {} has following dependecny module {}", moduleId, moduleIdList);
 			List<ModuleInfo> selfInstanceList = registry
 					.getModuleInstances(moduleId);
 			for(Short id : moduleIdList){
-				logger.debug("Send module instance registered change notify to module {}", id);
+				logger.debug("Send module instance registered notify to module {}", id);
 				notifyService.updatedModuleInstances(id, selfInstanceList);
 			}
 		}
@@ -52,7 +52,7 @@ public class DefaultRegisterListener implements RegisterListener {
 
 	@Override
 	public void onUnRegistered(short moduleId, String ipAddress) {
-		logger.debug("on module unregistered");
+		logger.debug("on module unregistered: {}-{}", moduleId, ipAddress);
 		List<Short> moduleIdList = registry.getDependentModuleIds(moduleId);
 		if (moduleIdList != null && !moduleIdList.isEmpty()) {
 			if (moduleIdList != null && !moduleIdList.isEmpty()) {
@@ -60,7 +60,7 @@ public class DefaultRegisterListener implements RegisterListener {
 				List<ModuleInfo> selfInstanceList = registry
 						.getModuleInstances(moduleId);
 				for(Short id : moduleIdList){
-					logger.debug("Send module instance unregistered change notify to module {}", id);
+					logger.debug("Send module instance unregistered notify to module {}", id);
 					notifyService.updatedModuleInstances(id, selfInstanceList);
 				}
 			}

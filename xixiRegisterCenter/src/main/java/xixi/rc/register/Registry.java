@@ -18,7 +18,7 @@ public interface Registry {
 	
 	public void buildInstanceChannelMap(short moduleId,String ipAddress,Channel channel);
 	
-	public void buildModuleDependencyMap(short srcModuleId, short destModuleId);
+	public void buildModuleDependencyMap(short moduleId,short dependentModuleId);
 	
 	public List<Short> getDependentModuleIds(short moduleId);
 	
@@ -34,5 +34,5 @@ public interface Registry {
 	
 	public void removeInstance(short moduleId, String ipAddress);
 	
-	public void removeInstanceAndUnactive(Channel channel);
+	public void removeInstanceAndDeactive(Channel channel);
 }

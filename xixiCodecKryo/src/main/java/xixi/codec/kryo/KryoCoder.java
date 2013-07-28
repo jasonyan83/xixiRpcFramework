@@ -50,6 +50,7 @@ public class KryoCoder implements Coder {
 		
 		kryo.register(RpcRequest.class, 300101);
 		kryo.register(RpcResponse.class, 300102);
+		classRegisterFlag = true;
 	}
 
 	
@@ -68,7 +69,6 @@ public class KryoCoder implements Coder {
 			Object ret = kryo.readClassAndObject(input);
 			return ret;
 		} else {
-
 			registerClass();
 			return decode(inData);
 		}

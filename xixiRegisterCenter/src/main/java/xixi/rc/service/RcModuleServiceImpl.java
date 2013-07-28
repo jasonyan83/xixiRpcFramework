@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import xix.rc.bean.ModuleInfo;
 import xixi.common.annotation.EventMethod;
 import xixi.rc.iservice.RCModuleService;
-import xixi.rc.register.RegisterListener;
+import xixi.rc.register.ModuleInstanceListener;
 import xixi.rc.register.Registry;
 
 public class RcModuleServiceImpl implements RCModuleService {
@@ -19,7 +19,7 @@ public class RcModuleServiceImpl implements RCModuleService {
 
 	private Registry registry;
 
-	private RegisterListener registerListener;
+	private ModuleInstanceListener registerListener;
 
 	public Registry getRegistry() {
 		return registry;
@@ -29,12 +29,11 @@ public class RcModuleServiceImpl implements RCModuleService {
 		this.registry = registry;
 	}
 
-
-	public RegisterListener getRegisterListener() {
+	public ModuleInstanceListener getRegisterListener() {
 		return registerListener;
 	}
 
-	public void setRegisterListener(RegisterListener registerListener) {
+	public void setRegisterListener(ModuleInstanceListener registerListener) {
 		this.registerListener = registerListener;
 	}
 	
@@ -63,7 +62,7 @@ public class RcModuleServiceImpl implements RCModuleService {
 	public int unRegisterModule(short moduleId, String ipAddress) {
 		boolean ret = registry.unRegister(moduleId, ipAddress);
 		if (ret) {
-			registerListener.onRegistered(moduleId, ipAddress);
+			registerListener.onUnRegistered(moduleId, ipAddress);
 			return 0;
 		} else {
 			return -1;
@@ -81,7 +80,7 @@ public class RcModuleServiceImpl implements RCModuleService {
 		List<ModuleInfo> list = new ArrayList<ModuleInfo>();
 		for (Short destModuleId : destModuleIdList) {
 			list.addAll(registry.getModuleInstances(destModuleId));
-			registry.buildModuleDependencyMap(srcModuleId, destModuleId);
+			registry.buildModuleDependencyMap(destModuleId, srcModuleId);
 		}
 		return list;
 	}

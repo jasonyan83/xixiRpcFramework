@@ -83,7 +83,7 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 							logger.debug("Set the instane to unactive");
 							moduleInfo.setLive(false);
 							moduleInfo.setHeartBeatRetryTimes(0);
-							registry.removeInstance(moduleInfo.getIpAddress());
+							registry.removeInstance(moduleInfo.getModuleId(),moduleInfo.getIpAddress());
 						}
 					} else {
 						moduleInfo.setHeartBeatRetryTimes(0);

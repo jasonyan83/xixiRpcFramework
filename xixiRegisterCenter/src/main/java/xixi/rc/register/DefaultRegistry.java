@@ -110,18 +110,20 @@ public class DefaultRegistry implements Registry {
 	}
 
 	@Override
-	public void buildModuleDependencyMap(short srcModuleId, short destModuleId) {
+	public void buildModuleDependencyMap(short moduleId,short dependentModuleId) {
 		logger.debug(
-				"build module dependency map for source module {}, dest module {}",
-				srcModuleId, destModuleId);
+				"build module dependency map for source module {}, depentdent module {}",
+				moduleId, dependentModuleId);
 		synchronized (this) {
-			List<Short> list = moduleDependenceMap.get(srcModuleId);
+			List<Short> list = moduleDependenceMap.get(moduleId);
 			if (list == null) {
 				list = new ArrayList<Short>();
-				list.add(destModuleId);
-				moduleDependenceMap.put(srcModuleId, list);
+				list.add(dependentModuleId);
+				moduleDependenceMap.put(moduleId, list);
 			}
-			list.add(destModuleId);
+			if(!list.contains(dependentModuleId)){
+				list.add(dependentModuleId);
+			}
 		}
 	}
 
@@ -243,7 +245,7 @@ public class DefaultRegistry implements Registry {
 		return retMap;
 	}
 
-	private void unActiveInstance(short moduleId, String ipAddress){
+	private void deactiveInstance(short moduleId, String ipAddress){
 		Map<String, ModuleStatusInfo> map = this.modulesMap.get(moduleId);
 		if(map!=null){
 			ModuleStatusInfo m = map.get(ipAddress);
@@ -269,13 +271,13 @@ public class DefaultRegistry implements Registry {
 		this.instanceChannelMap.remove(moduleString);
 	}
 	
-	public void removeInstanceAndUnactive(Channel channel){
+	public void removeInstanceAndDeactive(Channel channel){
 		String  moduleString = this.channelInstanceMap.get(channel);
 		if(moduleString!=null){
 			this.instanceChannelMap.remove(moduleString);
 		}
 		this.channelInstanceMap.remove(channel);
-		this.unActiveInstance(Short.valueOf(ModuleStringUtil.getMoudleId(moduleString)),ModuleStringUtil.getIpAddress(moduleString));
+		this.deactiveInstance(Short.valueOf(ModuleStringUtil.getMoudleId(moduleString)),ModuleStringUtil.getIpAddress(moduleString));
 	}
 	
 	public Map<String, String> getInstanceChannelMap() {
