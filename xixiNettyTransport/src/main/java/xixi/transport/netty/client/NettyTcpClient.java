@@ -1,5 +1,6 @@
 package xixi.transport.netty.client;
 
+import static xixi.router.Router.ROUTERMAP;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class NettyTcpClient extends AbstractTcpClient {
 	private static final Logger logger = LoggerFactory
 			.getLogger(NettyTcpClient.class);
 
-	private Integer moduleId;
+	private short moduleId;
 	private TcpClientPipelineFactory pipelineFactory;
 	private ClientBootstrap bootstrap = new ClientBootstrap(
 			new NioClientSocketChannelFactory(Executors.newCachedThreadPool(),
@@ -75,7 +76,9 @@ public class NettyTcpClient extends AbstractTcpClient {
 			if (channel != null) {
 				channel.onChannelDisconntected();
 			}
-			stop();
+			ROUTERMAP.get(moduleId).removeTcpClient(NettyTcpClient.this);
+			//the stop() will be called from router clean task
+			//stop();
 		}
 
 		@Override
@@ -116,23 +119,13 @@ public class NettyTcpClient extends AbstractTcpClient {
 		return future;
 	}
 
-	/*
-	 * @Override protected void onConnectSuccess() {
-	 * routerListener.onClientConnected(this); }
-	 */
-
-	public Integer getModuleId() {
+	public short getModuleId() {
 		return moduleId;
 	}
 
-	public void setModuleId(Integer moduleId) {
+	public void setModuleId(short moduleId) {
 		this.moduleId = moduleId;
 	}
-
-	/*
-	 * @Override protected void onConnectLost() {
-	 * routerListener.onClientClose(this); }
-	 */
 
 	public ChannelHandler getChannelHandler() {
 		return channelHandler;

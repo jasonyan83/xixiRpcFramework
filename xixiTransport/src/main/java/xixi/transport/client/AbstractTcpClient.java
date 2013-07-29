@@ -1,6 +1,5 @@
 package xixi.transport.client;
 
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -25,7 +24,6 @@ public abstract class AbstractTcpClient extends AbstractLBProperty implements Tc
 	private String localIp = "0.0.0.0";
 	private int localPort;
 	private String name;
-	private int moduleId;
 
 	protected Channel channel = null;
 
@@ -90,12 +88,19 @@ public abstract class AbstractTcpClient extends AbstractLBProperty implements Tc
 			logger.info(name() + " channel : " + channel
 					+ "closed, retry connect...");
 		}
+		
+		if (channel != null) {
+			channel.onChannelDisconntected();
+		}
+		
 		exec.schedule(new Runnable() {
 
 			public void run() {
 				doConnect();
 			}
 		}, retryTimeout, TimeUnit.MILLISECONDS);
+		
+		
 	}
 
 	protected abstract ChannelFuture doConnect();
@@ -113,7 +118,7 @@ public abstract class AbstractTcpClient extends AbstractLBProperty implements Tc
 	}
 
 	public String name() {
-		return this.moduleId + "-" + this.name;
+		return this.name;
 	}
 	
 	protected String destIp(){

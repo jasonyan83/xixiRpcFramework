@@ -4,6 +4,8 @@ import org.apache.commons.lang.StringUtils;
 
 public class ModuleStringUtil {
 
+	public final static String IP_SEPERATE = ":";
+	
 	public static String getMoudleId(String moduleString){
 		if (StringUtils.isNotEmpty(moduleString)) {
 			return  moduleString.split("-")[0];
@@ -20,14 +22,14 @@ public class ModuleStringUtil {
 	
 	public static String getIp(String ipAddress){
 		if (StringUtils.isNotEmpty(ipAddress)) {
-			return  ipAddress.split(":")[0];
+			return  ipAddress.split(IP_SEPERATE)[0];
 			}
 		return null;
 	}
 	
 	public static int getPort(String ipAddress){
 		if (StringUtils.isNotEmpty(ipAddress)) {
-			return  Integer.parseInt(ipAddress.split(":")[1]);
+			return  Integer.parseInt(ipAddress.split(IP_SEPERATE)[1]);
 			}
 		return 0;
 	}

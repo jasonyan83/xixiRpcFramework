@@ -145,7 +145,7 @@ public class ModuleStatusInfo {
 		this.lastMinuteTaskExecTime = lastMinuteTaskExecTime;
 	}
 	
-	public ModuleStatusInfo buildOrUpdateModuleStatusInfo(ModuleInfo moduleInfo){
+	public ModuleStatusInfo buildModuleStatusInfo(ModuleInfo moduleInfo){
 		this.setModuleId(moduleInfo.getModuleId());
 		this.setIpAddress(moduleInfo.getIpAddress());
 		this.setWeight(moduleInfo.getWeight());
@@ -153,6 +153,18 @@ public class ModuleStatusInfo {
 		this.setLastHBTime(new Date());
 		this.setLive(true);
 		this.setRouterScheduleType(moduleInfo.getRouterScheduleType());	
+		return this;
+	}
+	
+	//The router schedule type will stay the same in the moduleStatusInfo update notify
+	public ModuleStatusInfo updateModuleStatusInfo(ModuleStatusInfo moduleStatusInfo){
+		this.setWeight(moduleStatusInfo.getWeight());
+		this.setLastHBTime(new Date());
+		this.setLive(true);
+		this.setAverageTaskExecTime(moduleStatusInfo.getAverageTaskExecTime());
+		this.setLastMinuteTaskCount(moduleStatusInfo.getLastMinuteTaskCount());
+		this.setTotalTaskCount(moduleStatusInfo.getTotalTaskCount());
+		this.setLastMinuteTaskExecTime(moduleStatusInfo.getLastMinuteTaskExecTime());
 		return this;
 	}
 

@@ -31,7 +31,7 @@ public class XixiRCClientInvoker extends AbstractClientInvoker {
 			
 			RpcNotify notify = new RpcNotify();
 			notify.setBasicVer((byte)1).setDstModule(inv.moduleId()).setSrcModule(Constants.SOURCE_MODULEID)
-			.setInterfaceName(inv.rpcInterface()).setMethodName(inv.rpcMethod()).setType((byte)1).setData(inv.getArgs())
+			.setInterfaceName(inv.rpcInterface()).setMethodName(inv.rpcMethod()).setType((byte)3).setData(inv.getArgs())
 			.setTransactionId(inv.future().id());
 			
 		    notify.setData(inv.getArgs());	
@@ -40,7 +40,7 @@ public class XixiRCClientInvoker extends AbstractClientInvoker {
 		    
 		    for(ModuleInfo m : instances){
 		    	Channel channel = registry.getChannelByInstance(m.getIpAddress());
-		    	logger.debug("sending notify by instance {0} through channel {}", m.getIpAddress(), channel);
+		    	logger.debug("sending notify by instance {} through channel {}", m.getIpAddress(), channel);
 		    	channel.send(notify);
 		    }
 		}

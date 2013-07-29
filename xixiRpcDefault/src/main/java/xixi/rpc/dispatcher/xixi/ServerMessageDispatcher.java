@@ -21,14 +21,11 @@ import xixi.transport.dispatcher.Dispatcher;
  * @author hp
  *
  */
-public class ServerMessageDispatcher implements Dispatcher{
+public class ServerMessageDispatcher extends AbstractDispatcher{
 
     private static final Logger logger = 
     	LoggerFactory.getLogger(ServerMessageDispatcher.class);
     
-    private EventBus eventBus ;
-    
-
 	@Override
 	public void dispatcher(Object message) {
 		logger.debug("Dispatchering message {}", message);
@@ -38,7 +35,7 @@ public class ServerMessageDispatcher implements Dispatcher{
 			
 			final RpcResponse rpcResp = rpcRequest.copytoResponse();
 			
-			eventBus.fireEvent(inv);
+			this.getEventBus().fireEvent(inv);
 			
 			try {
 				inv.future().addCallback(new Callback(){
@@ -59,15 +56,6 @@ public class ServerMessageDispatcher implements Dispatcher{
 		else{
 			throw new IllegalArgumentException("invalid message");
 		}
-	}
-
-	public EventBus getEventBus() {
-		return eventBus;
-	}
-
-
-	public void setEventBus(EventBus eventBus) {
-		this.eventBus = eventBus;
 	}
 
 }

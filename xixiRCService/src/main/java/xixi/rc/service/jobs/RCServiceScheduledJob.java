@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import xix.rc.bean.HeartBeat;
 import xix.rc.bean.ModuleStatusInfo;
 import xixi.common.constants.Constants;
+import xixi.common.util.ModuleStringUtil;
 import xixi.monitor.dashboard.DashBoard;
 import xixi.monitor.dashboard.DashBoard.AbstractDashBoard;
 import xixi.rc.iservice.RCHeartBeatService;
@@ -102,7 +103,7 @@ public class RCServiceScheduledJob {
 		moduleInfo.setLastHBTime(new Date());
 		moduleInfo.setModuleId(Constants.SOURCE_MODULEID);
 		moduleInfo
-				.setIpAddress(Constants.LOCAL_IP + "-" + Constants.LOCAL_PORT);
+				.setIpAddress(Constants.LOCAL_IP + ModuleStringUtil.IP_SEPERATE + Constants.LOCAL_PORT);
 
 		logger.debug("Sending moduleStatusInfo " + moduleInfo);
 		statService.sendModuleStatInfo(moduleInfo);
@@ -111,7 +112,7 @@ public class RCServiceScheduledJob {
 
 	private void sendHeartBeat() {
 		HeartBeat heartBeat = new HeartBeat(Constants.SOURCE_MODULEID,
-				Constants.LOCAL_IP + ":" + Constants.LOCAL_PORT, 10000);
+				Constants.LOCAL_IP + ModuleStringUtil.IP_SEPERATE + Constants.LOCAL_PORT, 10000);
 		logger.debug("Sending heartbeat " + heartBeat);
 		hbService.heartBeat(heartBeat);
 	}
