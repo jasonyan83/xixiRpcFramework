@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import xixi.common.annotation.EventService;
 import xixi.common.constants.Constants;
 import xixi.common.respository.ArgumentTypeRepository;
@@ -18,12 +21,16 @@ import xixi.common.util.ConfigUtils;
 import xixi.rpc.RpcInvoker;
 import xixi.rpc.client.invoker.AbstractClientInvoker;
 import xixi.rpc.client.invoker.RpcInvocation;
+import xixi.rpc.exception.TimeoutException;
 import xixi.rpc.filter.Filter;
 import xixi.rpc.future.Future;
 import xixi.rpc.future.RpcFuture;
 
 public class ProxyFactory {
 
+	private static final Logger logger = LoggerFactory
+			.getLogger(ProxyFactory.class);
+	
 	private final Map<Class<?>, Object> proxyRepository = new HashMap<Class<?>, Object>();
 	// TODO: the invoker is singltion this time ,to make sure the thread safe
 	private RpcInvoker invoker;
@@ -128,7 +135,14 @@ public class ProxyFactory {
 				return invoker.invoke(inv);
 			} else {
 				// sync invoke
-				return invoker.invoke(inv).getValue();
+				try{
+					return invoker.invoke(inv).getValue();
+				}
+				catch(TimeoutException e){
+					logger.error("Invoke TIMEOUT for {}", method.getName());
+					return null;
+				}
+
 			}
 		}
 	}

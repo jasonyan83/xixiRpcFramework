@@ -56,7 +56,7 @@ public class Constants {
 	   public static final String ROUTER_SCHEDULE_TYPE_KEY="router.schedule.type";
 	   public static final String DEFAULT_ROUTER_SCHEDULE = "roundrobin";
 	   
-	   public static final int DEFAULT_FUTURE_TIMEOUT = 30000*1000;
+	   public static final int DEFAULT_FUTURE_TIMEOUT = 3*1000;
 	   
 	   public static final String SOURCE_MODULEID_KEY = "source.moduleId";
 	   public static short SOURCE_MODULEID;

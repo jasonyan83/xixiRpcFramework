@@ -88,7 +88,7 @@ public class XixiNettyDecoder extends FrameDecoder {
 					.setSecondTransaction(secondTransactionId)
 					.setMessageLength(msgLength)
 					.setInterfaceName(interfaceName).setMethodName(methodName);
-			logger.debug("The requst is without data is " + request);
+			//logger.debug("The requst without data is " + request);
 			request.setData((Object[])coder.decode(msgBody));
 			logger.debug("The requst with data is " + request);
 			return request;

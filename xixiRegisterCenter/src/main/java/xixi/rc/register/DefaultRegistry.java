@@ -39,6 +39,7 @@ public class DefaultRegistry implements Registry {
 					module.setLive(true);
 					logger.warn("模块{}对应的ip{},恢复服务", moduleInfo.getModuleId(),
 							moduleInfo.getIpAddress());
+					logger.debug("Current module is {}", module);
 					succeed = true;
 				} else {
 					logger.warn("模块{}已经存在相应的IP地址{}，重复注册？",
@@ -48,7 +49,7 @@ public class DefaultRegistry implements Registry {
 
 			} else {
 				ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo()
-						.buildOrUpdateModuleStatusInfo(moduleInfo);
+						.buildModuleStatusInfo(moduleInfo);
 				modulesInstanceMap.put(moduleInfo.getIpAddress(),
 						moduleStatusInfo);
 
@@ -57,7 +58,7 @@ public class DefaultRegistry implements Registry {
 		} else {
 			HashMap<String, ModuleStatusInfo> modulesInstanceMap = new HashMap<String, ModuleStatusInfo>();
 			ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo()
-					.buildOrUpdateModuleStatusInfo(moduleInfo);
+					.buildModuleStatusInfo(moduleInfo);
 			modulesInstanceMap.put(moduleInfo.getIpAddress(), moduleStatusInfo);
 
 			modulesMap.put(moduleInfo.getModuleId(), modulesInstanceMap);
@@ -178,28 +179,29 @@ public class DefaultRegistry implements Registry {
 			ModuleStatusInfo module = modulesInstanceMap.get(moduleStatusInfo
 					.getIpAddress());
 			if (module != null) {
+				logger.debug("Current module is {}", module);
 				if (!module.isLive()) {
 					//TODO: if the service is down , it will lose all the stat infomation currently
 					//and when it is up again, the register center will see the empty stat info.
-					module = moduleStatusInfo;
+					module = module.updateModuleStatusInfo(moduleStatusInfo);
 					logger.warn("模块{}对应的ip{},恢复服务",
 							moduleStatusInfo.getModuleId(),
 							moduleStatusInfo.getIpAddress());
 					modulesInstanceMap.put(moduleStatusInfo.getIpAddress(),
-							moduleStatusInfo);
+							module);
 					succeed = true;
 
 				}
 				else{
+					module = module.updateModuleStatusInfo(moduleStatusInfo);
 					modulesInstanceMap.put(moduleStatusInfo.getIpAddress(),
-							moduleStatusInfo);
+							module);
 					succeed = true;
 				}
 
 			} else {
-				modulesInstanceMap.put(moduleStatusInfo.getIpAddress(),
-						moduleStatusInfo);
-				succeed = true;
+				logger.error("There is no exsit module instance");
+				succeed = false;
 
 			}
 		} else {

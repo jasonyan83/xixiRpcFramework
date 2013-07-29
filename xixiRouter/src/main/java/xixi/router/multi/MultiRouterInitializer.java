@@ -54,6 +54,7 @@ public class MultiRouterInitializer implements RouterInitializer {
 				TcpClient client = TransportFacade.initClient(m.getIp(),
 						m.getPort());
 				client.setWeight(m.getWeight());
+				client.setModuleId(m.getModuleId());
 				RouterSchedules.setModuleScheduleType(Short.valueOf(m.getModuleId()), m.getRouterScheduleType());
 				r.addTcpClient(client);
 			}

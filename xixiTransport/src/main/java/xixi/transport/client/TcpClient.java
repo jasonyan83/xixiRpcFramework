@@ -11,4 +11,6 @@ public interface TcpClient extends LBProperty {
     public void setDestIp(String ip);
     public void setDestPort(int port);
     public String getDestIpAddress();
+    public void setModuleId(short moduleId);
+    public short getModuleId();
 }

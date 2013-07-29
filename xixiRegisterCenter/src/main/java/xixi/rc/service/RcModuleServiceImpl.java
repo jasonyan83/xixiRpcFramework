@@ -37,6 +37,7 @@ public class RcModuleServiceImpl implements RCModuleService {
 		this.registerListener = registerListener;
 	}
 	
+	//TODO:when the server down and then up immeditealy, the RC might not recoginze the same server, it is still wait for the hb to retry
 	@Override
 	@EventMethod(name = "registerModule", filter = "rcRegisterFilter")
 	public int registerModule(ModuleInfo moduleInfo) {

@@ -1,5 +1,6 @@
 package xixi.testModuleA.test;
 
+import xixi.rpc.exception.TimeoutException;
 import xixi.testModuleB.test.Account;
 import xixi.testModuleB.test.IAccountService;
 
@@ -12,12 +13,18 @@ public class LoginService {
 
 			public void run() {
 				while(true){
-					Account account = accountService.getAccountById();
-					System.out.println(account.getName() + "-" + account.getBalance());
+					
 					try {
+						Account account = accountService.getAccountById();
+						if(account!=null){
+							System.out.println(account.getName() + "-" + account.getBalance());
+						}
+						else{
+							System.out.println("NULL VALUE");
+						}
+
 						Thread.sleep(3000);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

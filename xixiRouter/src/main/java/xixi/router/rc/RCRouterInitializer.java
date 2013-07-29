@@ -7,6 +7,7 @@ import xix.rc.bean.ModuleInfo;
 import xixi.common.constants.Constants;
 import xixi.common.spring.BeanFactoryUtil;
 import xixi.common.util.ConfigUtils;
+import xixi.common.util.ModuleStringUtil;
 import xixi.rc.iservice.RCModuleService;
 import xixi.router.direct.DirectRouterInitializer;
 
@@ -43,7 +44,7 @@ public class RCRouterInitializer extends DirectRouterInitializer {
 		moduleInfo.setModuleId(Constants.SOURCE_MODULEID);
 		moduleInfo.setWeight(weight);
 		moduleInfo.setDescription(description);
-		moduleInfo.setIpAddress(Constants.LOCAL_IP + ":" + Constants.LOCAL_PORT);
+		moduleInfo.setIpAddress(Constants.LOCAL_IP + ModuleStringUtil.IP_SEPERATE + Constants.LOCAL_PORT);
 		moduleInfo.setRouterScheduleType(routerScheduleType);
 		
 		int result = rcModuleService.registerModule(moduleInfo);

@@ -42,10 +42,13 @@
         <property name="registry" ref="registry" />
     </bean>
     
-	<bean id="registerListener" class="xixi.rc.register.DefaultRegisterListener">
+	<bean id="registerListener" class="xixi.rc.register.DefaultModuleInstanceListener">
 	  <property name="registry" ref="registry" />
-	  <property name="notifyService" ref="notifyService" />
-	  	 
+	  <property name="notifyService" ref="notifyService" />  	 
+	</bean>
+	
+	<bean id="rcChannelHandler" class="xixi.rc.transport.RCChannelHandler">
+	  <property name="registry" ref="registry" /> 
 	</bean>
 	
 	 <bean id="notifyService" factory-bean="proxyFactory" factory-method="createProxy">

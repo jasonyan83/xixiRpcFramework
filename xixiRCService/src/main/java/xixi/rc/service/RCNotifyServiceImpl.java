@@ -50,6 +50,7 @@ public class RCNotifyServiceImpl implements RCNotifyService {
 									ModuleStringUtil.getIp(ipAddress),
 									ModuleStringUtil.getPort(ipAddress));
 							client.setWeight(m.getWeight());
+							client.setModuleId(destModuleId);
 							logger.debug("Adding new client{} to Router {}", client,r);
 							r.addTcpClient(client);
 						}

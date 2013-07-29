@@ -8,12 +8,12 @@
     
    <bean id="defaultClientMessageDipatcher"
         class="xixi.rpc.dispatcher.xixi.ClientMessageDispatcher" lazy-init="true">
+       <property name="eventBus" 		ref="${eventBus}" /> 
     </bean>
     
     <bean id="defaultServerMessageDipatcher"
         class="xixi.rpc.dispatcher.xixi.ServerMessageDispatcher" lazy-init="true">
         <property name="eventBus" 		ref="${eventBus}" /> 
-        
     </bean>
     
 </beans>

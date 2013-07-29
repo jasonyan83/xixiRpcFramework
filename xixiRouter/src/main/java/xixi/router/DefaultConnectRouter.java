@@ -17,7 +17,7 @@ import xixi.rpc.bean.RpcMessage;
 import xixi.transport.client.TcpClient;
 
 public class DefaultConnectRouter extends AbstractRouter {
-	
+
 	private static final Logger logger = LoggerFactory
 			.getLogger(DefaultConnectRouter.class);
 
@@ -35,12 +35,14 @@ public class DefaultConnectRouter extends AbstractRouter {
 		if (moduleId < 0) {
 			return null;
 		}
-		
+
 		DefaultConnectRouter router = (DefaultConnectRouter) ROUTERMAP
 				.get(moduleId);
 		if (router == null) {
-			ModuleRepository moduleRepository = (ModuleRepository)BeanFactoryUtil.getBean("moduleRepository");
-			DefaultConnectRouter r = new DefaultConnectRouter(moduleId,moduleRepository);
+			ModuleRepository moduleRepository = (ModuleRepository) BeanFactoryUtil
+					.getBean("moduleRepository");
+			DefaultConnectRouter r = new DefaultConnectRouter(moduleId,
+					moduleRepository);
 			router = (DefaultConnectRouter) ROUTERMAP.putIfAbsent(moduleId, r);
 			if (router == null) {
 				router = r;
@@ -51,7 +53,8 @@ public class DefaultConnectRouter extends AbstractRouter {
 
 	private final List<TcpClient> clientList = new ArrayList<TcpClient>();
 
-	public DefaultConnectRouter(short moduleId,ModuleRepository moduleRepository) {
+	public DefaultConnectRouter(short moduleId,
+			ModuleRepository moduleRepository) {
 		super(moduleId);
 		this.moduleRepository = moduleRepository;
 	}
@@ -60,13 +63,21 @@ public class DefaultConnectRouter extends AbstractRouter {
 	public void addTcpClient(TcpClient client) {
 		logger.debug("Add new client for mutilConnectRouter: " + client);
 		clientList.add(client);
-		moduleRepository.addNewInstance(this.moduleId(), client.getDestIpAddress());
+		moduleRepository.addNewInstance(this.moduleId(),
+				client.getDestIpAddress());
 	}
 
 	@Override
 	public void router(RpcMessage message) {
-		TcpClient client = RouterSchedules.schedule(this.moduleId(), clientList);
-		client.send(message);
+		TcpClient client = RouterSchedules
+				.schedule(this.moduleId(), clientList);
+		if(client!=null){
+			client.send(message);
+		}
+		else{
+			logger.error("No client available for module {}, Please check the to see if all the server is down!", moduleId());
+		}
+
 	}
 
 	@Override
@@ -74,16 +85,29 @@ public class DefaultConnectRouter extends AbstractRouter {
 		for (TcpClient client : clientList) {
 			if (ipAddress.equals(client.getDestIpAddress())) {
 				logger.debug("Preparing to remove client:" + client);
-				exe.schedule(new RouterCleanTask(client), 5000, TimeUnit.MILLISECONDS);
+				clientList.remove(client);
+				moduleRepository.removeInstance(client.getModuleId(), client.getDestIpAddress());
+				exe.schedule(new RouterCleanTask(client), 5000,
+						TimeUnit.MILLISECONDS);
 			}
 		}
 	}
-	
+
+	@Override
+	public void removeTcpClient(TcpClient client) {
+		logger.debug("Preparing to remove client:" + client);
+		clientList.remove(client);
+		moduleRepository.removeInstance(client.getModuleId(), client.getDestIpAddress());
+		exe.schedule(new RouterCleanTask(client), 5000, TimeUnit.MILLISECONDS);
+	}
+
 	@Override
 	public void destory() {
-		logger.debug("destory the DefaultConnecetRouter. Currently the client number is:" + clientList.size());
+		logger.debug("destory the DefaultConnecetRouter. Currently the client number is:"
+				+ clientList.size());
 		for (TcpClient client : clientList) {
-			 exe.schedule(new RouterCleanTask(client), 5000, TimeUnit.MILLISECONDS);
+			exe.schedule(new RouterCleanTask(client), 5000,
+					TimeUnit.MILLISECONDS);
 		}
 	}
 

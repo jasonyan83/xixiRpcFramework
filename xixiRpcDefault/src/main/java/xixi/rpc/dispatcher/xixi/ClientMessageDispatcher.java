@@ -5,14 +5,15 @@ import org.slf4j.LoggerFactory;
 
 import xixi.rpc.bean.RpcNotify;
 import xixi.rpc.bean.RpcResponse;
+import xixi.rpc.client.invoker.RpcInvocation;
 import xixi.rpc.future.DefaultFuture;
-import xixi.transport.dispatcher.Dispatcher;
 
-public class ClientMessageDispatcher implements Dispatcher {
+public class ClientMessageDispatcher extends AbstractDispatcher {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(ClientMessageDispatcher.class);
-	
+
+
 	@Override
 	public void dispatcher(Object message) {
 		logger.debug("Dispatchering message {}", message);
@@ -20,7 +21,9 @@ public class ClientMessageDispatcher implements Dispatcher {
 			DefaultFuture.setResult(message);
 		}
 		if(message instanceof RpcNotify){
-			DefaultFuture.setResult(message);
+			RpcNotify notify = (RpcNotify)message;
+			final RpcInvocation inv = new RpcInvocation(notify.getInterfaceName(),notify.getMethodName(),notify.getData());
+			this.getEventBus().fireEvent(inv);
 		}
 		else{
 			throw new IllegalArgumentException("message is not RpcResponse");
