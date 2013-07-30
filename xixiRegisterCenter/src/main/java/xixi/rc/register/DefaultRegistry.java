@@ -180,9 +180,15 @@ public class DefaultRegistry implements Registry {
 					.getIpAddress());
 			if (module != null) {
 				logger.debug("Current module is {}", module);
+<<<<<<< HEAD
 				if (!module.isLive()) {
 					//TODO: if the service is down , it will lose all the stat infomation currently
 					//and when it is up again, the register center will see the empty stat info.
+=======
+				if (!module.isLive()) {
+					//TODO: if the service is down , it will lose all the stat infomation currently
+					//and when it is up again, the register center will see the empty stat info.
+>>>>>>> ca9acabbc37e7875ab54e4b115b453fe158cf875
 					module = module.updateModuleStatusInfo(moduleStatusInfo);
 					logger.warn("模块{}对应的ip{},恢复服务",
 							moduleStatusInfo.getModuleId(),
@@ -193,16 +199,26 @@ public class DefaultRegistry implements Registry {
 
 				}
 				else{
+<<<<<<< HEAD
 					module = module.updateModuleStatusInfo(moduleStatusInfo);
+=======
+					module = module.updateModuleStatusInfo(moduleStatusInfo);
+>>>>>>> ca9acabbc37e7875ab54e4b115b453fe158cf875
 					modulesInstanceMap.put(moduleStatusInfo.getIpAddress(),
 							module);
 					succeed = true;
 				}
 
 			} else {
+<<<<<<< HEAD
 				logger.error("There is no exsit module instance");
 				succeed = false;
 
+=======
+				logger.error("There is no exsit module instance");
+				succeed = false;
+
+>>>>>>> ca9acabbc37e7875ab54e4b115b453fe158cf875
 			}
 		} else {
 			logger.error("There is NO exsit moduleInstanceMap");
