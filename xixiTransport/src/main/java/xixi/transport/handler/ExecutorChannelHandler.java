@@ -1,28 +1,18 @@
 package xixi.transport.handler;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
+import xixi.common.thread.XixiThreadPool;
 
 
-public class ExecutorChannelHandler extends AbstractChannelHandler{
+public abstract class ExecutorChannelHandler extends AbstractChannelHandler{
 
-	private ExecutorService executor = Executors.newCachedThreadPool(new ThreadFactory(){
-		@Override
-		public Thread newThread(Runnable r) {
-			//TODO: specific ThreadFactory
-			return new Thread(r,"BizShardThreadPool");
-		}
-	});
+	private XixiThreadPool threadPool;
 
-	public ExecutorService getExecutor() {
-		return executor;
+	public XixiThreadPool getThreadPool() {
+		return threadPool;
 	}
 
-	public void setExecutor(ExecutorService executor) {
-		if(executor==null){
-			throw new IllegalArgumentException();
-		}
-		this.executor = executor;
+	public void setThreadPool(XixiThreadPool threadPool) {
+		this.threadPool = threadPool;
 	}
+	
 }

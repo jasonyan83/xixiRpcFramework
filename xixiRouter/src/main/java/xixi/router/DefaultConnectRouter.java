@@ -61,6 +61,10 @@ public class DefaultConnectRouter extends AbstractRouter {
 
 	@Override
 	public void addTcpClient(TcpClient client) {
+		if(clientList.contains(client)){
+			logger.debug("Added client fail. Reason: Exsiting client {}", client);
+			return;
+		}
 		logger.debug("Add new client for mutilConnectRouter: " + client);
 		clientList.add(client);
 		moduleRepository.addNewInstance(this.moduleId(),
@@ -71,17 +75,12 @@ public class DefaultConnectRouter extends AbstractRouter {
 	public void router(RpcMessage message) {
 		TcpClient client = RouterSchedules
 				.schedule(this.moduleId(), clientList);
-<<<<<<< HEAD
 		if(client!=null){
 			client.send(message);
 		}
 		else{
 			logger.error("No client available for module {}, Please check the to see if all the server is down!", moduleId());
 		}
-
-=======
-		client.send(message);
->>>>>>> ca9acabbc37e7875ab54e4b115b453fe158cf875
 	}
 
 	@Override
@@ -89,10 +88,7 @@ public class DefaultConnectRouter extends AbstractRouter {
 		for (TcpClient client : clientList) {
 			if (ipAddress.equals(client.getDestIpAddress())) {
 				logger.debug("Preparing to remove client:" + client);
-<<<<<<< HEAD
 				clientList.remove(client);
-=======
->>>>>>> ca9acabbc37e7875ab54e4b115b453fe158cf875
 				moduleRepository.removeInstance(client.getModuleId(), client.getDestIpAddress());
 				exe.schedule(new RouterCleanTask(client), 5000,
 						TimeUnit.MILLISECONDS);
@@ -103,10 +99,7 @@ public class DefaultConnectRouter extends AbstractRouter {
 	@Override
 	public void removeTcpClient(TcpClient client) {
 		logger.debug("Preparing to remove client:" + client);
-<<<<<<< HEAD
 		clientList.remove(client);
-=======
->>>>>>> ca9acabbc37e7875ab54e4b115b453fe158cf875
 		moduleRepository.removeInstance(client.getModuleId(), client.getDestIpAddress());
 		exe.schedule(new RouterCleanTask(client), 5000, TimeUnit.MILLISECONDS);
 	}

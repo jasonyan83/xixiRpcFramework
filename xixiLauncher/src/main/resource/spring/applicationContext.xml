@@ -13,4 +13,8 @@
 	 <bean id="beanFactoryUtil"
         class="xixi.common.spring.BeanFactoryUtil">
     </bean>
+    
+     <bean id="shardThreadPool"
+        class="xixi.common.thread.ShardThreadPool">
+    </bean>
 </beans>

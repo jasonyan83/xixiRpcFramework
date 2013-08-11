@@ -56,16 +56,21 @@
     </bean>
     
 	 <bean id="registry" class="xixi.rc.register.DefaultRegistry">
+	      <property name="jmxExporter" ref="jmxExporter" /> 
 	</bean>
 	
+	 <bean id="shardThreadPool"
+        class="xixi.common.thread.ShardThreadPool">
+    </bean>
+    
 	<bean id="jmxExporter"
 		class="org.springframework.jmx.export.MBeanExporter">
-		<property name="beans">
+		<!-- <property name="beans">
 			<map>
 				<entry key="public:app=RegisterCenter,class=monitor,group=${biz.name},name=registry"
 					value-ref="registry" />	
 			</map>
-		</property>
+		</property> -->
 	</bean>
 	    
 </beans>

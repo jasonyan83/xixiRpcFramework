@@ -8,13 +8,12 @@ public class MessageDispatcherChannelHandler extends ExecutorChannelHandler{
 
 	@Override
 	public void onMessageRecieved(final Object message) {
-		this.getExecutor().submit(new Runnable(){
+		this.getThreadPool().submit(new Runnable(){
 			@Override
 			public void run() {	
 				messageDispatcher.dispatcher(message);
 			}
 		});
-
 	}
 
 	public Dispatcher getMessageDispatcher() {

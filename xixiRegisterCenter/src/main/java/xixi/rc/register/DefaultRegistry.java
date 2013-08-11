@@ -4,26 +4,48 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.management.ObjectName;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jmx.export.MBeanExporter;
 
 import xix.rc.bean.ModuleInfo;
 import xix.rc.bean.ModuleStatusInfo;
 import xixi.common.util.ModuleStringUtil;
 import xixi.transport.channel.Channel;
 
+//If RC is down, defaultRegisgry will lose all the the registry information since it stores all the 
+//information to memory. When the RC is up again, the module instance will do the registry process again
+//and send all the module dependence relationship to rc to help to build the dependency
 public class DefaultRegistry implements Registry {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(DefaultRegistry.class);
 
-	private final Map<Short, HashMap<String, ModuleStatusInfo>> modulesMap = new HashMap<Short, HashMap<String, ModuleStatusInfo>>();
+	//Thread Unsafe
+	private final ConcurrentHashMap<Short, HashMap<String, ModuleStatusInfo>> modulesMap = new ConcurrentHashMap<Short, HashMap<String, ModuleStatusInfo>>();
 
+	//ThreadSafe
 	private final Map<String, Channel> instanceChannelMap = new HashMap<String, Channel>();
+	
+	//ThreadSafe
 	private final Map<Channel, String> channelInstanceMap = new HashMap<Channel, String>();
 
-	private final Map<Short, List<Short>> moduleDependenceMap = new HashMap<Short, List<Short>>();
+	//Thread Unsafe
+	private final ConcurrentHashMap<Short, List<Short>> moduleDependenceMap = new ConcurrentHashMap<Short, List<Short>>();
+
+	private MBeanExporter jmxExporter;
+	
+	public MBeanExporter getJmxExporter() {
+		return jmxExporter;
+	}
+
+	public void setJmxExporter(MBeanExporter jmxExporter) {
+		this.jmxExporter = jmxExporter;
+	}
 
 	@Override
 	public boolean register(ModuleInfo moduleInfo) throws Exception {
@@ -115,17 +137,15 @@ public class DefaultRegistry implements Registry {
 		logger.debug(
 				"build module dependency map for source module {}, depentdent module {}",
 				moduleId, dependentModuleId);
-		synchronized (this) {
 			List<Short> list = moduleDependenceMap.get(moduleId);
 			if (list == null) {
 				list = new ArrayList<Short>();
 				list.add(dependentModuleId);
-				moduleDependenceMap.put(moduleId, list);
+				moduleDependenceMap.putIfAbsent(moduleId, list);
 			}
 			if(!list.contains(dependentModuleId)){
 				list.add(dependentModuleId);
 			}
-		}
 	}
 
 	@Override
@@ -180,45 +200,26 @@ public class DefaultRegistry implements Registry {
 					.getIpAddress());
 			if (module != null) {
 				logger.debug("Current module is {}", module);
-<<<<<<< HEAD
 				if (!module.isLive()) {
-					//TODO: if the service is down , it will lose all the stat infomation currently
+					//if the service is down , it will lose all the stat infomation currently
 					//and when it is up again, the register center will see the empty stat info.
-=======
-				if (!module.isLive()) {
-					//TODO: if the service is down , it will lose all the stat infomation currently
-					//and when it is up again, the register center will see the empty stat info.
->>>>>>> ca9acabbc37e7875ab54e4b115b453fe158cf875
 					module = module.updateModuleStatusInfo(moduleStatusInfo);
 					logger.warn("模块{}对应的ip{},恢复服务",
 							moduleStatusInfo.getModuleId(),
 							moduleStatusInfo.getIpAddress());
-					modulesInstanceMap.put(moduleStatusInfo.getIpAddress(),
-							module);
 					succeed = true;
 
 				}
 				else{
-<<<<<<< HEAD
-					module = module.updateModuleStatusInfo(moduleStatusInfo);
-=======
-					module = module.updateModuleStatusInfo(moduleStatusInfo);
->>>>>>> ca9acabbc37e7875ab54e4b115b453fe158cf875
+	                module = module.updateModuleStatusInfo(moduleStatusInfo);
 					modulesInstanceMap.put(moduleStatusInfo.getIpAddress(),
 							module);
 					succeed = true;
 				}
 
 			} else {
-<<<<<<< HEAD
-				logger.error("There is no exsit module instance");
+				logger.error("There is No exsit module instance");
 				succeed = false;
-
-=======
-				logger.error("There is no exsit module instance");
-				succeed = false;
-
->>>>>>> ca9acabbc37e7875ab54e4b115b453fe158cf875
 			}
 		} else {
 			logger.error("There is NO exsit moduleInstanceMap");
@@ -239,29 +240,42 @@ public class DefaultRegistry implements Registry {
 		return this.modulesMap;
 	}
 	
-	public Map<String,List<String>> getModulesMapInfo(){
-		Map<String,List<String>> retMap = new HashMap<String,List<String>>();
-		for(Short key : modulesMap.keySet()){
-			if(retMap.get(key.toString())!=null){
-				List<String> statusInfoList = retMap.get(key.toString());
-				HashMap<String,ModuleStatusInfo> statusInfoMap = modulesMap.get(key);
-			    for(ModuleStatusInfo statusInfo : statusInfoMap.values()){
-			    	statusInfoList.add(statusInfo.toString());
-			    }
-			    retMap.put(key.toString(), statusInfoList);
-			}
-			else{
-				List<String> statusInfoList = new ArrayList<String>();
-				HashMap<String,ModuleStatusInfo> statusInfoMap = modulesMap.get(key);
-				 for(ModuleStatusInfo statusInfo : statusInfoMap.values()){
-				    	statusInfoList.add(statusInfo.toString());
-				    }
-			
-				retMap.put(key.toString(), statusInfoList);
+	public void init(){
+		if ( null != jmxExporter ) {
+			ObjectName objectName;
+			try {
+				objectName = new ObjectName("prefix:class=rc,group=registry,name=dashboard");
+				jmxExporter.registerManagedResource(new RegistryDashBoard(), objectName);
+			} catch (Exception e) {
+				logger.error("registerMBean", e);
 			}
 		}
-		return retMap;
 	}
+	public class RegistryDashBoard{
+		public Map<String,List<String>> getModulesMapInfo(){
+			Map<String,List<String>> retMap = new HashMap<String,List<String>>();
+			for(Short key : modulesMap.keySet()){
+				if(retMap.get(key.toString())!=null){
+					List<String> statusInfoList = retMap.get(key.toString());
+					HashMap<String,ModuleStatusInfo> statusInfoMap = modulesMap.get(key);
+				    for(ModuleStatusInfo statusInfo : statusInfoMap.values()){
+				    	statusInfoList.add(statusInfo.toString());
+				    }
+				    retMap.put(key.toString(), statusInfoList);
+				}
+				else{
+					List<String> statusInfoList = new ArrayList<String>();
+					HashMap<String,ModuleStatusInfo> statusInfoMap = modulesMap.get(key);
+					 for(ModuleStatusInfo statusInfo : statusInfoMap.values()){
+					    	statusInfoList.add(statusInfo.toString());
+					    }
+					retMap.put(key.toString(), statusInfoList);
+				}
+			}
+			return retMap;
+		}
+	}
+	
 
 	private void deactiveInstance(short moduleId, String ipAddress){
 		Map<String, ModuleStatusInfo> map = this.modulesMap.get(moduleId);

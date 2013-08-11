@@ -5,12 +5,18 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import xixi.common.constants.Constants;
 import xixi.rpc.Callback;
 import xixi.rpc.exception.TimeoutException;
 
 public abstract class AbstractFuture implements Future{
 
+	private static final Logger logger = LoggerFactory
+			.getLogger(AbstractFuture.class);
+	
 	protected boolean done;
 	
 	protected boolean fail;
@@ -78,6 +84,7 @@ public abstract class AbstractFuture implements Future{
 			lock.unlock();
 		}
 		if(retValue==null){
+			logger.error("Return value is NULL, will throw out TimeoutException");
 			throw new TimeoutException("getValue timeout for future");
 		}
 		

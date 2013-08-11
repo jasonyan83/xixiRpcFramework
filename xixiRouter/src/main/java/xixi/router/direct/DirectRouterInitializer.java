@@ -1,19 +1,22 @@
 package xixi.router.direct;
 
+import static xixi.router.Router.ROUTERMAP;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xixi.common.constants.Constants;
 import xixi.common.util.ConfigUtils;
 import xixi.common.util.ModuleStringUtil;
+import xixi.router.AbstractRouterInitializer;
 import xixi.router.DefaultConnectRouter;
 import xixi.router.Router;
-import xixi.router.RouterInitializer;
 import xixi.router.schedule.RouterSchedules;
 import xixi.transport.client.TcpClient;
 import xixi.transport.facade.TransportFacade;
+import xixi.transport.listener.ConnectorListener;
 
-public class DirectRouterInitializer implements RouterInitializer{
+public class DirectRouterInitializer extends AbstractRouterInitializer {
 
 	private static final Logger logger = 
         	LoggerFactory.getLogger(DirectRouterInitializer.class);
@@ -59,7 +62,36 @@ public class DirectRouterInitializer implements RouterInitializer{
 				}
 			
 				TcpClient client = TransportFacade.initClient(ip, port);
-				r.addTcpClient(client);
+				client.setModuleId(Short.parseShort(moduleId));
+				this.addListener(client);
 			}
+	}
+	
+	protected void addListener(final TcpClient client){
+		logger.debug("DirectRouterInitializer addListener");
+		client.addConnectorListener(new ConnectorListener(){
+			@Override
+			public void onConnected() {
+				logger.debug("DirectRouterInitializer on client connected");
+				Router router = ROUTERMAP.get(client.getModuleId());
+				if(router!=null){
+					router.addTcpClient(client);
+				}
+				else{
+					logger.error("Add client to router failed. Router {} is NULL", router);
+				}
+			}
+
+			@Override
+			public void onDisConnected() {
+				Router router = ROUTERMAP.get(client.getModuleId());
+				if(router!=null){
+					router.removeTcpClient(client);
+				}
+				else{
+					logger.error("Remove client from router failed.  Router {} is NULL", router);
+				}
+			}
+		});
 	}
 }

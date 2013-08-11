@@ -15,6 +15,7 @@ import xixi.router.Router;
 import xixi.router.multi.ModuleRepository;
 import xixi.transport.client.TcpClient;
 import xixi.transport.facade.TransportFacade;
+import xixi.transport.listener.ConnectorListener;
 
 public class RCNotifyServiceImpl implements RCNotifyService {
 
@@ -45,14 +46,34 @@ public class RCNotifyServiceImpl implements RCNotifyService {
 					logger.debug("Module {} got new service instance: {}", destModuleId,ipAddress);
 					for(ModuleInfo m : instancesList){
 						if(m.getIpAddress().equals(ipAddress)){
-							Router r = DefaultConnectRouter.getOrAddRouter(destModuleId);
-							TcpClient client = TransportFacade.initClient(
+							final Router r = DefaultConnectRouter.getOrAddRouter(destModuleId);
+							final TcpClient client = TransportFacade.initClient(
 									ModuleStringUtil.getIp(ipAddress),
 									ModuleStringUtil.getPort(ipAddress));
 							client.setWeight(m.getWeight());
 							client.setModuleId(destModuleId);
 							logger.debug("Adding new client{} to Router {}", client,r);
-							r.addTcpClient(client);
+							client.addConnectorListener(new ConnectorListener(){
+								@Override
+								public void onConnected() {
+									if(r!=null){
+										r.addTcpClient(client);		
+									}
+									else{
+										logger.error("Router is NULL for module: {}", client.getModuleId());
+									}
+								}
+
+								@Override
+								public void onDisConnected() {
+									if(r!=null){
+										r.removeTcpClient(client);
+									}
+									else{
+										logger.error("Router is NULL for module: {}", client.getModuleId());
+									}
+								}
+							});
 						}
 					}
 				}

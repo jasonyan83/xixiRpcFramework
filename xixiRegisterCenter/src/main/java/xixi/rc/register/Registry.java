@@ -8,6 +8,7 @@ import xix.rc.bean.ModuleInfo;
 import xix.rc.bean.ModuleStatusInfo;
 import xixi.transport.channel.Channel;
 
+//Could have default, redis,DB, file system Regisgry
 public interface Registry {
 
 	public boolean register(ModuleInfo moduleInfo) throws Exception ;

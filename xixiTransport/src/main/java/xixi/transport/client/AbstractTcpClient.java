@@ -5,12 +5,13 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.jboss.netty.channel.ChannelFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xixi.common.bean.AbstractLBProperty;
 import xixi.transport.channel.Channel;
+import xixi.transport.handler.ChannelHandler;
+import xixi.transport.listener.ConnectorListener;
 
 public abstract class AbstractTcpClient extends AbstractLBProperty implements TcpClient {
 	private static final Logger logger = LoggerFactory
@@ -21,22 +22,29 @@ public abstract class AbstractTcpClient extends AbstractLBProperty implements Tc
 
 	private String destIp = null;
 	private int destPort = -1;
-	private String localIp = "0.0.0.0";
-	private int localPort;
 	private String name;
+
+	protected ChannelHandler channelHandler;
 
 	protected Channel channel = null;
 
 	protected long retryTimeout = 10 * 1000;
-	protected static final int MAX_RETRY_TIMES = 3;
-	protected AtomicInteger retryTimes = new AtomicInteger();
+	
+	protected int maxRetryTimes = 3;
+	
+	public int getMaxRetryTimes() {
+		return maxRetryTimes;
+	}
 
-	public AbstractTcpClient(String destIp, int despPort, String localIp,
-			int localPort, String name) {
+	public void setMaxRetryTimes(int maxRetryTimes) {
+		this.maxRetryTimes = maxRetryTimes;
+	}
+	
+	protected AtomicInteger retryTimes = new AtomicInteger(1);
+
+	public AbstractTcpClient(String destIp, int despPort, String name) {
 		this.destIp = destIp;
 		this.destPort = despPort;
-		this.localIp = localIp;
-		this.localPort = localPort;
 		this.name = name;
 	}
 
@@ -59,38 +67,10 @@ public abstract class AbstractTcpClient extends AbstractLBProperty implements Tc
 		}
 	}
 
-	protected void onConnectComplete(ChannelFuture future) {
-		if (!future.isSuccess()) {
-			if (retryTimes.get() > MAX_RETRY_TIMES) {
-				logger.info(name() + " connect [" + this.destIp + ":"
-						+ this.destPort + "] 超出了最大尝试此次，不再尝试连接");
-				return;
-			}
-
-			if (logger.isInfoEnabled()) {
-				logger.info(name() + " connect [" + this.destIp + ":"
-						+ this.destPort + "] failed, retry ["
-						+ retryTimes.get() + "] times");
-			}
-			exec.schedule(new Runnable() {
-
-				public void run() {
-					doConnect();
-				}
-			}, retryTimeout, TimeUnit.MILLISECONDS);
-		} else {
-			// onConnectSuccess();
-		}
-	}
-
-	private void onChannelDisconnected(Channel channel) {
+	protected void onChannelDisconnected(Channel channel) {
 		if (logger.isInfoEnabled()) {
 			logger.info(name() + " channel : " + channel
 					+ "closed, retry connect...");
-		}
-		
-		if (channel != null) {
-			channel.onChannelDisconntected();
 		}
 		
 		exec.schedule(new Runnable() {
@@ -100,10 +80,9 @@ public abstract class AbstractTcpClient extends AbstractLBProperty implements Tc
 			}
 		}, retryTimeout, TimeUnit.MILLISECONDS);
 		
-		
 	}
 
-	protected abstract ChannelFuture doConnect();
+	protected abstract void doConnect();
 
 	public long getRetryTimeout() {
 		return retryTimeout;
@@ -129,6 +108,14 @@ public abstract class AbstractTcpClient extends AbstractLBProperty implements Tc
 		return this.destPort;
 	}
 	
+	public ChannelHandler getChannelHandler() {
+		return channelHandler;
+	}
+
+	public void setChannelHandler(ChannelHandler channelHandler) {
+		this.channelHandler = channelHandler;
+	}
+	
 	@Override
 	public void setDestIp(String ip) {
 		this.destIp = ip;
@@ -138,8 +125,18 @@ public abstract class AbstractTcpClient extends AbstractLBProperty implements Tc
 	public void setDestPort(int port) {
 		this.destPort = port;
 	}
+	
 	@Override
 	public String getDestIpAddress() {
 		return this.destIp + ":" + this.destPort;
+	}
+	
+	public void addConnectorListener(ConnectorListener connectorListener) {
+		if(channelHandler!=null){
+			channelHandler.addConnectorListener(connectorListener);
+		}
+		else{
+			logger.error("ChannelHandler is NULL");
+		}
 	}
 }

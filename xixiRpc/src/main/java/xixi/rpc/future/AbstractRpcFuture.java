@@ -53,7 +53,8 @@ public abstract class AbstractRpcFuture extends AbstractFuture implements RpcFut
 						return resp.getData()[0];
 					}
 					if(resp.getStatus()==RpcResponse.TIMEOUT){
-						throw new TimeoutException("RPC Future timeout for Response");
+						logger.error("PC Future timeout for Response: {}", resp);
+						throw new TimeoutException("RPC Future timeout for Response "+ resp);
 					}
 				   return resp.getData()[0];
 			    }

@@ -2,14 +2,15 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans>
     <bean id="defaultServerChannelHandler"
-        class="xixi.transport.handler.MessageDispatcherChannelHandler" lazy-init="true">
+        class="xixi.transport.handler.MessageDispatcherChannelHandler" lazy-init="true" scope="prototype">
         <property name="messageDispatcher" ref="${server.message.dispatcher}"/>
+        <property name="threadPool" ref="${channel.handler.threadpool}"/>
     </bean>
     
      <bean id="defaultClientChannelHandler"
-        class="xixi.transport.handler.MessageDispatcherChannelHandler" lazy-init="true">
+        class="xixi.transport.handler.MessageDispatcherChannelHandler" lazy-init="true" scope="prototype">
         <property name="messageDispatcher" ref="${client.message.dispatcher}"/>
+        <property name="threadPool" ref="${channel.handler.threadpool}"/>
     </bean>
-    
     
 </beans>

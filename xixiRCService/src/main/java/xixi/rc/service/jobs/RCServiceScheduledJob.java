@@ -68,11 +68,11 @@ public class RCServiceScheduledJob {
 
 	public void start() {
 		logger.info("HeartBeat Schedule Job started!");
-		hbScheduleService.scheduleWithFixedDelay(new HeartBeatTask(), 5000,
+		hbScheduleService.scheduleWithFixedDelay(new HeartBeatTask(), 10000,
 				10000, TimeUnit.MILLISECONDS);
 
 		logger.info("ModuleStatus Schedule Job started!");
-		hbScheduleService.scheduleWithFixedDelay(new ModuleStatusTask(), 5000,
+		hbScheduleService.scheduleWithFixedDelay(new ModuleStatusTask(), 10000,
 				10000, TimeUnit.MILLISECONDS);
 	}
 

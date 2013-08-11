@@ -1,10 +1,10 @@
 package xixi.transport.netty.client;
 
-import static xixi.router.Router.ROUTERMAP;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.ChannelFuture;
@@ -18,9 +18,7 @@ import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xixi.common.constants.Constants;
 import xixi.transport.client.AbstractTcpClient;
-import xixi.transport.handler.ChannelHandler;
 import xixi.transport.netty.channel.NettyChannel;
 import xixi.transport.netty.pipeline.TcpClientPipelineFactory;
 import xixi.transport.util.SenderUtil;
@@ -35,14 +33,12 @@ public class NettyTcpClient extends AbstractTcpClient {
 			new NioClientSocketChannelFactory(Executors.newCachedThreadPool(),
 					Executors.newCachedThreadPool()));
 	
-	private ChannelHandler channelHandler;
-
 	public NettyTcpClient(String destIp,int destPort) {
-		super(destIp,destPort,Constants.LOCAL_IP,Constants.LOCAL_PORT,"NettyTcpClient");
+		super(destIp,destPort,"NettyTcpClient");
 	}
 
 	public NettyTcpClient() {
-		super(null,0,Constants.LOCAL_IP,Constants.LOCAL_PORT,"NettyTcpClient");
+		super(null,0,"NettyTcpClient");
 	}
 	
 	protected class IOHandler extends SimpleChannelUpstreamHandler {
@@ -66,6 +62,20 @@ public class NettyTcpClient extends AbstractTcpClient {
 			logger.info("NettyTcpClient-channelConnected:{}", e);
 			channel = NettyChannel.getOrCreateChannel(e
 					.getChannel(),channelHandler);
+			if(channel!=null){
+				exec.submit(new Runnable(){
+
+					@Override
+					public void run() {
+						channel.onChannelConntected();
+					}
+					
+				});
+			}
+			else{
+				logger.error("Channel is null");
+			}
+			
 		}
 
 		@Override
@@ -76,7 +86,11 @@ public class NettyTcpClient extends AbstractTcpClient {
 			if (channel != null) {
 				channel.onChannelDisconntected();
 			}
-			ROUTERMAP.get(moduleId).removeTcpClient(NettyTcpClient.this);
+			else{
+				logger.error("Channel is null");
+				return;
+			}
+			onChannelDisconnected(channel);
 			//the stop() will be called from router clean task
 			//stop();
 		}
@@ -90,10 +104,9 @@ public class NettyTcpClient extends AbstractTcpClient {
 		}
 	}
 
-	protected ChannelFuture doConnect() {
+	protected void doConnect() {
 		if (null == name() || destIp().equals("")) {
 			logger.warn(name() + " destIp is null, disable this connector.");
-			return null;
 		}
 
 		bootstrap.setOption("remoteAddress", new InetSocketAddress(destIp(),
@@ -116,23 +129,39 @@ public class NettyTcpClient extends AbstractTcpClient {
 				});
 			}
 		});
-		return future;
 	}
 
+	protected void onConnectComplete(ChannelFuture future) {
+		if (!future.isSuccess()) {
+			if (retryTimes.get() > maxRetryTimes) {
+				logger.info(name() + " connect [" + destIp() + ":"
+						+ destPort() + "] 超出了最大尝试此次，不再尝试连接");
+				return;
+			}
+
+			if (logger.isInfoEnabled()) {
+				logger.info(name() + " connect [" + destIp() + ":"
+						+ destPort() + "] failed, retry ["
+						+ retryTimes.get() + "] times");
+			}
+			retryTimes.incrementAndGet();
+			
+			exec.schedule(new Runnable() {
+
+				public void run() {
+					doConnect();
+				}
+			}, retryTimeout, TimeUnit.MILLISECONDS);
+		} else {
+			logger.debug("Client connected successful!");
+		}
+	}
 	public short getModuleId() {
 		return moduleId;
 	}
 
 	public void setModuleId(short moduleId) {
 		this.moduleId = moduleId;
-	}
-
-	public ChannelHandler getChannelHandler() {
-		return channelHandler;
-	}
-
-	public void setChannelHandler(ChannelHandler channelHandler) {
-		this.channelHandler = channelHandler;
 	}
 
 	public TcpClientPipelineFactory getPipelineFactory() {
