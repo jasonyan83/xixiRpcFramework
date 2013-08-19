@@ -60,6 +60,9 @@ public class Constants {
 	   
 	   public static final String SOURCE_MODULEID_KEY = "source.moduleId";
 	   public static short SOURCE_MODULEID;
+	   
+	   public static final String RC_CONNECT_RETRY_TIME_KEY = "rc.connect.retry.times";
+	   public static int RC_CONNECT_RETRY_TIME = 3;
 	   static{
 		   //TODO：add system default value here
 		   RPC_CLINET_FILTER_DEFAULT.add("logger");
@@ -69,7 +72,7 @@ public class Constants {
 		   LOCAL_PORT = Integer.parseInt(ConfigUtils.getProperty(LOCAL_PORT_KEY));
 		   
 		   SOURCE_MODULEID = Short.parseShort(ConfigUtils.getProperty(SOURCE_MODULEID_KEY));
-		   
+		   RC_CONNECT_RETRY_TIME = Integer.parseInt(ConfigUtils.getProperty(RC_CONNECT_RETRY_TIME_KEY,"3"));
 	   }
 	   
 }

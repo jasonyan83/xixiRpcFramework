@@ -28,5 +28,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiCodecKryo"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiRpcDefault"/>
 	<classpathentry kind="lib" path="/xixiNettyTransport/kryo-2.20-all.jar" sourcepath="F:/googleDownload/kryo-2.20/kryo-2.20/java"/>
+	<classpathentry kind="lib" path="jedis-2.1.0.jar"/>
+	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-pool-1.5.6-jar.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

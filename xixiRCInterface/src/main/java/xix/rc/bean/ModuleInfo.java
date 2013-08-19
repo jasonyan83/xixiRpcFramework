@@ -18,9 +18,21 @@ public class ModuleInfo {
 	private String routerScheduleType="";
 
 	private String description="";
+	
+	private boolean rcConnectLost = false;
+
 
 	public String getDescription() {
 		return description;
+		
+	}
+
+	public boolean isRcConnectLost() {
+		return rcConnectLost;
+	}
+
+	public void setRcConnectLost(boolean rcConnectLost) {
+		this.rcConnectLost = rcConnectLost;
 	}
 
 	public void setDescription(String description) {

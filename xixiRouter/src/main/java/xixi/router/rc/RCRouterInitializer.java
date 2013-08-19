@@ -20,6 +20,8 @@ public class RCRouterInitializer extends DirectRouterInitializer {
 			.getLogger(RCRouterInitializer.class);
 
 	private RCModuleService rcModuleService;
+	
+	private boolean rcConnectLost =  false;
 
 	public RCRouterInitializer() {
 		routerAddresses = ConfigUtils.getProperty(Constants.RC_ADDRESSES_KEY,
@@ -41,7 +43,8 @@ public class RCRouterInitializer extends DirectRouterInitializer {
 	}
 
 	@Override
-	protected void addListener(TcpClient client) {
+	protected void addListener(final TcpClient client) {
+		client.setMaxRetryTimes(Constants.RC_CONNECT_RETRY_TIME);
 		super.addListener(client);
 		client.addConnectorListener(new ConnectorListener() {
 			@Override
@@ -64,6 +67,7 @@ public class RCRouterInitializer extends DirectRouterInitializer {
 							+ ModuleStringUtil.IP_SEPERATE
 							+ Constants.LOCAL_PORT);
 					moduleInfo.setRouterScheduleType(routerScheduleType);
+					moduleInfo.setRcRebootFlag(rcConnectLost);
 
 					int result = rcModuleService.registerModule(moduleInfo);
 					if (result != 0) {
@@ -80,8 +84,7 @@ public class RCRouterInitializer extends DirectRouterInitializer {
 
 			@Override
 			public void onDisConnected() {
-				// TODO Auto-generated method stub
-
+				rcConnectLost = true;
 			}
 
 		});

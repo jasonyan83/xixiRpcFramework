@@ -124,7 +124,10 @@ public class DefaultConnectRouter extends AbstractRouter {
 		@Override
 		public void run() {
 			logger.debug("Stopping the client:" + client);
-			client.stop();
+			if(client.getModuleId()!=101){
+				client.stop();
+			}
+
 		}
 	}
 

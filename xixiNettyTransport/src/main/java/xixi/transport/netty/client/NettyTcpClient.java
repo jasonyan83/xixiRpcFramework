@@ -45,7 +45,7 @@ public class NettyTcpClient extends AbstractTcpClient {
 		@Override
 		public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
 				throws Exception {
-			logger.info("收到消息{}", e.getMessage());
+			logger.info("Message Received {}", e.getMessage());
 			Object message = e.getMessage();
 			SenderUtil.attachChannelToMsg(message, channel);
 			if(channel!=null){
@@ -63,8 +63,8 @@ public class NettyTcpClient extends AbstractTcpClient {
 			channel = NettyChannel.getOrCreateChannel(e
 					.getChannel(),channelHandler);
 			if(channel!=null){
+				//use different thread to dispatch channelconnected event so that it will not block current nio thread
 				exec.submit(new Runnable(){
-
 					@Override
 					public void run() {
 						channel.onChannelConntected();

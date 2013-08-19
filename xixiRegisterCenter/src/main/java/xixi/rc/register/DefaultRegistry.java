@@ -1,9 +1,11 @@
 package xixi.rc.register;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.management.ObjectName;
@@ -14,13 +16,12 @@ import org.springframework.jmx.export.MBeanExporter;
 
 import xix.rc.bean.ModuleInfo;
 import xix.rc.bean.ModuleStatusInfo;
-import xixi.common.util.ModuleStringUtil;
 import xixi.transport.channel.Channel;
 
 //If RC is down, defaultRegisgry will lose all the the registry information since it stores all the 
 //information to memory. When the RC is up again, the module instance will do the registry process again
 //and send all the module dependence relationship to rc to help to build the dependency
-public class DefaultRegistry implements Registry {
+public class DefaultRegistry extends AbstractRegister implements Registry {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(DefaultRegistry.class);
@@ -57,16 +58,25 @@ public class DefaultRegistry implements Registry {
 			ModuleStatusInfo module = modulesInstanceMap.get(moduleInfo
 					.getIpAddress());
 			if (module != null) {
-				if (!module.isLive()) {
+				if(!moduleInfo.isRcConnectLost()){
+					//RC stays live
+					if (!module.isLive()) {
+						module.setLive(true);
+						logger.warn("模块{}对应的ip{},恢复服务", moduleInfo.getModuleId(),
+								moduleInfo.getIpAddress());
+						succeed = true;
+					} else {
+						logger.warn("模块{}已经存在相应的IP地址{}，重复注册？",
+								moduleInfo.getModuleId(), moduleInfo.getIpAddress());
+						succeed = false;
+					}
+				}
+				else{
+					//RC was down and reboot again.
 					module.setLive(true);
-					logger.warn("模块{}对应的ip{},恢复服务", moduleInfo.getModuleId(),
-							moduleInfo.getIpAddress());
-					logger.debug("Current module is {}", module);
+					module.setRegisterTime(new Date());
 					succeed = true;
-				} else {
-					logger.warn("模块{}已经存在相应的IP地址{}，重复注册？",
-							moduleInfo.getModuleId(), moduleInfo.getIpAddress());
-					succeed = false;
+					logger.info("Module {} registered again after RCreboot", moduleInfo);
 				}
 
 			} else {
@@ -74,7 +84,6 @@ public class DefaultRegistry implements Registry {
 						.buildModuleStatusInfo(moduleInfo);
 				modulesInstanceMap.put(moduleInfo.getIpAddress(),
 						moduleStatusInfo);
-
 				succeed = true;
 			}
 		} else {
@@ -109,27 +118,6 @@ public class DefaultRegistry implements Registry {
 
 		}
 		return succeed;
-	}
-
-	@Override
-	public void buildInstanceChannelMap(short moduleId, String ipAddress,
-			Channel channel) {
-
-
-		logger.debug("Build instance channle map for {}-{}", moduleId, ipAddress);
-
-		String moduleString = channelInstanceMap.put(channel, moduleId + "-"
-				+ ipAddress);
-		if (moduleString != null) {
-			logger.warn(moduleString + " already exsit in the map for channel:"
-					+ channel);
-		}
-
-		Channel ch = instanceChannelMap.put(ipAddress, channel);
-		if (ch != null) {
-			logger.warn(channel + " already exsit in the map for instance:"
-					+ moduleString);
-		}
 	}
 
 	@Override
@@ -227,18 +215,6 @@ public class DefaultRegistry implements Registry {
 		}
 		return succeed;
 	}
-
-	public Channel getChannelByInstance(String ipAddress) {
-		return this.instanceChannelMap.get(ipAddress);
-	}
-
-	public String getInstanceIpByChannel(Channel channel) {
-		return this.channelInstanceMap.get(channel);
-	}
-	
-	public Map<Short, HashMap<String,  ModuleStatusInfo>> getModulesMap(){
-		return this.modulesMap;
-	}
 	
 	public void init(){
 		if ( null != jmxExporter ) {
@@ -277,7 +253,7 @@ public class DefaultRegistry implements Registry {
 	}
 	
 
-	private void deactiveInstance(short moduleId, String ipAddress){
+	protected void deactiveInstance(short moduleId, String ipAddress){
 		Map<String, ModuleStatusInfo> map = this.modulesMap.get(moduleId);
 		if(map!=null){
 			ModuleStatusInfo m = map.get(ipAddress);
@@ -294,41 +270,19 @@ public class DefaultRegistry implements Registry {
 		}
 	}
 	
-	public void removeInstance(short moduleId, String ipAddress){
-		String moduleString = moduleId + "-" + ipAddress;
-		Channel channel = this.instanceChannelMap.get(moduleString);
-		if(channel!=null){
-			this.channelInstanceMap.remove(channel);
-		}
-		this.instanceChannelMap.remove(moduleString);
-	}
-	
-	public void removeInstanceAndDeactive(Channel channel){
-		String  moduleString = this.channelInstanceMap.get(channel);
-		if(moduleString!=null){
-			this.instanceChannelMap.remove(moduleString);
-		}
-		this.channelInstanceMap.remove(channel);
-		this.deactiveInstance(Short.valueOf(ModuleStringUtil.getMoudleId(moduleString)),ModuleStringUtil.getIpAddress(moduleString));
-	}
-	
-	public Map<String, String> getInstanceChannelMap() {
-		Map<String,String> retMap = new HashMap<String,String>();
-		for(String key:instanceChannelMap.keySet()){
-			retMap.put(key, instanceChannelMap.get(key).toString());
-		}
-		return retMap;
-	}
-
-	public Map<String, String> getChannelInstanceMap() {
-		Map<String,String> retMap = new HashMap<String,String>();
-		for(Channel key:channelInstanceMap.keySet()){
-			retMap.put(key.toString(), channelInstanceMap.get(key));
-		}
-		return retMap;
-	}
-
 	public Map<Short, List<Short>> getModuleDependenceMap() {
 		return moduleDependenceMap;
 	}
+
+	@Override
+	public List<ModuleStatusInfo> getAllModules() {
+		List<ModuleStatusInfo> list = new ArrayList<ModuleStatusInfo>();
+		for(Entry<Short, HashMap<String, ModuleStatusInfo>> entry: modulesMap.entrySet()){
+			for(ModuleStatusInfo info :entry.getValue().values()){
+				list.add(info);
+			}
+		}
+		return list;
+	}
+
 }

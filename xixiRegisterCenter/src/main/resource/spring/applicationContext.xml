@@ -33,9 +33,9 @@
 		<property name="registerListener" ref="registerListener" />
 	</bean>
 	     
-	 <bean id="rcHeartBeatServie" class="xixi.rc.service.RCHeartBeatServiceImpl" init-method="init">
+<!-- 	 <bean id="rcHeartBeatServie" class="xixi.rc.service.RCHeartBeatServiceImpl" init-method="init">
 		<property name="registry" ref="registry" />
-	</bean>
+	</bean> -->
 	
 	 <bean id="xixiRCClientInvoker"
         class="xixi.rc.invoker.client.XixiRCClientInvoker">
@@ -57,6 +57,10 @@
     
 	 <bean id="registry" class="xixi.rc.register.DefaultRegistry">
 	      <property name="jmxExporter" ref="jmxExporter" /> 
+	</bean>
+	
+    <bean id="rcBootJob" class="xixi.rc.jobs.RCBootJob" init-method="init">
+	   <property name="registry" ref="registry" /> 
 	</bean>
 	
 	 <bean id="shardThreadPool"

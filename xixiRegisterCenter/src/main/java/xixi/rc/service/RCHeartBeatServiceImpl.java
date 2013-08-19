@@ -23,6 +23,7 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 
 	private Registry registry;
 
+	private boolean firstCheck = true;
 	@Override
 	@EventMethod(name = "heartBeat")
 	public void heartBeat(HeartBeat heartbeat) {
@@ -59,12 +60,10 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 
 		@Override
 		public void run() {
-			for (HashMap<String, ModuleStatusInfo> modules : registry
-					.getModulesMap().values()) {
-				for (ModuleStatusInfo moduleInfo : modules.values()) {
+			for (ModuleStatusInfo moduleInfo : registry.getAllModules()) {
 					if (!moduleInfo.isLive()) {
 /*						logger.debug(
-								"Instance {} is down. Non't need to check the heartbeat",
+								"Instance {} is down. No not need to check the heartbeat",
 								moduleInfo.getModuleId() + "-"
 										+ moduleInfo.getIpAddress());*/
 						continue;
@@ -98,5 +97,5 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 					- moduleInfo.getLastHBTime().getTime();
 			return (duration >= moduleInfo.getHeartBeatInteval());
 		}
-	}
+	
 }

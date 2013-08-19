@@ -17,8 +17,9 @@ import xix.rc.bean.ModuleStatusInfo;
 import xixi.rc.iservice.RCNotifyService;
 import xixi.rc.register.Registry;
 
+//The notify job is not used by default. RC will only send moduleStatus updated notify 
+//when a new instance register to the RC
 public class RCModuleStatusInfoNotifyJob {
-
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(RCModuleStatusInfoNotifyJob.class);
@@ -41,14 +42,14 @@ public class RCModuleStatusInfoNotifyJob {
 	
 	private void sendModuleStatusInfoNotify(){
 	    Map<Short, HashMap<String, ModuleStatusInfo>> fullCopyMap = new HashMap<Short, HashMap<String, ModuleStatusInfo>>();
-	    fullCopyMap.putAll(registry.getModulesMap());
+	   // fullCopyMap.putAll(registry.getModulesMap());
 	    
 	    for(Entry<Short, HashMap<String, ModuleStatusInfo>> entry : fullCopyMap.entrySet()){
 	    	Short moduleId = entry.getKey();
 	    	
 	    	List<Short> moduleIdList = registry.getDependentModuleIds(moduleId);
 			if (moduleIdList != null && !moduleIdList.isEmpty()) {
-				logger.debug("Module {} has following dependecny module {}", moduleId, moduleIdList);
+				logger.debug(" Module {} has following dependecny module {}", moduleId, moduleIdList);
 				List<ModuleInfo> selfInstanceList = registry
 						.getModuleInstances(moduleId);
 				for(Short id : moduleIdList){
@@ -60,7 +61,6 @@ public class RCModuleStatusInfoNotifyJob {
 				logger.debug("No module depend on Module {}", moduleId);
 			}
 	    }
-	    
 	}
 	
 	private class ModuleStatusInfoNotifyTaskk implements Runnable {
