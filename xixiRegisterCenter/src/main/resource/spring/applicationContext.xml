@@ -49,6 +49,8 @@
 	
 	<bean id="rcChannelHandler" class="xixi.rc.transport.RCChannelHandler">
 	  <property name="registry" ref="${registry.type}Registry" /> 
+	   <property name="messageDispatcher" ref="${server.message.dispatcher}"/>
+        <property name="threadPool" ref="${channel.handler.threadpool}"/>
 	</bean>
 	
 	 <bean id="notifyService" factory-bean="proxyFactory" factory-method="createProxy">

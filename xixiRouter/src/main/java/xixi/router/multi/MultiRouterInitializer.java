@@ -36,12 +36,6 @@ public class MultiRouterInitializer extends AbstractRouterInitializer {
 	@Override
 	public void init() {
 		logger.debug("Initializing Mutil Router");
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		List<Short> destMoudleIdList = DependencyModuleRepository
 				.getDepentModuleIdList();
 		logger.debug("Get Dependency moduleId list " + destMoudleIdList);

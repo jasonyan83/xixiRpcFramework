@@ -15,4 +15,5 @@ public interface ChannelHandler {
 	void onSent(Object message);
 	
 	void addConnectorListener(ConnectorListener listener);
+
 }

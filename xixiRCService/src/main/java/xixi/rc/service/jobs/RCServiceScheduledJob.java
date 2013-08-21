@@ -72,8 +72,8 @@ public class RCServiceScheduledJob {
 				10000, TimeUnit.MILLISECONDS);*/
 
 		logger.info("ModuleStatus Schedule Job started!");
-		hbScheduleService.scheduleWithFixedDelay(new ModuleStatusTask(), 10000,
-				10000, TimeUnit.MILLISECONDS);
+		hbScheduleService.scheduleWithFixedDelay(new ModuleStatusTask(), 15*1000,
+				300*1000, TimeUnit.MILLISECONDS);
 	}
 
 	private void sendModuleStatusInfo() {
