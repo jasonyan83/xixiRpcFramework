@@ -67,7 +67,7 @@ public class RCRouterInitializer extends DirectRouterInitializer {
 							+ ModuleStringUtil.IP_SEPERATE
 							+ Constants.LOCAL_PORT);
 					moduleInfo.setRouterScheduleType(routerScheduleType);
-					moduleInfo.setRcRebootFlag(rcConnectLost);
+					moduleInfo.setRcConnectLost(rcConnectLost);
 
 					int result = rcModuleService.registerModule(moduleInfo);
 					if (result != 0) {

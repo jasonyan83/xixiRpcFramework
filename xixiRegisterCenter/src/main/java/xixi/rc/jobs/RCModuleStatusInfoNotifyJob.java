@@ -17,7 +17,7 @@ import xix.rc.bean.ModuleStatusInfo;
 import xixi.rc.iservice.RCNotifyService;
 import xixi.rc.register.Registry;
 
-//The notify job is not used by default. RC will only send moduleStatus updated notify 
+//This notify job is not used by default. RC will only send moduleStatus updated notify 
 //when a new instance register to the RC
 public class RCModuleStatusInfoNotifyJob {
 

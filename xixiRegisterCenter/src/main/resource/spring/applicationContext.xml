@@ -21,15 +21,15 @@
     </bean>
     
      <bean id="rcRegisterFilter" class="xixi.rc.filter.RCRegisterFilter">
-		<property name="registry" ref="registry" />
+		<property name="registry" ref="${registry.type}Registry" />
 	</bean>
 	    
     <bean id="rcStatServiceImpl" class="xixi.rc.service.RCStatServiceImpl">
-		<property name="registry" ref="registry" />
+		<property name="registry" ref="${registry.type}Registry" />
 	</bean>
 	
 	<bean id="rcModuleService" class="xixi.rc.service.RcModuleServiceImpl">
-		<property name="registry" ref="registry" />
+		<property name="registry" ref="${registry.type}Registry" />
 		<property name="registerListener" ref="registerListener" />
 	</bean>
 	     
@@ -39,28 +39,31 @@
 	
 	 <bean id="xixiRCClientInvoker"
         class="xixi.rc.invoker.client.XixiRCClientInvoker">
-        <property name="registry" ref="registry" />
+        <property name="registry" ref="${registry.type}Registry" />
     </bean>
     
 	<bean id="registerListener" class="xixi.rc.register.DefaultModuleInstanceListener">
-	  <property name="registry" ref="registry" />
+	  <property name="registry" ref="${registry.type}Registry" />
 	  <property name="notifyService" ref="notifyService" />  	 
 	</bean>
 	
 	<bean id="rcChannelHandler" class="xixi.rc.transport.RCChannelHandler">
-	  <property name="registry" ref="registry" /> 
+	  <property name="registry" ref="${registry.type}Registry" /> 
 	</bean>
 	
 	 <bean id="notifyService" factory-bean="proxyFactory" factory-method="createProxy">
        <constructor-arg value="xixi.rc.iservice.RCNotifyService" />
     </bean>
     
-	 <bean id="registry" class="xixi.rc.register.DefaultRegistry">
+	 <bean id="defaultRegistry" class="xixi.rc.register.DefaultRegistry" lazy-init="true">
 	      <property name="jmxExporter" ref="jmxExporter" /> 
 	</bean>
 	
+     <bean id="redisRegistry" class="xixi.rc.register.RedisRegistry" lazy-init="true">
+	</bean>
+	
     <bean id="rcBootJob" class="xixi.rc.jobs.RCBootJob" init-method="init">
-	   <property name="registry" ref="registry" /> 
+	   <property name="registry" ref="${registry.type}Registry" /> 
 	</bean>
 	
 	 <bean id="shardThreadPool"

@@ -1,5 +1,7 @@
 package xix.rc.bean;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -7,7 +9,12 @@ import xixi.common.annotation.XixiBean;
 import xixi.common.util.ModuleStringUtil;
 
 @XixiBean(id=300102)
-public class ModuleInfo {
+public class ModuleInfo implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4648995679231228617L;
 
 	private short moduleId;
 

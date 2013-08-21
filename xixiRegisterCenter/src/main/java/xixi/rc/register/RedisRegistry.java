@@ -2,7 +2,6 @@ package xixi.rc.register;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,7 +18,6 @@ import redis.clients.jedis.JedisPoolConfig;
 import xix.rc.bean.ModuleInfo;
 import xix.rc.bean.ModuleStatusInfo;
 import xixi.common.util.ConfigUtils;
-import xixi.transport.channel.Channel;
 
 public class RedisRegistry extends AbstractRegister implements Registry {
 
@@ -54,7 +52,7 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 		boolean moudleExsit = isModuleExsit(moduleInfo.getModuleId(),
 				moduleInfo.getIpAddress());
 
-		addModuleId(moduleInfo.getModuleId());
+		long ret = addModuleId(moduleInfo.getModuleId());
 
 		if (moudleExsit) {
 			final ModuleStatusInfo module = getModule(moduleInfo.getModuleId(),
@@ -87,7 +85,8 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 		} else {
 			ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo()
 					.buildModuleStatusInfo(moduleInfo);
-			saveModule(moduleStatusInfo);
+			long rets = saveModule(moduleStatusInfo);
+			succeed = true;
 		}
 		return succeed;
 	}
@@ -134,7 +133,6 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 				}
 				return moduleInfoList;
 			}
-
 		});
 	}
 
@@ -212,16 +210,23 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 	@Override
 	public boolean updateModuleStatusInfo(
 			final ModuleStatusInfo moduleStatusInfo) {
-		Long ret = executeJedisTask(new BinaryJedisTask<Long>() {
-			@Override
-			public Long execute(BinaryJedisCommands jedis) {
-				String id = moduleStatusInfo.getModuleId() + "";
-				return jedis.hset(id.getBytes(), moduleStatusInfo
-						.getIpAddress().getBytes(), SerializationUtils
-						.serialize(moduleStatusInfo));
+		logger.debug("Update moduleStatusInfo for {}", moduleStatusInfo);
+	    ModuleStatusInfo module = getModule(moduleStatusInfo.getModuleId(),
+				moduleStatusInfo.getIpAddress());
+		if (module != null) {
+			logger.debug("Current module is {}", module);
+			if (!module.isLive()) {
+				logger.warn("模块{}对应的ip{},恢复服务", moduleStatusInfo.getModuleId(),
+						moduleStatusInfo.getIpAddress());
 			}
-		});
-		return (ret == 0l) ? true : false;
+			module = module.updateModuleStatusInfo(moduleStatusInfo);
+			long ret = saveModule(module);
+			return (ret == 0l) ? true : false;
+		}
+		else {
+			logger.error("There is No exsit module instance");
+			return false;
+		}
 	}
 
 	@Override
@@ -231,15 +236,15 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 		saveModule(m);
 	}
 
-	private void addModuleId(short moduleId) {
+	private Long addModuleId(short moduleId) {
 		final String id = moduleId + "";
-		executeJedisTask(new BinaryJedisTask<Long>() {
+		return executeJedisTask(new BinaryJedisTask<Long>() {
 			@Override
 			public Long execute(BinaryJedisCommands jedis) {
-				if (jedis.sismember(MODULE_ID_KEY.getBytes(), id.getBytes())) {
+				if (!jedis.sismember(MODULE_ID_KEY.getBytes(), id.getBytes())) {
 					return jedis.sadd(MODULE_ID_KEY.getBytes(), id.getBytes());
 				}
-				return null;
+				return -1l;
 			}
 		});
 	}

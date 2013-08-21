@@ -1,5 +1,6 @@
 package xix.rc.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -8,8 +9,13 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import xixi.common.annotation.XixiBean;
 
 @XixiBean(id=300103)
-public class ModuleStatusInfo {
+public class ModuleStatusInfo implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3010603398012468028L;
+
 	private short moduleId;
 
 	private String ipAddress;

@@ -29,12 +29,6 @@ public class DefaultRegistry extends AbstractRegister implements Registry {
 	//Thread Unsafe
 	private final ConcurrentHashMap<Short, HashMap<String, ModuleStatusInfo>> modulesMap = new ConcurrentHashMap<Short, HashMap<String, ModuleStatusInfo>>();
 
-	//ThreadSafe
-	private final Map<String, Channel> instanceChannelMap = new HashMap<String, Channel>();
-	
-	//ThreadSafe
-	private final Map<Channel, String> channelInstanceMap = new HashMap<Channel, String>();
-
 	//Thread Unsafe
 	private final ConcurrentHashMap<Short, List<Short>> moduleDependenceMap = new ConcurrentHashMap<Short, List<Short>>();
 
