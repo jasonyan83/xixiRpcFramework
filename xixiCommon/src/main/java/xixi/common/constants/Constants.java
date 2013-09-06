@@ -8,6 +8,7 @@ import xixi.common.util.ConfigUtils;
 
 public class Constants {
 
+	   public static final String PATH_SEPARATOR = "/";
 	   public static final String  DEFAULT_PROPERTIES  = "app.properties";
 
 	   public static final String  PROPERTIES_KEY  = "xixi.properties.file";
@@ -28,9 +29,15 @@ public class Constants {
 	   
 	   public static final String ROUTER_NAME = "router.name";
 	   
+	   public static final String REGISTRY_TYPE = "registry.type";
+	   
 	   public static final String DEFAULT_ROUTER = "direct";
 	   
 	   public static final String RC_ROUTER = "direct-rc";
+	   
+	   public static final String MODULE_VERSION = "version";
+	   
+	   public static final String ZOOKEEPER_ROUTER = "zookeeper";
 	   
 	   public static final String RC_MODULE_ID = "rc.module.id";
 	   

@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import xixi.common.annotation.XixiBean;
 
 @XixiBean(id=300103)
-public class ModuleStatusInfo implements Serializable {
+public class ModuleInstanceStatusInfo implements Serializable {
 	
 	/**
 	 * 
@@ -151,7 +151,7 @@ public class ModuleStatusInfo implements Serializable {
 		this.lastMinuteTaskExecTime = lastMinuteTaskExecTime;
 	}
 	
-	public ModuleStatusInfo buildModuleStatusInfo(ModuleInfo moduleInfo){
+	public ModuleInstanceStatusInfo buildModuleStatusInfo(ModuleInstanceInfo moduleInfo){
 		this.setModuleId(moduleInfo.getModuleId());
 		this.setIpAddress(moduleInfo.getIpAddress());
 		this.setWeight(moduleInfo.getWeight());
@@ -163,7 +163,7 @@ public class ModuleStatusInfo implements Serializable {
 	}
 	
 	//The router schedule type will stay the same in the moduleStatusInfo update notify
-	public ModuleStatusInfo updateModuleStatusInfo(ModuleStatusInfo moduleStatusInfo){
+	public ModuleInstanceStatusInfo updateModuleStatusInfo(ModuleInstanceStatusInfo moduleStatusInfo){
 		this.setWeight(moduleStatusInfo.getWeight());
 		this.setLastHBTime(new Date());
 		this.setLive(true);

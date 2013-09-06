@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xix.rc.bean.HeartBeat;
-import xix.rc.bean.ModuleStatusInfo;
+import xix.rc.bean.ModuleInstanceStatusInfo;
 import xixi.common.constants.Constants;
 import xixi.common.util.ModuleStringUtil;
 import xixi.monitor.dashboard.DashBoard;
@@ -77,7 +77,7 @@ public class RCServiceScheduledJob {
 	}
 
 	private void sendModuleStatusInfo() {
-		ModuleStatusInfo moduleInfo = new ModuleStatusInfo();
+		ModuleInstanceStatusInfo moduleInfo = new ModuleInstanceStatusInfo();
 		AbstractDashBoard serverDashboard = dashBoard.getDashBoard("server");
 		Long totalNum = 0l;
 		Long lastMinuteNum = 0l;

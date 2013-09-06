@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xix.rc.bean.HeartBeat;
-import xix.rc.bean.ModuleStatusInfo;
+import xix.rc.bean.ModuleInstanceStatusInfo;
 import xixi.common.annotation.EventMethod;
 import xixi.rc.iservice.RCHeartBeatService;
 import xixi.rc.register.Registry;
@@ -30,7 +30,7 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 		logger.debug("Recieved HeartBeat " + heartbeat);
 		short moduleId = heartbeat.getModuleId();
 		String ipAddress = heartbeat.getIpAddress();
-		ModuleStatusInfo m = registry.getModuleStatusInfo(moduleId, ipAddress);
+		ModuleInstanceStatusInfo m = registry.getModuleStatusInfo(moduleId, ipAddress);
 		m.setLastHBTime(new Date());
 		m.setHeartBeatInteval(heartbeat.getInterval());
 	}
@@ -60,7 +60,7 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 
 		@Override
 		public void run() {
-			for (ModuleStatusInfo moduleInfo : registry.getAllModules()) {
+			for (ModuleInstanceStatusInfo moduleInfo : registry.getAllModules()) {
 					if (!moduleInfo.isLive()) {
 /*						logger.debug(
 								"Instance {} is down. No not need to check the heartbeat",
@@ -92,7 +92,7 @@ public class RCHeartBeatServiceImpl implements RCHeartBeatService {
 
 		}
 
-		private boolean isHeartbeatTimeout(ModuleStatusInfo moduleInfo) {
+		private boolean isHeartbeatTimeout(ModuleInstanceStatusInfo moduleInfo) {
 			long duration = System.currentTimeMillis()
 					- moduleInfo.getLastHBTime().getTime();
 			return (duration >= moduleInfo.getHeartBeatInteval());

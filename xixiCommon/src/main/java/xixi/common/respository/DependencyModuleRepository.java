@@ -3,19 +3,28 @@ package xixi.common.respository;
 import java.util.ArrayList;
 import java.util.List;
 
+import xixi.common.annotation.EventService;
+import xixi.common.bean.ModuleInfo;
+
 public class DependencyModuleRepository {
 
-	public static final List<Short> dependentModuleIdList = new ArrayList<Short>();
+	public static final List<ModuleInfo> modules = new ArrayList<ModuleInfo>();
 	
-	public static void addDepedentModuleId(Short moduleId){
-		if(dependentModuleIdList.contains(moduleId)){
-			return ;
+	public static void addDepedentModuleId(EventService a){
+		if(a!=null&&a.moduleId()!=101){
+			ModuleInfo m = new ModuleInfo();
+			m.setModuleId(a.moduleId());
+			m.setVersion(a.version());
+			if(modules.contains(m)){
+				return ;
+			}
+			modules.add(m);
 		}
-		dependentModuleIdList.add(moduleId);
+		
+		
 	}
 	
-	public static List<Short> getDepentModuleIdList(){
-		dependentModuleIdList.remove(new Short((short) 101));
-		return dependentModuleIdList;
+	public static List<ModuleInfo> getDepentModuleIdList(){
+		return modules;
 	}
 }

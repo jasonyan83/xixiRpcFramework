@@ -5,7 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xix.rc.bean.ModuleInfo;
+import xix.rc.bean.ModuleInstanceInfo;
 import xixi.rc.iservice.RCNotifyService;
 import xixi.transport.channel.Channel;
 
@@ -39,7 +39,7 @@ public class DefaultModuleInstanceListener implements ModuleInstanceListener {
 		List<Short> moduleIdList = registry.getDependentModuleIds(moduleId);
 		if (moduleIdList != null && !moduleIdList.isEmpty()) {
 			logger.debug("Module {} has following dependent modules {}", moduleId, moduleIdList);
-			List<ModuleInfo> selfInstanceList = registry
+			List<ModuleInstanceInfo> selfInstanceList = registry
 					.getModuleInstances(moduleId);
 			for(Short id : moduleIdList){
 				logger.debug("Send module instance registered notify to module {}", id);

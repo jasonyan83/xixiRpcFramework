@@ -4,26 +4,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import xix.rc.bean.ModuleInfo;
-import xix.rc.bean.ModuleStatusInfo;
+import xix.rc.bean.ModuleInstanceInfo;
+import xix.rc.bean.ModuleInstanceStatusInfo;
 import xixi.transport.channel.Channel;
 
 public class FileRegistry implements Registry{
 
 	@Override
-	public boolean register(ModuleInfo moduleInfo) throws Exception {
+	public boolean register(ModuleInstanceInfo moduleInfo) throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean unRegister(short moduleId, String ipAddress) {
+	public boolean unRegister(short moduleId, String version, String ipAddress) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public List<ModuleInfo> getModuleInstances(short moduleId) {
+	public List<ModuleInstanceInfo> getModuleInstances(short moduleId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -60,14 +60,14 @@ public class FileRegistry implements Registry{
 	}
 
 	@Override
-	public ModuleStatusInfo getModuleStatusInfo(short moduleId, String ipAddress) {
+	public ModuleInstanceStatusInfo getModuleStatusInfo(short moduleId, String ipAddress) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public boolean updateModuleStatusInfo(ModuleStatusInfo moduleStatusInfo) {
+	public boolean updateModuleStatusInfo(ModuleInstanceStatusInfo moduleStatusInfo) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -85,7 +85,7 @@ public class FileRegistry implements Registry{
 	}
 
 	@Override
-	public List<ModuleStatusInfo> getAllModules() {
+	public List<ModuleInstanceStatusInfo> getAllModules() {
 		// TODO Auto-generated method stub
 		return null;
 	}

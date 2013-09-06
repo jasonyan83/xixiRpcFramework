@@ -63,6 +63,10 @@ public class DefaultConnectRouter extends AbstractRouter {
 	public void addTcpClient(TcpClient client) {
 		if(clientList.contains(client)){
 			logger.debug("Added client fail. Reason: Exsiting client {}", client);
+			//before moduleA get all the dependent instance, new moduleB instance might register to the RC/Zookeeper, so that it might 
+			//invoke the callback to add the same instance twice. That's why it needs to remove the client once it found the same
+			//instance is already in the clientList.
+			this.removeTcpClient(client);
 			return;
 		}
 		logger.debug("Add new client for mutilConnectRouter: " + client);
@@ -129,6 +133,16 @@ public class DefaultConnectRouter extends AbstractRouter {
 			}
 
 		}
+	}
+
+	@Override
+	public TcpClient getTcpClient(String ipAddress) {
+		for(TcpClient client: clientList){
+			if(client.getDestIpAddress().equals(ipAddress)){
+			    return client;	
+			}
+		}
+		return null;
 	}
 
 }

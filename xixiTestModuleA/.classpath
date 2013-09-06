@@ -23,5 +23,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiMonitor"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiRCService"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiRCInterface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiRegistryZooKeeper"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

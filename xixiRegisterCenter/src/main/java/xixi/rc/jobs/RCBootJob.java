@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xix.rc.bean.ModuleStatusInfo;
+import xix.rc.bean.ModuleInstanceStatusInfo;
 import xixi.rc.register.Registry;
 
 public class RCBootJob {
@@ -50,7 +50,7 @@ public class RCBootJob {
 
 		@Override
 		public void run() {
-			for (ModuleStatusInfo moduleInfo : registry.getAllModules()) {
+			for (ModuleInstanceStatusInfo moduleInfo : registry.getAllModules()) {
 
 				if (!moduleInfo.isLive()) {
 					continue;
@@ -79,7 +79,7 @@ public class RCBootJob {
 			}
 		}
 
-		private boolean isNewRegistry(ModuleStatusInfo moduleInfo) {
+		private boolean isNewRegistry(ModuleInstanceStatusInfo moduleInfo) {
 			return (moduleInfo.getRegisterTime().getTime()
 					- startTime.getTime() > 0);
 		}

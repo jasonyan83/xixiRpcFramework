@@ -82,8 +82,7 @@ public class ProxyFactory {
 		EventService annotation = serviceInterface
 				.getAnnotation(EventService.class);
 		if (annotation != null) {
-			DependencyModuleRepository.addDepedentModuleId(annotation
-					.moduleId());
+			DependencyModuleRepository.addDepedentModuleId(annotation);
 		}
 
 		for (Method m : serviceInterface.getDeclaredMethods()) {

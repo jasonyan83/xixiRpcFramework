@@ -7,7 +7,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xixi.router.direct.DirectRouterInitializer;
 import xixi.transport.client.TcpClient;
 
 //ThreadSafe, the setModuleScheduleType will only be invoked by main thread.
@@ -25,26 +24,33 @@ public class RouterSchedules {
 			if (moduleScheduleMap.get(moduleId) == null) {
 				moduleScheduleMap.put(moduleId, new RoundRobinSchedule());
 			}
-
+			break;
 		case "weight":
 			if (moduleScheduleMap.get(moduleId) == null) {
 				moduleScheduleMap.put(moduleId, new WeightSelectSchedule());
 			}
+			break;
 		default:
 			if (moduleScheduleMap.get(moduleId) == null) {
-
 				moduleScheduleMap.put(moduleId, new RoundRobinSchedule());
 			}
 		}
 	}
 
 	public static TcpClient schedule(Short moduleId, List<TcpClient> clientList) {
-		RouterSchedule schedule = moduleScheduleMap.get(moduleId);
-		if(schedule==null){
-			logger.warn("No matched ScheduleType for module " + moduleId + ". Will use the first client in the list");
-			return clientList.get(0);
+		if(clientList!=null&&clientList.size()>0){
+			RouterSchedule schedule = moduleScheduleMap.get(moduleId);
+			if(schedule==null){
+				logger.warn("No matched ScheduleType for module " + moduleId + ". Will use the first client in the list");
+				
+				return clientList.get(0);
+			}
+			return schedule.schedule(moduleId, clientList);
 		}
-		return schedule.schedule(moduleId, clientList);
+		else{
+			return null;
+		}
+	
 	}
 
 }

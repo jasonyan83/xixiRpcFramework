@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+     <bean id="zookeeperRegistry"
+        class="xixi.register.zookeeper.ZooKeeperRegistry" lazy-init="true">
+         <property name="zkClient" ref="curatorZookeeperClient"/>
+    </bean>
+    
+    
+     <bean id="curatorZookeeperClient"
+        class="xixi.register.client.CuratorZookeeperClient" lazy-init="true">
+        <constructor-arg index="0">  
+            <value>${zookeeper.connectString}</value>  
+        </constructor-arg>  
+    </bean>
+    
+</beans>

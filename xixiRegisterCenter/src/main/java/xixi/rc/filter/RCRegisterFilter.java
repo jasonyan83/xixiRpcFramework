@@ -3,7 +3,7 @@ package xixi.rc.filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xix.rc.bean.ModuleInfo;
+import xix.rc.bean.ModuleInstanceInfo;
 import xixi.rc.register.Registry;
 import xixi.rpc.Callback;
 import xixi.rpc.Invocation;
@@ -46,7 +46,7 @@ public class RCRegisterFilter implements Filter {
 						if (args.length != 1) {
 							logger.error("This is not a valid module register request");
 						}
-						ModuleInfo moduleInfo = (ModuleInfo)args[0];
+						ModuleInstanceInfo moduleInfo = (ModuleInstanceInfo)args[0];
 						
 						short moduleId = moduleInfo.getModuleId();
 						String ipAddress = moduleInfo.getIpAddress();

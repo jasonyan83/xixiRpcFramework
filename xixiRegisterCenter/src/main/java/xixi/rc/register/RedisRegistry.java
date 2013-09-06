@@ -15,11 +15,11 @@ import redis.clients.jedis.BinaryJedisCommands;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-import xix.rc.bean.ModuleInfo;
-import xix.rc.bean.ModuleStatusInfo;
+import xix.rc.bean.ModuleInstanceInfo;
+import xix.rc.bean.ModuleInstanceStatusInfo;
 import xixi.common.util.ConfigUtils;
 
-public class RedisRegistry extends AbstractRegister implements Registry {
+public class RedisRegistry extends AbstractRegistry implements Registry {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(RedisRegistry.class);
@@ -47,7 +47,7 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 	private final String MODULE_ID_DEPENDENCY_PREFIX = "d-";
 
 	@Override
-	public boolean register(final ModuleInfo moduleInfo) throws Exception {
+	public boolean register(final ModuleInstanceInfo moduleInfo) throws Exception {
 		boolean succeed = false;
 		boolean moudleExsit = isModuleExsit(moduleInfo.getModuleId(),
 				moduleInfo.getIpAddress());
@@ -55,7 +55,7 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 		long ret = addModuleId(moduleInfo.getModuleId());
 
 		if (moudleExsit) {
-			final ModuleStatusInfo module = getModule(moduleInfo.getModuleId(),
+			final ModuleInstanceStatusInfo module = getModule(moduleInfo.getModuleId(),
 					moduleInfo.getIpAddress());
 
 			if (!moduleInfo.isRcConnectLost()) {
@@ -83,7 +83,7 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 			}
 
 		} else {
-			ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo()
+			ModuleInstanceStatusInfo moduleStatusInfo = new ModuleInstanceStatusInfo()
 					.buildModuleStatusInfo(moduleInfo);
 			long rets = saveModule(moduleStatusInfo);
 			succeed = true;
@@ -92,7 +92,7 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 	}
 
 	@Override
-	public boolean unRegister(final short moduleId, final String ipAddress) {
+	public boolean unRegister(final short moduleId, String version, final String ipAddress) {
 		logger.debug("Unregistering module {}-{}" + moduleId, ipAddress);
 		boolean succeed = false;
 		boolean moudleExsit = isModuleExsit(moduleId, ipAddress);
@@ -113,17 +113,17 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 	}
 
 	@Override
-	public List<ModuleInfo> getModuleInstances(final short moduleId) {
+	public List<ModuleInstanceInfo> getModuleInstances(final short moduleId) {
 		final String id = moduleId + "";
-		final List<ModuleInfo> moduleInfoList = new ArrayList<ModuleInfo>();
-		return executeJedisTask(new BinaryJedisTask<List<ModuleInfo>>() {
+		final List<ModuleInstanceInfo> moduleInfoList = new ArrayList<ModuleInstanceInfo>();
+		return executeJedisTask(new BinaryJedisTask<List<ModuleInstanceInfo>>() {
 			@Override
-			public List<ModuleInfo> execute(BinaryJedisCommands jedis) {
+			public List<ModuleInstanceInfo> execute(BinaryJedisCommands jedis) {
 				Map<byte[], byte[]> ret = jedis.hgetAll(id.getBytes());
 				for (Entry<byte[], byte[]> entry : ret.entrySet()) {
-					ModuleStatusInfo moduleStatusInfo = (ModuleStatusInfo) SerializationUtils
+					ModuleInstanceStatusInfo moduleStatusInfo = (ModuleInstanceStatusInfo) SerializationUtils
 							.deserialize(entry.getValue());
-					ModuleInfo m = new ModuleInfo();
+					ModuleInstanceInfo m = new ModuleInstanceInfo();
 					m.setIpAddress(moduleStatusInfo.getIpAddress());
 					m.setModuleId(moduleId);
 					m.setWeight(moduleStatusInfo.getWeight());
@@ -169,13 +169,13 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 	}
 
 	@Override
-	public ModuleStatusInfo getModuleStatusInfo(short moduleId, String ipAddress) {
+	public ModuleInstanceStatusInfo getModuleStatusInfo(short moduleId, String ipAddress) {
 		return getModule(moduleId, ipAddress);
 	}
 
-	public List<ModuleStatusInfo> getAllModules() {
+	public List<ModuleInstanceStatusInfo> getAllModules() {
 
-		final List<ModuleStatusInfo> list = new ArrayList<ModuleStatusInfo>();
+		final List<ModuleInstanceStatusInfo> list = new ArrayList<ModuleInstanceStatusInfo>();
 		List<String> ids = executeJedisTask(new BinaryJedisTask<List<String>>() {
 			@Override
 			public List<String> execute(BinaryJedisCommands jedis) {
@@ -189,12 +189,12 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 		});
 
 		for (final String id : ids) {
-			executeJedisTask(new BinaryJedisTask<List<ModuleStatusInfo>>() {
+			executeJedisTask(new BinaryJedisTask<List<ModuleInstanceStatusInfo>>() {
 				@Override
-				public List<ModuleStatusInfo> execute(BinaryJedisCommands jedis) {
+				public List<ModuleInstanceStatusInfo> execute(BinaryJedisCommands jedis) {
 					Map<byte[], byte[]> ret = jedis.hgetAll(id.getBytes());
 					for (Entry<byte[], byte[]> entry : ret.entrySet()) {
-						ModuleStatusInfo moduleStatusInfo = (ModuleStatusInfo) SerializationUtils
+						ModuleInstanceStatusInfo moduleStatusInfo = (ModuleInstanceStatusInfo) SerializationUtils
 								.deserialize(entry.getValue());
 
 						list.add(moduleStatusInfo);
@@ -209,9 +209,9 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 
 	@Override
 	public boolean updateModuleStatusInfo(
-			final ModuleStatusInfo moduleStatusInfo) {
+			final ModuleInstanceStatusInfo moduleStatusInfo) {
 		logger.debug("Update moduleStatusInfo for {}", moduleStatusInfo);
-	    ModuleStatusInfo module = getModule(moduleStatusInfo.getModuleId(),
+	    ModuleInstanceStatusInfo module = getModule(moduleStatusInfo.getModuleId(),
 				moduleStatusInfo.getIpAddress());
 		if (module != null) {
 			logger.debug("Current module is {}", module);
@@ -231,7 +231,7 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 
 	@Override
 	protected void deactiveInstance(short moduleId, String ipAddress) {
-		ModuleStatusInfo m = getModule(moduleId, ipAddress);
+		ModuleInstanceStatusInfo m = getModule(moduleId, ipAddress);
 		m.setLive(false);
 		saveModule(m);
 	}
@@ -267,19 +267,19 @@ public class RedisRegistry extends AbstractRegister implements Registry {
 		T execute(BinaryJedisCommands jedis);
 	}
 
-	private ModuleStatusInfo getModule(final short moduleId,
+	private ModuleInstanceStatusInfo getModule(final short moduleId,
 			final String ipAddress) {
 		final String id = moduleId + "";
-		return executeJedisTask(new BinaryJedisTask<ModuleStatusInfo>() {
+		return executeJedisTask(new BinaryJedisTask<ModuleInstanceStatusInfo>() {
 			@Override
-			public ModuleStatusInfo execute(BinaryJedisCommands jedis) {
+			public ModuleInstanceStatusInfo execute(BinaryJedisCommands jedis) {
 				byte[] ret = jedis.hget(id.getBytes(), ipAddress.getBytes());
-				return (ModuleStatusInfo) SerializationUtils.deserialize(ret);
+				return (ModuleInstanceStatusInfo) SerializationUtils.deserialize(ret);
 			}
 		});
 	}
 
-	private Long saveModule(final ModuleStatusInfo module) {
+	private Long saveModule(final ModuleInstanceStatusInfo module) {
 		final String id = module.getModuleId() + "";
 		return executeJedisTask(new BinaryJedisTask<Long>() {
 			@Override

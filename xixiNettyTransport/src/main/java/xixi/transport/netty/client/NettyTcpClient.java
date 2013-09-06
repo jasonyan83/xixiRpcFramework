@@ -27,7 +27,6 @@ public class NettyTcpClient extends AbstractTcpClient {
 	private static final Logger logger = LoggerFactory
 			.getLogger(NettyTcpClient.class);
 
-	private short moduleId;
 	private TcpClientPipelineFactory pipelineFactory;
 	private ClientBootstrap bootstrap = new ClientBootstrap(
 			new NioClientSocketChannelFactory(Executors.newCachedThreadPool(),
@@ -155,13 +154,6 @@ public class NettyTcpClient extends AbstractTcpClient {
 		} else {
 			logger.debug("Client connected successful!");
 		}
-	}
-	public short getModuleId() {
-		return moduleId;
-	}
-
-	public void setModuleId(short moduleId) {
-		this.moduleId = moduleId;
 	}
 
 	public TcpClientPipelineFactory getPipelineFactory() {

@@ -6,7 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xix.rc.bean.ModuleInfo;
+import xix.rc.bean.ModuleInstanceInfo;
 import xixi.common.annotation.EventMethod;
 import xixi.common.util.ModuleStringUtil;
 import xixi.rc.iservice.RCNotifyService;
@@ -27,16 +27,16 @@ public class RCNotifyServiceImpl implements RCNotifyService {
 	@Override
 	@EventMethod(name = "updatedModuleInstances", filter = "bizLogger")
 	public void updatedModuleInstances(short moduleId,
-			List<ModuleInfo> instancesList) {
+			List<ModuleInstanceInfo> instancesList) {
 		List<String> newInstanceList = new ArrayList<String>();
 		if(instancesList!=null&&!instancesList.isEmpty()){
 			short destModuleId = instancesList.get(0).getModuleId();
 			logger.debug("Updating Module {} instances", destModuleId);
-			for (ModuleInfo m : instancesList) {
+			for (ModuleInstanceInfo m : instancesList) {
 				newInstanceList.add(m.getIpAddress());
 			}
 			
-			List<String> addedInstanceList = repository.getAddedInstanceList(
+			List<String> addedInstanceList = repository.getAddedIpList(
 					destModuleId, newInstanceList);
 			List<String> removedInstanceList = repository.getRemovedInstanceList(
 					destModuleId, newInstanceList);
@@ -44,7 +44,7 @@ public class RCNotifyServiceImpl implements RCNotifyService {
 			if (addedInstanceList != null && !addedInstanceList.isEmpty()) {
 				for (String ipAddress : addedInstanceList) {
 					logger.debug("Module {} got new service instance: {}", destModuleId,ipAddress);
-					for(ModuleInfo m : instancesList){
+					for(ModuleInstanceInfo m : instancesList){
 						if(m.getIpAddress().equals(ipAddress)){
 							final Router r = DefaultConnectRouter.getOrAddRouter(destModuleId);
 							final TcpClient client = TransportFacade.initClient(

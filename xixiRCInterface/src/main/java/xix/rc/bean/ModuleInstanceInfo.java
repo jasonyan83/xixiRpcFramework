@@ -9,7 +9,7 @@ import xixi.common.annotation.XixiBean;
 import xixi.common.util.ModuleStringUtil;
 
 @XixiBean(id=300102)
-public class ModuleInfo implements Serializable{
+public class ModuleInstanceInfo implements Serializable{
 
 	/**
 	 * 
@@ -28,6 +28,15 @@ public class ModuleInfo implements Serializable{
 	
 	private boolean rcConnectLost = false;
 
+	private String version = "1.0";
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
 
 	public String getDescription() {
 		return description;

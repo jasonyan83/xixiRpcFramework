@@ -5,7 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xix.rc.bean.ModuleInfo;
+import xix.rc.bean.ModuleInstanceInfo;
+import xixi.common.bean.ModuleInfo;
 import xixi.common.constants.Constants;
 import xixi.common.respository.DependencyModuleRepository;
 import xixi.common.spring.BeanFactoryUtil;
@@ -25,9 +26,9 @@ public class MultiRouterInitializer extends AbstractRouterInitializer {
 
 	private RCModuleService moduleService;
 
-	public MultiRouterInitializer() {
+	public MultiRouterInitializer(String registryType) {
 		moduleService = (RCModuleService) BeanFactoryUtil
-				.getBean("rcModuleService");
+				.getBean(registryType);
 		if (moduleService == null) {
 			logger.error("Get RCModuleService Failed");
 		}
@@ -36,9 +37,9 @@ public class MultiRouterInitializer extends AbstractRouterInitializer {
 	@Override
 	public void init() {
 		logger.debug("Initializing Mutil Router");
-		List<Short> destMoudleIdList = DependencyModuleRepository
+		List<ModuleInfo> destMoudleList = DependencyModuleRepository
 				.getDepentModuleIdList();
-		logger.debug("Get Dependency moduleId list " + destMoudleIdList);
+		logger.debug("Get Dependency moduleId list " + destMoudleList);
 
 		if (!MainThreadLock.lock.get()) {
 			try {
@@ -54,17 +55,18 @@ public class MultiRouterInitializer extends AbstractRouterInitializer {
 			}
 		}
 
-		if (destMoudleIdList != null && destMoudleIdList.size() == 0) {
+		if (destMoudleList != null && destMoudleList.size() == 0) {
 			logger.info("Do not have ANY dependency module");
 			return;
 		}
-		List<ModuleInfo> modulesInfo = moduleService.getInstanceList(
-				Constants.SOURCE_MODULEID, destMoudleIdList);
+		
+		List<ModuleInstanceInfo> modulesInfo = moduleService.getInstanceList(
+				Constants.SOURCE_MODULEID, destMoudleList);
 
 		logger.debug("Get Dependency ModuleInfo list from RC: " + modulesInfo);
 
 		if (modulesInfo != null && modulesInfo.size() > 0) {
-			for (ModuleInfo m : modulesInfo) {
+			for (ModuleInstanceInfo m : modulesInfo) {
 				Router r = DefaultConnectRouter.getOrAddRouter(m.getModuleId());
 				TcpClient client = TransportFacade.initClient(m.getIp(),
 						m.getPort());

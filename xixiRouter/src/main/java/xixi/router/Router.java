@@ -18,6 +18,8 @@ public interface Router{
 	
 	void removeTcpClient(TcpClient client);
 	
+	TcpClient getTcpClient(String ipAddress);
+	
 	short moduleId();
 	
 	public void router(RpcMessage message);

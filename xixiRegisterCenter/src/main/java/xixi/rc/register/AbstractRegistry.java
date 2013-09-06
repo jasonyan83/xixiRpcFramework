@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
 import xixi.common.util.ModuleStringUtil;
 import xixi.transport.channel.Channel;
 
-public abstract class AbstractRegister implements Registry {
+public abstract class AbstractRegistry implements Registry {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(AbstractRegister.class);
+			.getLogger(AbstractRegistry.class);
 
 	// ThreadSafe
 	private final Map<String, Channel> instanceChannelMap = new HashMap<String, Channel>();

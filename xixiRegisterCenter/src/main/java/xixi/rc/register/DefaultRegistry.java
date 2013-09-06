@@ -14,20 +14,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jmx.export.MBeanExporter;
 
-import xix.rc.bean.ModuleInfo;
-import xix.rc.bean.ModuleStatusInfo;
+import xix.rc.bean.ModuleInstanceInfo;
+import xix.rc.bean.ModuleInstanceStatusInfo;
 import xixi.transport.channel.Channel;
 
 //If RC is down, defaultRegisgry will lose all the the registry information since it stores all the 
 //information to memory. When the RC is up again, the module instance will do the registry process again
 //and send all the module dependence relationship to rc to help to build the dependency
-public class DefaultRegistry extends AbstractRegister implements Registry {
+public class DefaultRegistry extends AbstractRegistry implements Registry {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(DefaultRegistry.class);
 
 	//Thread Unsafe
-	private final ConcurrentHashMap<Short, HashMap<String, ModuleStatusInfo>> modulesMap = new ConcurrentHashMap<Short, HashMap<String, ModuleStatusInfo>>();
+	private final ConcurrentHashMap<Short, HashMap<String, ModuleInstanceStatusInfo>> modulesMap = new ConcurrentHashMap<Short, HashMap<String, ModuleInstanceStatusInfo>>();
 
 	//Thread Unsafe
 	private final ConcurrentHashMap<Short, List<Short>> moduleDependenceMap = new ConcurrentHashMap<Short, List<Short>>();
@@ -43,13 +43,13 @@ public class DefaultRegistry extends AbstractRegister implements Registry {
 	}
 
 	@Override
-	public boolean register(ModuleInfo moduleInfo) throws Exception {
+	public boolean register(ModuleInstanceInfo moduleInfo) throws Exception {
 		logger.debug("Registering module :" + moduleInfo);
 		boolean succeed = false;
 		if (modulesMap.get(moduleInfo.getModuleId()) != null) {
-			HashMap<String, ModuleStatusInfo> modulesInstanceMap = modulesMap
+			HashMap<String, ModuleInstanceStatusInfo> modulesInstanceMap = modulesMap
 					.get(moduleInfo.getModuleId());
-			ModuleStatusInfo module = modulesInstanceMap.get(moduleInfo
+			ModuleInstanceStatusInfo module = modulesInstanceMap.get(moduleInfo
 					.getIpAddress());
 			if (module != null) {
 				if(!moduleInfo.isRcConnectLost()){
@@ -74,15 +74,15 @@ public class DefaultRegistry extends AbstractRegister implements Registry {
 				}
 
 			} else {
-				ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo()
+				ModuleInstanceStatusInfo moduleStatusInfo = new ModuleInstanceStatusInfo()
 						.buildModuleStatusInfo(moduleInfo);
 				modulesInstanceMap.put(moduleInfo.getIpAddress(),
 						moduleStatusInfo);
 				succeed = true;
 			}
 		} else {
-			HashMap<String, ModuleStatusInfo> modulesInstanceMap = new HashMap<String, ModuleStatusInfo>();
-			ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo()
+			HashMap<String, ModuleInstanceStatusInfo> modulesInstanceMap = new HashMap<String, ModuleInstanceStatusInfo>();
+			ModuleInstanceStatusInfo moduleStatusInfo = new ModuleInstanceStatusInfo()
 					.buildModuleStatusInfo(moduleInfo);
 			modulesInstanceMap.put(moduleInfo.getIpAddress(), moduleStatusInfo);
 
@@ -94,17 +94,17 @@ public class DefaultRegistry extends AbstractRegister implements Registry {
 	}
 
 	@Override
-	public boolean unRegister(short moduleId, String ipAddress) {
+	public boolean unRegister(short moduleId, String version, String ipAddress) {
 		logger.debug("Unregistering module {}-{}" + moduleId, ipAddress);
 		boolean succeed = false;
-		HashMap<String, ModuleStatusInfo> modulesInstanceMap = modulesMap
+		HashMap<String, ModuleInstanceStatusInfo> modulesInstanceMap = modulesMap
 				.get(moduleId);
 		if (modulesInstanceMap == null
 				|| modulesInstanceMap.get(ipAddress) == null) {
 			logger.debug("The module " + moduleId + " with instance"
 					+ ipAddress + "is not exsit");
 		} else {
-			ModuleStatusInfo m = modulesInstanceMap.remove(ipAddress);
+			ModuleInstanceStatusInfo m = modulesInstanceMap.remove(ipAddress);
 			logger.debug("unRegistering Module " + moduleId + " with instance "
 					+ ipAddress);
 			succeed = true;
@@ -142,14 +142,14 @@ public class DefaultRegistry extends AbstractRegister implements Registry {
 	}
 
 	@Override
-	public List<ModuleInfo> getModuleInstances(short moduleId) {
+	public List<ModuleInstanceInfo> getModuleInstances(short moduleId) {
 		logger.debug("Get module instance for moduleId {}", moduleId);
-		Map<String, ModuleStatusInfo> map = modulesMap.get(moduleId);
-		List<ModuleInfo> moduleInfoList = new ArrayList<ModuleInfo>();
+		Map<String, ModuleInstanceStatusInfo> map = modulesMap.get(moduleId);
+		List<ModuleInstanceInfo> moduleInfoList = new ArrayList<ModuleInstanceInfo>();
 
 		if (map!=null&&!map.isEmpty()) {
-			for (ModuleStatusInfo moduleStatusInfo : map.values()) {
-				ModuleInfo m = new ModuleInfo();
+			for (ModuleInstanceStatusInfo moduleStatusInfo : map.values()) {
+				ModuleInstanceInfo m = new ModuleInstanceInfo();
 				m.setIpAddress(moduleStatusInfo.getIpAddress());
 				m.setModuleId(moduleId);
 				m.setWeight(moduleStatusInfo.getWeight());
@@ -161,9 +161,9 @@ public class DefaultRegistry extends AbstractRegister implements Registry {
 		return moduleInfoList;
 	}
 
-	public ModuleStatusInfo getModuleStatusInfo(short moduleId, String ipAddress) {
+	public ModuleInstanceStatusInfo getModuleStatusInfo(short moduleId, String ipAddress) {
 		logger.debug("Get module status info for {}-{}", moduleId, ipAddress);
-		HashMap<String, ModuleStatusInfo> instanceMap = modulesMap
+		HashMap<String, ModuleInstanceStatusInfo> instanceMap = modulesMap
 				.get(moduleId);
 		if (instanceMap != null) {
 			return instanceMap.get(ipAddress);
@@ -172,13 +172,13 @@ public class DefaultRegistry extends AbstractRegister implements Registry {
 		}
 	}
 
-	public boolean updateModuleStatusInfo(ModuleStatusInfo moduleStatusInfo) {
+	public boolean updateModuleStatusInfo(ModuleInstanceStatusInfo moduleStatusInfo) {
 		boolean succeed = false;
 		logger.debug("Update moduleStatusInfo for {}", moduleStatusInfo);
 		if (modulesMap.get(moduleStatusInfo.getModuleId()) != null) {
-			HashMap<String, ModuleStatusInfo> modulesInstanceMap = modulesMap
+			HashMap<String, ModuleInstanceStatusInfo> modulesInstanceMap = modulesMap
 					.get(moduleStatusInfo.getModuleId());
-			ModuleStatusInfo module = modulesInstanceMap.get(moduleStatusInfo
+			ModuleInstanceStatusInfo module = modulesInstanceMap.get(moduleStatusInfo
 					.getIpAddress());
 			if (module != null) {
 				logger.debug("Current module is {}", module);
@@ -227,16 +227,16 @@ public class DefaultRegistry extends AbstractRegister implements Registry {
 			for(Short key : modulesMap.keySet()){
 				if(retMap.get(key.toString())!=null){
 					List<String> statusInfoList = retMap.get(key.toString());
-					HashMap<String,ModuleStatusInfo> statusInfoMap = modulesMap.get(key);
-				    for(ModuleStatusInfo statusInfo : statusInfoMap.values()){
+					HashMap<String,ModuleInstanceStatusInfo> statusInfoMap = modulesMap.get(key);
+				    for(ModuleInstanceStatusInfo statusInfo : statusInfoMap.values()){
 				    	statusInfoList.add(statusInfo.toString());
 				    }
 				    retMap.put(key.toString(), statusInfoList);
 				}
 				else{
 					List<String> statusInfoList = new ArrayList<String>();
-					HashMap<String,ModuleStatusInfo> statusInfoMap = modulesMap.get(key);
-					 for(ModuleStatusInfo statusInfo : statusInfoMap.values()){
+					HashMap<String,ModuleInstanceStatusInfo> statusInfoMap = modulesMap.get(key);
+					 for(ModuleInstanceStatusInfo statusInfo : statusInfoMap.values()){
 					    	statusInfoList.add(statusInfo.toString());
 					    }
 					retMap.put(key.toString(), statusInfoList);
@@ -248,9 +248,9 @@ public class DefaultRegistry extends AbstractRegister implements Registry {
 	
 
 	protected void deactiveInstance(short moduleId, String ipAddress){
-		Map<String, ModuleStatusInfo> map = this.modulesMap.get(moduleId);
+		Map<String, ModuleInstanceStatusInfo> map = this.modulesMap.get(moduleId);
 		if(map!=null){
-			ModuleStatusInfo m = map.get(ipAddress);
+			ModuleInstanceStatusInfo m = map.get(ipAddress);
 			if(m!=null){
 				m.setLive(false);
 				logger.debug("Setting instance {}-{} to unactive", moduleId, ipAddress);
@@ -269,10 +269,10 @@ public class DefaultRegistry extends AbstractRegister implements Registry {
 	}
 
 	@Override
-	public List<ModuleStatusInfo> getAllModules() {
-		List<ModuleStatusInfo> list = new ArrayList<ModuleStatusInfo>();
-		for(Entry<Short, HashMap<String, ModuleStatusInfo>> entry: modulesMap.entrySet()){
-			for(ModuleStatusInfo info :entry.getValue().values()){
+	public List<ModuleInstanceStatusInfo> getAllModules() {
+		List<ModuleInstanceStatusInfo> list = new ArrayList<ModuleInstanceStatusInfo>();
+		for(Entry<Short, HashMap<String, ModuleInstanceStatusInfo>> entry: modulesMap.entrySet()){
+			for(ModuleInstanceStatusInfo info :entry.getValue().values()){
 				list.add(info);
 			}
 		}

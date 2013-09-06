@@ -3,7 +3,7 @@ package xixi.router.rc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xix.rc.bean.ModuleInfo;
+import xix.rc.bean.ModuleInstanceInfo;
 import xixi.common.constants.Constants;
 import xixi.common.spring.BeanFactoryUtil;
 import xixi.common.thread.MainThreadLock;
@@ -58,7 +58,7 @@ public class RCRouterInitializer extends DirectRouterInitializer {
 					String routerScheduleType = ConfigUtils.getProperty(
 							Constants.ROUTER_SCHEDULE_TYPE_KEY,
 							Constants.DEFAULT_ROUTER_SCHEDULE);
-					ModuleInfo moduleInfo = new ModuleInfo();
+					ModuleInstanceInfo moduleInfo = new ModuleInstanceInfo();
 
 					moduleInfo.setModuleId(Constants.SOURCE_MODULEID);
 					moduleInfo.setWeight(weight);

@@ -12,8 +12,8 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xix.rc.bean.ModuleInfo;
-import xix.rc.bean.ModuleStatusInfo;
+import xix.rc.bean.ModuleInstanceInfo;
+import xix.rc.bean.ModuleInstanceStatusInfo;
 import xixi.rc.iservice.RCNotifyService;
 import xixi.rc.register.Registry;
 
@@ -41,16 +41,16 @@ public class RCModuleStatusInfoNotifyJob {
 	}
 	
 	private void sendModuleStatusInfoNotify(){
-	    Map<Short, HashMap<String, ModuleStatusInfo>> fullCopyMap = new HashMap<Short, HashMap<String, ModuleStatusInfo>>();
+	    Map<Short, HashMap<String, ModuleInstanceStatusInfo>> fullCopyMap = new HashMap<Short, HashMap<String, ModuleInstanceStatusInfo>>();
 	   // fullCopyMap.putAll(registry.getModulesMap());
 	    
-	    for(Entry<Short, HashMap<String, ModuleStatusInfo>> entry : fullCopyMap.entrySet()){
+	    for(Entry<Short, HashMap<String, ModuleInstanceStatusInfo>> entry : fullCopyMap.entrySet()){
 	    	Short moduleId = entry.getKey();
 	    	
 	    	List<Short> moduleIdList = registry.getDependentModuleIds(moduleId);
 			if (moduleIdList != null && !moduleIdList.isEmpty()) {
 				logger.debug(" Module {} has following dependecny module {}", moduleId, moduleIdList);
-				List<ModuleInfo> selfInstanceList = registry
+				List<ModuleInstanceInfo> selfInstanceList = registry
 						.getModuleInstances(moduleId);
 				for(Short id : moduleIdList){
 					logger.debug("Send module instance registered notify to module {}", id);

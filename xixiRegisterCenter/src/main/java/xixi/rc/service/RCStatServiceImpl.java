@@ -3,7 +3,7 @@ package xixi.rc.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xix.rc.bean.ModuleStatusInfo;
+import xix.rc.bean.ModuleInstanceStatusInfo;
 import xixi.common.annotation.EventMethod;
 import xixi.rc.iservice.RCStatService;
 import xixi.rc.register.Registry;
@@ -25,7 +25,7 @@ public class RCStatServiceImpl implements RCStatService {
 
 	@Override
 	@EventMethod(name = "sendModuleStatInfo")
-	public int sendModuleStatInfo(ModuleStatusInfo moduleStatusInfo) {
+	public int sendModuleStatInfo(ModuleInstanceStatusInfo moduleStatusInfo) {
 		logger.debug("Get moduleStatInfo " + moduleStatusInfo);
 		boolean ret = registry.updateModuleStatusInfo(moduleStatusInfo);
 		if(ret){

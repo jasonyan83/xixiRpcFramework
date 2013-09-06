@@ -35,7 +35,7 @@ public class XixiClientInvoker extends AbstractClientInvoker {
 		}
 		else{
 			logger.error("Can not find router for module {}", inv.moduleId());
-			throw new InvocationException();
+			return inv.future();
 		}
 		return inv.future();
 	}
