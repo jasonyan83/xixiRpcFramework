@@ -2,6 +2,7 @@ package xixi.register.zookeeper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,14 +13,15 @@ import xix.rc.bean.RegistryNotify;
 import xixi.common.bean.ModuleInfo;
 import xixi.common.constants.Constants;
 import xixi.rc.iservice.RegistryService;
+import xixi.register.client.AbstractChildListener;
 import xixi.register.client.AbstractZookeeperClient;
-import xixi.register.client.ChildListener;
 import xixi.register.client.ZooKeeperClient;
 
 public class ZooKeeperRegistry implements RegistryService{
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractZookeeperClient.class);
 
+	private AtomicReference<RegistryNotify>  registerNotify = new AtomicReference<RegistryNotify>();
 	
 	private ZooKeeperClient zkClient;
 
@@ -40,9 +42,14 @@ public class ZooKeeperRegistry implements RegistryService{
 		return 0;
 	}
 
+	//Currently the subscirbe will be thread-safe, only called by the main thread. but it is OK to use AtomicReference to make sure
+	//notify is not override by different thread.
 	public void subscribe(ModuleInfo module, final RegistryNotify notify){
+		if(registerNotify.get()==null){
+			registerNotify.set(notify);
+		}
 		String path =  prefix + module.getModuleId() + Constants.PATH_SEPARATOR + module.getVersion();
-		zkClient.addChildListener(path, new ChildListener(){
+		zkClient.addChildListener(path, new AbstractChildListener(){
 			@Override
 			public void childChanged(String path, List<String> children) {
 				 List<ModuleInstanceInfo> instanceList = new ArrayList<ModuleInstanceInfo>();
@@ -53,12 +60,6 @@ public class ZooKeeperRegistry implements RegistryService{
 			   }
 			   notify.onModuleRouterChanged(instanceList);
 			}
-
-			@Override
-			public void nodeDataChanged(String path, byte[] data) {
-				 ModuleInstanceInfo m = (ModuleInstanceInfo)SerializationUtils.deserialize(data);
-				notify.onModuleInstanceChanged(m);
-			}
 		});
 	}
 		
@@ -67,12 +68,20 @@ public class ZooKeeperRegistry implements RegistryService{
 		return getModuleInstanceList(moduleId, "-1");
 	}
 
+	
 	private List<ModuleInstanceInfo> getModuleInstanceList(short moduleId,String version) {
 		String path = prefix +  moduleId + Constants.PATH_SEPARATOR + version;
 		List<String> childpaths = zkClient.getChildren(path);
 		 List<ModuleInstanceInfo> moduleList = new ArrayList<ModuleInstanceInfo>();
 		for(String childpath: childpaths){
-			byte[] data = zkClient.getData(path + Constants.PATH_SEPARATOR + childpath);
+			byte[] data = zkClient.getData(path + Constants.PATH_SEPARATOR + childpath, new AbstractChildListener(){
+				@Override
+				public void nodeDataChanged(String path, byte[] data) {
+					 ModuleInstanceInfo m = (ModuleInstanceInfo)SerializationUtils.deserialize(data);
+					 registerNotify.get().onModuleInstanceChanged(m);
+				}
+				
+			});
 			if(data!=null){
 				ModuleInstanceInfo m = (ModuleInstanceInfo)SerializationUtils.deserialize(data);
 				moduleList.add(m); 

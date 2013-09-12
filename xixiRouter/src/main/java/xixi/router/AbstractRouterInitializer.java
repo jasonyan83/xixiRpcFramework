@@ -24,7 +24,7 @@ public abstract class AbstractRouterInitializer implements RouterInitializer{
 					router.addTcpClient(client);
 				}
 				else{
-					logger.error("Add client to router failed. Router {} is NULL", router);
+					logger.error("Add client to router failed. Router is NULL");
 				}
 			}
 

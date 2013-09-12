@@ -67,7 +67,8 @@ public class MultiRouterInitializer extends AbstractRouterInitializer {
 
 		if (modulesInfo != null && modulesInfo.size() > 0) {
 			for (ModuleInstanceInfo m : modulesInfo) {
-				Router r = DefaultConnectRouter.getOrAddRouter(m.getModuleId());
+				Router r = DefaultConnectRouter.getOrAddRouter(m
+						.getModuleId());
 				TcpClient client = TransportFacade.initClient(m.getIp(),
 						m.getPort());
 				client.setWeight(m.getWeight());

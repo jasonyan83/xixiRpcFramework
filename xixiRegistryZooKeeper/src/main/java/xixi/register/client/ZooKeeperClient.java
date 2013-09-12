@@ -26,5 +26,7 @@ public interface ZooKeeperClient {
 	
 	byte[] getData(String path);
 
+	byte[] getData(String path, ChildListener listener);
+	
 	void setData(String path,byte[] data);
 }

@@ -109,8 +109,6 @@ public class ZKRouterInitializer extends DirectRouterInitializer {
 						List<ModuleInstanceInfo> addedInstanceList = moduleRepository
 								.getAddedInstanceList(moduleId, instanceList);
 						for (ModuleInstanceInfo m : addedInstanceList) {
-							Router r = DefaultConnectRouter
-									.getOrAddRouter(moduleId);
 							TcpClient client = TransportFacade.initClient(
 									m.getIp(), m.getPort());
 							client.setWeight(m.getWeight());

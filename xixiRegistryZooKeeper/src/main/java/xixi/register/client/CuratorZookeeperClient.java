@@ -142,6 +142,10 @@ public class CuratorZookeeperClient extends AbstractZookeeperClient<CuratorWatch
 		return new CuratorWatcherImpl(listener);
 	}
 	
+	public CuratorWatcher createNodeDataListener(String path, ChildListener listener) {
+		return new CuratorWatcherImpl(listener);
+	}
+	
 	public List<String> addTargetChildListener(String path, CuratorWatcher listener) {
 		try {
 			return client.getChildren().usingWatcher(listener).forPath(path);
@@ -156,9 +160,9 @@ public class CuratorZookeeperClient extends AbstractZookeeperClient<CuratorWatch
 		((CuratorWatcherImpl) listener).unwatch();
 	}
 
-	public byte[] addNodeDataListener(String path, CuratorWatcher listener) {
+	public byte[] getData(String path, ChildListener listener) {
 		try {
-			return client.getData().usingWatcher(listener).forPath(path);
+			return client.getData().usingWatcher(new CuratorWatcherImpl(listener)).forPath(path);
 		} catch (NoNodeException e) {
 			return null;
 		} catch (Exception e) {
