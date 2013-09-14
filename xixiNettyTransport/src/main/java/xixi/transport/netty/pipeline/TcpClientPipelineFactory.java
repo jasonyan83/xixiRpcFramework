@@ -9,14 +9,12 @@ import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
 import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
-import org.jboss.netty.handler.traffic.GlobalTrafficShapingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TcpClientPipelineFactory implements ChannelPipelineFactory {
     private static Logger logger = LoggerFactory.getLogger(TcpClientPipelineFactory.class);
 
-    private GlobalTrafficShapingHandler globalTrafficShapingHandler;
     private FrameDecoder tcpResponseDecoder;
     private OneToOneEncoder tcpRequestEncoder;
     private List<ChannelHandler> otherHandlers;
@@ -34,10 +32,7 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
         return pipeline;
     }
 
-    public void setGlobalTrafficShapingHandler(GlobalTrafficShapingHandler globalTrafficShapingHandler) {
-        this.globalTrafficShapingHandler = globalTrafficShapingHandler;
-    }
-
+  
     public void setTcpRequestEncoder(OneToOneEncoder tcpRequestEncoder) {
         this.tcpRequestEncoder = tcpRequestEncoder;
     }

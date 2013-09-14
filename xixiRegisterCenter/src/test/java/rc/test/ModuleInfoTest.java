@@ -1,17 +1,11 @@
-package rc.test;
+/*package rc.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import xix.rc.bean.HeartBeat;
 import xix.rc.bean.ModuleInstanceInfo;
-import xixi.codec.kryo.KryoCoder;
-import xixi.common.util.ByteUtils;
 
 public class ModuleInfoTest {
 
 	public static void main(String[] sf) {
-	/*	List<ModuleInfo> list = new ArrayList<ModuleInfo>();
+		List<ModuleInfo> list = new ArrayList<ModuleInfo>();
 
 		list.add(buildModuleInfo());
 		list.add(buildModuleInfo());
@@ -32,7 +26,7 @@ public class ModuleInfoTest {
 
 		Object[] o = (Object[])coder.decode(ret);
 
-		System.out.print("result is " + o[0]);*/
+		System.out.print("result is " + o[0]);
 		
 		System.out.println("Aa".hashCode());
 		System.out.println("BB".hashCode());
@@ -49,3 +43,4 @@ public class ModuleInfoTest {
 	}
 
 }
+*/

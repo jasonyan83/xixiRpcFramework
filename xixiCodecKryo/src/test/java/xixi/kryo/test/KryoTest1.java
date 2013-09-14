@@ -1,7 +1,6 @@
 package xixi.kryo.test;
 
 import xixi.codec.kryo.KryoCoder;
-import xixi.testModuleB.test.Account;
 
 public class KryoTest1 {
 

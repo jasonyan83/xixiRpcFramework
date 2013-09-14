@@ -7,29 +7,14 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src/main/resource"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/xixiCommon"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiRCInterface"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/xixiTransport"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/logback-classic-1.0.0-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/logback-core-1.0.0-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/slf4j-api-1.6.5.jar" sourcepath="C:/Documents and Settings/ThinkPad/.m2/repository/org/slf4j/slf4j-api/1.6.5/slf4j-api-1.6.5-sources.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/slf4j-log4j12-1.6.1.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-logging-1.1.1-jar.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/xixiCodecApi"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/xixiCodecKryo"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-beans-3.0.6.RELEASE-jar.jar" sourcepath="C:/Documents and Settings/ThinkPad/.m2/repository/org/springframework/spring-beans/3.0.6.RELEASE/spring-beans-3.0.6.RELEASE-sources.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-context-3.0.6.RELEASE-jar.jar" sourcepath="C:/Documents and Settings/ThinkPad/.m2/repository/org/springframework/spring-context/3.0.6.RELEASE/spring-context-3.0.6.RELEASE-sources.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-context-support-3.0.6.RELEASE-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-core-3.0.6.RELEASE-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/guava-11.0.1.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/curator-framework-2.1.0-incubating.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/curator-client-2.1.0-incubating.jar"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/xixiCommon"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre7">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>

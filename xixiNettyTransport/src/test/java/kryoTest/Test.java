@@ -1,4 +1,4 @@
-package kryoTest;
+/*package kryoTest;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,9 +11,9 @@ import com.esotericsoftware.kryo.io.Output;
 
 public class Test {
 
-	/**
+	*//**
 	 * @param args
-	 */
+	 *//*
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Kryo kryo = new Kryo();
@@ -50,3 +50,4 @@ public class Test {
 	}
 
 }
+*/

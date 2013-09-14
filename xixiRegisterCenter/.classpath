@@ -17,29 +17,12 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiRCInterface"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiRpc"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiTransport"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-logging-1.1.1-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-lang-2.6-jar.jar" sourcepath="C:/Documents and Settings/ThinkPad/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6-sources.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/slf4j-log4j12-1.6.1.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/log4j-1.2.16.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/logback-classic-1.0.0-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/logback-core-1.0.0-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/slf4j-api-1.6.5.jar" sourcepath="C:/Documents and Settings/ThinkPad/.m2/repository/org/slf4j/slf4j-api/1.6.5/slf4j-api-1.6.5-sources.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiRegister"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-expression-3.0.6.RELEASE-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-aop-3.0.6.RELEASE-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-asm-3.0.6.RELEASE-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-beans-3.0.6.RELEASE-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-context-3.0.6.RELEASE-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-context-support-3.0.6.RELEASE-jar.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/spring-core-3.0.6.RELEASE-jar.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiNettyTransport"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiCodecApi"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiCodecKryo"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiRpcDefault"/>
-	<classpathentry kind="lib" path="/xixiNettyTransport/kryo-2.20-all.jar" sourcepath="F:/googleDownload/kryo-2.20/kryo-2.20/java"/>
-	<classpathentry kind="lib" path="jedis-2.1.0.jar"/>
-	<classpathentry kind="lib" path="E:/github/xixiRpcFramework/publicLib/commons-pool-1.5.6-jar.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre7">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>

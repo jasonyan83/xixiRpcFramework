@@ -37,7 +37,6 @@ public class BeanFactoryUtil implements ApplicationContextAware {
 		logger.info("Loading Spring context for BeanFactoryUtil");
 		BeanFactoryUtil.context = applicationContext;
 		// }
-
 	}
 
 }

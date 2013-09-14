@@ -21,19 +21,13 @@ public class RouterSchedules {
 	public static void setModuleScheduleType(Short moduleId, String type) {
 		switch (type) {
 		case "roundrobin":
-			if (moduleScheduleMap.get(moduleId) == null) {
 				moduleScheduleMap.put(moduleId, new RoundRobinSchedule());
-			}
 			break;
 		case "weight":
-			if (moduleScheduleMap.get(moduleId) == null) {
 				moduleScheduleMap.put(moduleId, new WeightSelectSchedule());
-			}
 			break;
 		default:
-			if (moduleScheduleMap.get(moduleId) == null) {
 				moduleScheduleMap.put(moduleId, new RoundRobinSchedule());
-			}
 		}
 	}
 
