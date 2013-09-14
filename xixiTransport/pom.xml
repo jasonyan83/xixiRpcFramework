@@ -5,64 +5,22 @@
 	<artifactId>xixiTransport</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>xixiTransport</name>
+	<packaging>pom</packaging>
+
+   <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
 
 	<dependencies>
-
-	<dependency>
-		<groupId>jason.xixi</groupId>
-		<artifactId>xixiCommon</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</dependency>
-		
+		<dependency>
+			<groupId>jason.xixi</groupId>
+			<artifactId>xixiCommon</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
-	
-	
-  <repositories>
-    </repositories>
-        <distributionManagement>
-        <repository>
-            <id>releases</id>
-        </repository>
 
-    </distributionManagement>
-	<build>
-
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version>
-				<configuration>
-					<source />
-					<target />
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.2</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.1</version>
-			</plugin>
-
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.5</version>
-			</plugin>
-		</plugins>
-	</build>
+	<modules>
+		<module>../xixiNettyTransport</module>
+	</modules>
 </project>
