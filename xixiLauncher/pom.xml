@@ -6,10 +6,12 @@
 		<artifactId>xixiRpcFramework</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>xixiRouter</artifactId>
-	<name>xixiRouter</name>
+	
+	<artifactId>xixiLauncher</artifactId>
+	<name>xixiLauncher</name>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiCommon</artifactId>
@@ -30,21 +32,10 @@
 
 		<dependency>
 			<groupId>jason.xixi</groupId>
-			<artifactId>xixiRegister</artifactId>
+			<artifactId>xixiRouter</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
-		<dependency>
-			<groupId>jason.xixi</groupId>
-			<artifactId>xixiRpc</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>jason.xixi</groupId>
-			<artifactId>xixiRegisterZooKeeper</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 
 

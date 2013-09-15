@@ -1,4 +1,4 @@
-package rc.test;
+/*package rc.test;
 
 import java.util.Date;
 
@@ -33,12 +33,12 @@ public class RedisTest {
 	
 	
 	public static void main(String[] sf) {
-	/*	 ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo();
+		 ModuleStatusInfo moduleStatusInfo = new ModuleStatusInfo();
 		 moduleStatusInfo.setModuleId(Short.valueOf("20001"));
 		 moduleStatusInfo.setIpAddress("192.0.0.1");
 		 moduleStatusInfo.setLastHBTime(new Date());
 		 byte[] retByte = SerializationUtils.serialize(moduleStatusInfo);
-		 ModuleStatusInfo moduleStatusInfo2  = (ModuleStatusInfo)SerializationUtils.deserialize(retByte);*/
+		 ModuleStatusInfo moduleStatusInfo2  = (ModuleStatusInfo)SerializationUtils.deserialize(retByte);
 		 
 		 //System.out.println("moduleStatusInfo2 is " + moduleStatusInfo2);
 		Long ret = executeJedisTask(new BinaryJedisTask<Long>() {
@@ -88,3 +88,4 @@ public class RedisTest {
 		T execute(BinaryJedisCommands jedis);
 	}
 }
+*/

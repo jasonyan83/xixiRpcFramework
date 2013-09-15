@@ -1,24 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>jason.xixi</groupId>
-	<artifactId>xixiRpc</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>xixiRpc</name>
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version>
-				<configuration>
-					<source />
-					<target />
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	<dependencies>
 
+	<parent>
+		<groupId>jason.xixi</groupId>
+		<artifactId>xixiRpcFramework</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>xixiRpc</artifactId>
+	<name>xixiRpc</name>
+
+	<dependencies>
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiCommon</artifactId>
@@ -26,4 +19,9 @@
 		</dependency>
 
 	</dependencies>
+	<packaging>pom</packaging>
+	
+	<modules>
+		<module>../xixiRpcDefault</module>
+	</modules>
 </project>

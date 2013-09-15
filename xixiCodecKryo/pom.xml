@@ -12,8 +12,6 @@
 	<name>xixiCodecKryo</name>
 
 	<dependencies>
-
-
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiCommon</artifactId>
@@ -22,23 +20,9 @@
 
 		<dependency>
 			<groupId>jason.xixi</groupId>
-			<artifactId>xixiCodecApi</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>jason.xixi</groupId>
 			<artifactId>xixiRpc</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		
-		<dependency>
-			<groupId>com.esotericsoftware.kryo</groupId>
-			<artifactId>kryo</artifactId>
-			<version>2.20</version>
-		</dependency>
-
-
 	</dependencies>
 
 	<repositories>

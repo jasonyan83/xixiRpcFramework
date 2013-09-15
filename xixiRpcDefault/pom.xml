@@ -1,14 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>jason.xixi</groupId>
+	
+	<parent>
+		<groupId>jason.xixi</groupId>
+		<artifactId>xixiRpc</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../xixiRpc</relativePath>
+	</parent>
+	
 	<artifactId>xixiRpcDefault</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>xixiRpcDefault</name>
 
 	<dependencies>
-
-
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiCommon</artifactId>
@@ -29,12 +33,6 @@
 
 		<dependency>
 			<groupId>jason.xixi</groupId>
-			<artifactId>xixiRpc</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>jason.xixi</groupId>
 			<artifactId>xixiRouter</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
@@ -46,6 +44,5 @@
 		</dependency>
 
 	</dependencies>
-
 
 </project>
