@@ -24,6 +24,9 @@
 	
    <properties>  
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>  
+	 <java_source_version>1.7</java_source_version>
+     <java_target_version>1.7</java_target_version>
+
   </properties>  
 	<dependencies>	
 		<dependency>

@@ -9,7 +9,7 @@
 	</parent>
 	
 	<artifactId>xixiTransport</artifactId>
-	<name>xixiTransport</name>
+	<name>${project.artifactId}</name>
 	<packaging>pom</packaging>
 
    <properties>
@@ -20,7 +20,7 @@
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiCommon</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 	</dependencies>
 

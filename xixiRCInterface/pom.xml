@@ -8,20 +8,20 @@
 	</parent>
 	
 	<artifactId>xixiRCInterface</artifactId>
-	<name>xixiRCInterface</name>
+	<name>${project.artifactId}</name>
 
 	<dependencies>
 
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiCommon</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiTransport</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 
 	</dependencies>

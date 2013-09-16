@@ -6,40 +6,34 @@
 		<groupId>jason.xixi</groupId>
 		<artifactId>xixiTransport</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../xixiTransport</relativePath> 
+		<relativePath>../xixiTransport</relativePath>
 	</parent>
 
 	<artifactId>xixiNettyTransport</artifactId>
-	<name>xixiNettyTransport</name>
- <packaging>jar</packaging>
- 
-	<dependencies>
+	<name>${project.artifactId}</name>
+	<packaging>jar</packaging>
 
+	<dependencies>
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiCommon</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiCodecApi</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiRpc</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiRouter</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
-
 	</dependencies>
-
 
 </project>

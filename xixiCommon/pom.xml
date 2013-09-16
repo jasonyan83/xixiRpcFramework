@@ -8,5 +8,5 @@
 	</parent>
 	
 	<artifactId>xixiCommon</artifactId>
-	<name>xixiCommon</name>
+	<name>${project.artifactId}</name>
 </project>

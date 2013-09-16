@@ -8,38 +8,38 @@
 	</parent>
 
 	<artifactId>xixiRCService</artifactId>
-	<name>xixiRCService</name>
+	<name>${project.artifactId}</name>
 
 	<dependencies>
 
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiCommon</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiTransport</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiRCInterface</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiMonitor</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>jason.xixi</groupId>
 			<artifactId>xixiRouter</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 
 	</dependencies>

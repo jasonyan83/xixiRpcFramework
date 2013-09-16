@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>xixiCodecApi</artifactId>
-	<name>xixiCodecApi</name>
+	<name>${project.artifactId}</name>
 	<packaging>pom</packaging>
 
 	<modules>
