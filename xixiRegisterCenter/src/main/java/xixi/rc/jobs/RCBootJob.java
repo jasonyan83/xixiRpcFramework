@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import xix.rc.bean.ModuleInstanceStatusInfo;
+import xixi.monitor.dashboard.ModuleInstanceStatusInfo;
 import xixi.rc.register.Registry;
 
 public class RCBootJob {

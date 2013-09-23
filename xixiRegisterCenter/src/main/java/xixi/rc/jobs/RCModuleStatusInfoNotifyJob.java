@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xix.rc.bean.ModuleInstanceInfo;
-import xix.rc.bean.ModuleInstanceStatusInfo;
+import xixi.monitor.dashboard.ModuleInstanceStatusInfo;
 import xixi.rc.iservice.RCNotifyService;
 import xixi.rc.register.Registry;
 

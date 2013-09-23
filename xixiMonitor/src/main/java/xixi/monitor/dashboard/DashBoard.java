@@ -1,8 +1,25 @@
 package xixi.monitor.dashboard;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import xixi.common.constants.Constants;
+import xixi.monitor.api.InstanceStatisticsInfo;
+import xixi.monitor.api.MonitorService;
 
 public class DashBoard {
 
@@ -10,6 +27,7 @@ public class DashBoard {
 	
 	private ServerStatDashBoard serverDashBoard;
 	
+	private MonitorService monitorService;
 	public DashBoard(){
 		clientDashBoard = new ClientStatDashBoard();
 		serverDashBoard = new ServerStatDashBoard();
@@ -32,11 +50,6 @@ public class DashBoard {
 	}
 	
 	public abstract class AbstractDashBoard{
-		private ConcurrentHashMap<String, AtomicLong> averageTranactionTimeMap = new ConcurrentHashMap<String, AtomicLong>();
-
-		private ConcurrentHashMap<String, AtomicLong> transactionTimeMap = new ConcurrentHashMap<String, AtomicLong>();
-
-		private ConcurrentHashMap<String, AtomicLong> transactionNumMap = new ConcurrentHashMap<String, AtomicLong>();
 
 		private ConcurrentHashMap<String, AtomicLong> failedTransactionMap = new ConcurrentHashMap<String, AtomicLong>();
 
@@ -48,34 +61,94 @@ public class DashBoard {
 
 		private ConcurrentHashMap<String, AtomicLong> lastMinuteAverageTransactionTimeMap = new ConcurrentHashMap<String, AtomicLong>();
 
-		private AtomicLong lastMinuteStartTime = new AtomicLong(System.currentTimeMillis());
-
+		private  SimpleDateFormat format = new SimpleDateFormat("HHmm");
 		
-		public void addTranactionTime(String service, long time) {
+		private volatile String currentMinute = format.format(new Date()); 
+		
+		private BlockingQueue<InstanceStatisticsInfo> queue = new LinkedBlockingQueue<InstanceStatisticsInfo>();
+		
+		private Lock lock = new ReentrantLock();
+		
+		public void addTranactionTime(String service
+				, long time) {
 			
-			addTransactionTime(service, time, transactionTimeMap);
-
-			addTransactionNum(service,transactionNumMap);
+			long currentTime = System.currentTimeMillis();
 			
-			if (System.currentTimeMillis() - 1000 * 60 <= lastMinuteStartTime.get()) {
+			if (currentMinute.equals(format.format(currentTime))) {
 				addLastMinuteStat(service,time);
+
 			}
 			else{
-				lastMinuteStartTime.set(System.currentTimeMillis());
-				addLastMinuteStat(service,time);
+				try{
+					lock.lock();
+					if (!currentMinute.equals(format.format(currentTime))) {
+						snapshotLastMinuteStatus();
+					}
+					addLastMinuteStat(service,time);
+				}
+				finally{
+					lock.unlock();
+				}
 			}
 		}
 
+		private void snapshotLastMinuteStatus(){
+			
+			HashMap<String, AtomicLong> transactionTime = new HashMap<String, AtomicLong>();
+			transactionTime.putAll(lastMinuteTransactionTime);
+			
+			HashMap<String, AtomicLong> transactionNum = new HashMap<String, AtomicLong>();
+			transactionTime.putAll(lastMinuteTransactionNumMap);
+			
+			lastMinuteTransactionTime.clear();
+			lastMinuteTransactionNumMap.clear();
+			
+			//reset the current minute
+			currentMinute=format.format(System.currentTimeMillis());
+			
+			for (Entry<String, AtomicLong> entry : transactionTime
+					.entrySet()) {
+				String service = entry.getKey();
+				AtomicLong totalTime = entry.getValue();
+				
+				AtomicLong totalNumber = transactionNum.get(service);
+				
+				Long att = totalTime.get() / totalNumber.get();
+				
+				AtomicLong lmatt = lastMinuteAverageTransactionTimeMap.get(service);
+				if (lmatt == null) {
+					lmatt = new AtomicLong();
+					lmatt.set(att);
+				} else {
+					lmatt.set(att);
+				}
+
+				InstanceStatisticsInfo statisticsInfo = new InstanceStatisticsInfo();
+				statisticsInfo.setModuleId(Constants.SOURCE_MODULEID);
+				statisticsInfo.setIpAddress("TODO");
+				statisticsInfo.setServiceName(service);
+				statisticsInfo.setLastMinuteTaskCount(totalNumber.get());
+				statisticsInfo.setLastMinuteTaskATT(att);
+				
+				queue.add(statisticsInfo);
+				//monitorService.collectStatistics(staList)
+			}
+		}
+		
 		private void addLastMinuteStat(String service, long time){
-			AtomicLong lmtt = lastMinuteTransactionTime.get(service);
+			addTransactionTime(service, time, lastMinuteTransactionTime);
+			
+			addTransactionNum(service,lastMinuteTransactionNumMap);
+		}
+		
+		private void addTransactionTime(String service,long time,ConcurrentHashMap<String, AtomicLong> map){
+			AtomicLong lmtt = map.get(service);
 			if (lmtt == null) {
 				lmtt = new AtomicLong();
 				lmtt.addAndGet(time);
 			} else {
 				lmtt.addAndGet(time);
 			}
-
-			addTransactionNum(service,lastMinuteTransactionNumMap);
 		}
 		
 		private void addTransactionNum(String service,ConcurrentHashMap<String, AtomicLong> map){
@@ -88,15 +161,6 @@ public class DashBoard {
 			}
 		}
 		
-		private void addTransactionTime(String service, long time, ConcurrentHashMap<String, AtomicLong> map){
-			AtomicLong t = map.get(service);
-			if (t == null) {
-				t = new AtomicLong();
-				t.addAndGet(time);
-			} else {
-				t.addAndGet(time);
-			}
-		}
 		
 		public void addFaildeTransaction(String service) {
 			addTransactionNum(service,failedTransactionMap);
@@ -106,69 +170,51 @@ public class DashBoard {
 			addTransactionNum(service,succeedTransactionMap);
 		}
 
-		private class DashBoardCountTask implements Runnable {
+		private void countAverageTranactionTime(ConcurrentHashMap<String, AtomicLong> trannsactionTimeMap,
+				ConcurrentHashMap<String, AtomicLong> transactionNumMap,
+				ConcurrentHashMap<String, AtomicLong> averageTransactionTimeMap){
+			for (Entry<String, AtomicLong> entry : trannsactionTimeMap
+					.entrySet()) {
+				String service = entry.getKey();
+				AtomicLong totalTime = entry.getValue();
+				
+				AtomicLong totalNumber = transactionNumMap.get(service);
+				
+				Long att = totalTime.get() / totalNumber.get();
+				
+				AtomicLong lmatt = averageTransactionTimeMap.get(service);
+				if (lmatt == null) {
+					lmatt = new AtomicLong();
+					lmatt.set(att);
+				} else {
+					lmatt.set(att);
+				}
+			}
+		}
 
+		public void init(){
+			ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor(new ThreadFactory(){
+				@Override
+				public Thread newThread(Runnable arg0) {
+					// TODO Auto-generated method stub
+					return new Thread("Statistics Collect Thread");
+				}
+				
+			});
+			
+			service.scheduleWithFixedDelay(new StatisticsTask(), 60*1000, 60*1000, TimeUnit.SECONDS);
+		}
+		
+		private class StatisticsTask implements Runnable{
 			@Override
 			public void run() {
-				while(true){
-				    //count total transaction number and average time
-					countAverageTranactionTime(transactionTimeMap,transactionNumMap,averageTranactionTimeMap);
-					
-					//count last minute transaction number and average time
-					countAverageTranactionTime(lastMinuteTransactionTime,lastMinuteTransactionNumMap,lastMinuteAverageTransactionTimeMap);
-					
-					try {
-						Thread.sleep(60*1000);
-					} catch (InterruptedException e) {
-						
-						e.printStackTrace();
-					}
-				}
-
-
+				List<InstanceStatisticsInfo> staList = new ArrayList<InstanceStatisticsInfo>();
+				queue.drainTo(staList);
+				monitorService.collectStatistics(staList);
 			}
 			
-			private void countAverageTranactionTime(ConcurrentHashMap<String, AtomicLong> trannsactionTimeMap,
-					ConcurrentHashMap<String, AtomicLong> transactionNumMap,
-					ConcurrentHashMap<String, AtomicLong> averageTransactionTimeMap){
-				for (Entry<String, AtomicLong> entry : trannsactionTimeMap
-						.entrySet()) {
-					String service = entry.getKey();
-					AtomicLong totalTime = entry.getValue();
-					
-					AtomicLong totalNumber = transactionNumMap.get(service);
-
-					AtomicLong att = averageTransactionTimeMap.get(service);
-					if (att != null) {
-						att.set(totalTime.get() / totalNumber.get());
-					} else {
-						att = new AtomicLong();
-						att.set(totalTime.get() / totalNumber.get());
-					}
-				}
-			}
 		}
-
-		public void init() {
-			Thread thread = new Thread(new DashBoardCountTask(),
-					"DashBoard count Thread");
-			thread.setDaemon(true);
-			thread.start();
-		}
-
-
-		public ConcurrentHashMap<String, AtomicLong> getAverageTranactionTimeMap() {
-			return averageTranactionTimeMap;
-		}
-
-		public ConcurrentHashMap<String, AtomicLong> getTransactionTimeMap() {
-			return transactionTimeMap;
-		}
-
-		public ConcurrentHashMap<String, AtomicLong> getTransactionNumMap() {
-			return transactionNumMap;
-		}
-
+		
 		public ConcurrentHashMap<String, AtomicLong> getFailedTransactionMap() {
 			return failedTransactionMap;
 		}

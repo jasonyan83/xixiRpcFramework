@@ -16,8 +16,8 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import xix.rc.bean.ModuleInstanceInfo;
-import xix.rc.bean.ModuleInstanceStatusInfo;
 import xixi.common.util.ConfigUtils;
+import xixi.monitor.dashboard.ModuleInstanceStatusInfo;
 
 public class RedisRegistry extends AbstractRegistry implements Registry {
 
@@ -62,12 +62,12 @@ public class RedisRegistry extends AbstractRegistry implements Registry {
 				// RC stays live
 				if (!module.isLive()) {
 					module.setLive(true);
-					logger.warn("Ä£¿é{}¶ÔÓ¦µÄip{},»Ö¸´·þÎñ", moduleInfo.getModuleId(),
+					logger.warn("Ä£ï¿½ï¿½{}ï¿½ï¿½Ó¦ï¿½ï¿½ip{},ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½", moduleInfo.getModuleId(),
 							moduleInfo.getIpAddress());
 					saveModule(module);
 					succeed = true;
 				} else {
-					logger.warn("Ä£¿é{}ÒÑ¾­´æÔÚÏàÓ¦µÄIPµØÖ·{}£¬ÖØ¸´×¢²á£¿",
+					logger.warn("Ä£ï¿½ï¿½{}ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½IPï¿½ï¿½Ö·{}ï¿½ï¿½ï¿½Ø¸ï¿½×¢ï¿½á£¿",
 							moduleInfo.getModuleId(), moduleInfo.getIpAddress());
 					succeed = false;
 				}
@@ -216,7 +216,7 @@ public class RedisRegistry extends AbstractRegistry implements Registry {
 		if (module != null) {
 			logger.debug("Current module is {}", module);
 			if (!module.isLive()) {
-				logger.warn("Ä£¿é{}¶ÔÓ¦µÄip{},»Ö¸´·þÎñ", moduleStatusInfo.getModuleId(),
+				logger.warn("Ä£ï¿½ï¿½{}ï¿½ï¿½Ó¦ï¿½ï¿½ip{},ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½", moduleStatusInfo.getModuleId(),
 						moduleStatusInfo.getIpAddress());
 			}
 			module = module.updateModuleStatusInfo(moduleStatusInfo);

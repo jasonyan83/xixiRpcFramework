@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jmx.export.MBeanExporter;
 
 import xix.rc.bean.ModuleInstanceInfo;
-import xix.rc.bean.ModuleInstanceStatusInfo;
+import xixi.monitor.dashboard.ModuleInstanceStatusInfo;
 import xixi.transport.channel.Channel;
 
 //If RC is down, defaultRegisgry will lose all the the registry information since it stores all the 
@@ -56,11 +56,11 @@ public class DefaultRegistry extends AbstractRegistry implements Registry {
 					//RC stays live
 					if (!module.isLive()) {
 						module.setLive(true);
-						logger.warn("Ä£¿é{}¶ÔÓ¦µÄip{},»Ö¸´·þÎñ", moduleInfo.getModuleId(),
+						logger.warn("Ä£ï¿½ï¿½{}ï¿½ï¿½Ó¦ï¿½ï¿½ip{},ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½", moduleInfo.getModuleId(),
 								moduleInfo.getIpAddress());
 						succeed = true;
 					} else {
-						logger.warn("Ä£¿é{}ÒÑ¾­´æÔÚÏàÓ¦µÄIPµØÖ·{}£¬ÖØ¸´×¢²á£¿",
+						logger.warn("Ä£ï¿½ï¿½{}ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½IPï¿½ï¿½Ö·{}ï¿½ï¿½ï¿½Ø¸ï¿½×¢ï¿½á£¿",
 								moduleInfo.getModuleId(), moduleInfo.getIpAddress());
 						succeed = false;
 					}
@@ -186,7 +186,7 @@ public class DefaultRegistry extends AbstractRegistry implements Registry {
 					//if the service is down , it will lose all the stat infomation currently
 					//and when it is up again, the register center will see the empty stat info.
 					module = module.updateModuleStatusInfo(moduleStatusInfo);
-					logger.warn("Ä£¿é{}¶ÔÓ¦µÄip{},»Ö¸´·þÎñ",
+					logger.warn("Ä£ï¿½ï¿½{}ï¿½ï¿½Ó¦ï¿½ï¿½ip{},ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½",
 							moduleStatusInfo.getModuleId(),
 							moduleStatusInfo.getIpAddress());
 					succeed = true;

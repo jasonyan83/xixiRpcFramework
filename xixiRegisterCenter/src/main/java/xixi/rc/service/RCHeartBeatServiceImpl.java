@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xix.rc.bean.HeartBeat;
-import xix.rc.bean.ModuleInstanceStatusInfo;
 import xixi.common.annotation.EventMethod;
+import xixi.monitor.dashboard.ModuleInstanceStatusInfo;
 import xixi.rc.iservice.RCHeartBeatService;
 import xixi.rc.register.Registry;
 

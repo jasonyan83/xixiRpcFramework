@@ -3,7 +3,7 @@ package xixi.rc.register;
 import java.util.List;
 
 import xix.rc.bean.ModuleInstanceInfo;
-import xix.rc.bean.ModuleInstanceStatusInfo;
+import xixi.monitor.dashboard.ModuleInstanceStatusInfo;
 import xixi.transport.channel.Channel;
 
 //Could have default, redis,DB, file system Regisgry

@@ -6,6 +6,7 @@ import java.util.Date;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import xix.rc.bean.ModuleInstanceInfo;
 import xixi.common.annotation.XixiBean;
 
 @XixiBean(id=300103)

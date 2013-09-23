@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import xix.rc.bean.ModuleInstanceInfo;
-import xix.rc.bean.ModuleInstanceStatusInfo;
+import xixi.monitor.dashboard.ModuleInstanceStatusInfo;
 import xixi.transport.channel.Channel;
 
 public class FileRegistry implements Registry{

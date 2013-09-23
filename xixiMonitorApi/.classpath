@@ -6,13 +6,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src/main/resource"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xixiCommon"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/xixiNettyTransport"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/xixiRpc"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/xixiTransport"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/xixiRouter"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/xixiRegister"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
