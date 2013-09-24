@@ -80,6 +80,4 @@ public class InstanceStatisticsInfo implements Serializable {
 	public void setLastMinuteTaskATT(long lastMinuteTaskATT) {
 		this.lastMinuteTaskATT = lastMinuteTaskATT;
 	}
-
-
 }

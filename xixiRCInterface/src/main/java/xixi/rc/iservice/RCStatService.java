@@ -1,4 +1,4 @@
-package xixi.rc.iservice;
+/*package xixi.rc.iservice;
 
 import xixi.common.annotation.EventService;
 import xixi.monitor.dashboard.ModuleInstanceStatusInfo;
@@ -7,3 +7,4 @@ import xixi.monitor.dashboard.ModuleInstanceStatusInfo;
 public interface RCStatService {
 	public int sendModuleStatInfo(ModuleInstanceStatusInfo info);
 }
+*/

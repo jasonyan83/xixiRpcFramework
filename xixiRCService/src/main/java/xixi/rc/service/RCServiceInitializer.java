@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xixi.common.spring.BeanFactoryUtil;
-import xixi.rc.service.jobs.RCServiceScheduledJob;
 
 public class RCServiceInitializer {
 
@@ -13,7 +12,7 @@ public class RCServiceInitializer {
 	
 	public static void init(){
 		logger.info("Initialzing RC related service and job");
-		RCServiceScheduledJob job = (RCServiceScheduledJob)BeanFactoryUtil.getBean("rcServiceScheduleJob");
+		//RCServiceScheduledJob job = (RCServiceScheduledJob)BeanFactoryUtil.getBean("rcServiceScheduleJob");
 		RCNotifyServiceImpl rcNotifyService =(RCNotifyServiceImpl)BeanFactoryUtil.getBean("rcNotifyService");
 	}
 }

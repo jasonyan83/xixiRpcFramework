@@ -18,6 +18,62 @@
 			<artifactId>xixiMonitorApi</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		
+				<dependency>
+			<groupId>jason.xixi</groupId>
+			<artifactId>xixiCodecApi</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jason.xixi</groupId>
+			<artifactId>xixiCodecKryo</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+
+<!-- 		<dependency>
+			<groupId>jason.xixi</groupId>
+			<artifactId>xixiRCInterface</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+
+		<dependency>
+			<groupId>jason.xixi</groupId>
+			<artifactId>xixiRpcDefault</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jason.xixi</groupId>
+			<artifactId>xixiTransport</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jason.xixi</groupId>
+			<artifactId>xixiRegister</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jason.xixi</groupId>
+			<artifactId>xixiRpc</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jason.xixi</groupId>
+			<artifactId>xixiRouter</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jason.xixi</groupId>
+			<artifactId>xixiNettyTransport</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
 	</dependencies>
 
 

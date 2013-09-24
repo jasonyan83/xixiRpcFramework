@@ -1,16 +1,11 @@
 package xixi.monitor.filter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import xixi.rpc.Invoker;
-
 public class ClientStatInfoFilter extends AbstractStatInfoFilter {
-
-	private static final Logger logger = LoggerFactory
-			.getLogger(ClientStatInfoFilter.class);
-
+	
 	private String name = "clientstat";
+	
+	public ClientStatInfoFilter(){
+	}
 	
 	public ClientStatInfoFilter(String filterName){
 		name = filterName;

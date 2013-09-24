@@ -4,31 +4,38 @@
 
 	<bean id="clientStatInfoFilter" class="xixi.monitor.filter.ClientStatInfoFilter"
 		lazy-init="true">
-		<property name="dashBoard" ref="dashBoard" />
+		<property name="statService" ref="statService" />
 	</bean>
 
 	<bean id="serverStatInfoFilter" class="xixi.monitor.filter.ServerStatInfoFilter"
 		lazy-init="true">
-		<property name="dashBoard" ref="dashBoard" />
+		<property name="statService" ref="statService" />
 	</bean>
 
 	<bean id="bizLogger" class="xixi.monitor.filter.BizLoggerFilter"
 		lazy-init="true">
 	</bean>
 
-	<bean id="dashBoard" class="xixi.monitor.dashboard.DashBoard"
-		lazy-init="true">
+	<bean id="dashBoard" class="xixi.monitor.dashboard.DashBoard">
+		<property name="statService" ref="statService" />
 	</bean>
-	
-	<bean id="jmxExporter"
-		class="xixi.monitor.jmx.PrefixableMBeanExporter">
+
+	<bean id="statService" class="xixi.monitor.statistics.StatisticsService" init-method="init">
+	   <property name="monitorService" ref="monitorService" />
+	</bean>
+
+    <bean id="monitorService" factory-bean="proxyFactory" factory-method="createProxy">
+       <constructor-arg value="xixi.monitor.api.MonitorService" />
+    </bean>
+    
+	<bean id="jmxExporter" class="xixi.monitor.jmx.PrefixableMBeanExporter">
 		<constructor-arg value="public:app=${biz.name}," />
 		<property name="beans">
 			<map>
 				<entry key="prefix:class=monitor,group=${biz.name},name=dashboard"
-					value-ref="dashBoard" />	
+					value-ref="dashBoard" />
 			</map>
 		</property>
 	</bean>
-	
+
 </beans>

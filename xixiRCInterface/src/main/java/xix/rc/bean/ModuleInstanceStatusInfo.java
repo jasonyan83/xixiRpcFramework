@@ -9,12 +9,9 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import xix.rc.bean.ModuleInstanceInfo;
 import xixi.common.annotation.XixiBean;
 
-@XixiBean(id=300103)
+@XixiBean(id=150001)
 public class ModuleInstanceStatusInfo implements Serializable {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 3010603398012468028L;
 
 	private short moduleId;

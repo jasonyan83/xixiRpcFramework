@@ -47,7 +47,7 @@ public abstract class AbstractFuture implements Future{
 		fail = true;
 	}
 
-	protected boolean isDone(){
+	public boolean isDone(){
 		return done;
 	}
 	

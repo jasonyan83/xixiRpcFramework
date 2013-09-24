@@ -1,4 +1,4 @@
-package xixi.rc.service.jobs;
+/*package xixi.rc.service.jobs;
 
 import java.util.Date;
 import java.util.concurrent.Executors;
@@ -67,9 +67,9 @@ public class RCServiceScheduledJob {
 	}
 
 	public void start() {
-/*		logger.info("HeartBeat Schedule Job started!");
+		logger.info("HeartBeat Schedule Job started!");
 		hbScheduleService.scheduleWithFixedDelay(new HeartBeatTask(), 10000,
-				10000, TimeUnit.MILLISECONDS);*/
+				10000, TimeUnit.MILLISECONDS);
 
 		logger.info("ModuleStatus Schedule Job started!");
 		hbScheduleService.scheduleWithFixedDelay(new ModuleStatusTask(), 15*1000,
@@ -95,10 +95,10 @@ public class RCServiceScheduledJob {
 		moduleInfo.setLastMinuteTaskCount(lastMinuteNum);
 		moduleInfo.setTotalTaskCount(totalNum);
 		// TODO: define the detail stat info in the next version
-		/*
+		
 		 * moduleInfo.setAverageTaskExecTime(averageTaskExecTime);
 		 * moduleInfo.setLastMinuteTaskExecTime(lastMinuteTaskExecTime)
-		 */
+		 
 		moduleInfo.setLive(true);
 		moduleInfo.setLastHBTime(new Date());
 		moduleInfo.setModuleId(Constants.SOURCE_MODULEID);
@@ -131,3 +131,4 @@ public class RCServiceScheduledJob {
 		}
 	}
 }
+*/

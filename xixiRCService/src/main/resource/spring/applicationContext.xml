@@ -2,12 +2,12 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans>
 
-    <bean id="rcServiceScheduleJob"
+<!--     <bean id="rcServiceScheduleJob"
         class="xixi.rc.service.jobs.RCServiceScheduledJob" lazy-init="true" init-method="start">
        <property name="hbService" ref="hbService"/>
         <property name="statService" ref="statService"/>
         <property name="dashBoard" ref="dashBoard"/>
-    </bean>
+    </bean> -->
     
     <bean id="hbService" factory-bean="proxyFactory" factory-method="createProxy" lazy-init="true">
        <constructor-arg value="xixi.rc.iservice.RCHeartBeatService" />

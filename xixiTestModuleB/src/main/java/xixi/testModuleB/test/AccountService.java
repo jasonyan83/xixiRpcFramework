@@ -16,7 +16,7 @@ public class AccountService implements IAccountService {
 		
 	}
 	
-	@EventMethod(name = "getAccountById", filter = "bizLogger")
+	@EventMethod(name = "getAccountById", filter = "serverStatInfoFilter")
 	public Account getAccountById() {
 		logger.debug("Invoking getAccountById");
 		Account account = new Account();
