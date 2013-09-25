@@ -51,7 +51,7 @@ public class RpcServiceInvoker implements Invoker {
 				 result = method.invoke(target);
 			}
 			else{
-				 result = method.invoke(target,inv.getArgs());
+				 result = method.invoke(target,inv.getArgs()[0]);
 			}
 			
 			if(result==null){

@@ -19,6 +19,12 @@ public class AccountService implements IAccountService {
 	@EventMethod(name = "getAccountById", filter = "serverStatInfoFilter")
 	public Account getAccountById() {
 		logger.debug("Invoking getAccountById");
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Account account = new Account();
 		account.setId(new Integer(1010));
 		account.setName("jason");

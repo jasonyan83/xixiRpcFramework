@@ -64,7 +64,7 @@ public class StatisticsService {
 			try{
 				lock.lock();
 				if (!currentMinute.equals(format.format(currentTime))) {
-					snapshotLastMinuteStatus();
+					snapshotLastMinuteStatus(currentTime - 60000);
 				}
 				addLastMinuteStat(service,time);
 			}
@@ -74,7 +74,7 @@ public class StatisticsService {
 		}
 	}
 
-	private void snapshotLastMinuteStatus(){
+	private void snapshotLastMinuteStatus(long previousTime){
 		
 		HashMap<String, AtomicLong> transactionTime = new HashMap<String, AtomicLong>();
 		transactionTime.putAll(lastMinuteTransactionTime);
@@ -111,6 +111,7 @@ public class StatisticsService {
 			statisticsInfo.setServiceName(service);
 			statisticsInfo.setLastMinuteTaskCount(totalNumber.get());
 			statisticsInfo.setLastMinuteTaskATT(att);
+			statisticsInfo.setDate(new Date(previousTime));
 			
 			queue.add(statisticsInfo);
 			//monitorService.collectStatistics(staList)

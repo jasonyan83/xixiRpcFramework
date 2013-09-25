@@ -9,6 +9,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import xixi.common.annotation.EventMethod;
 import xixi.monitor.api.InstanceStatisticsInfo;
 import xixi.monitor.api.MonitorService;
 
@@ -27,16 +28,18 @@ public class XixiMonitorService implements MonitorService {
 
 	private String statisticsDirectory = "statistics";
 
+	@EventMethod(name = "collectStatistics")
 	@Override
 	public void collectStatistics(List<InstanceStatisticsInfo> statList) {
 
+		System.out.println("Starting write statistics into disk: " + statList.size());
 		logger.info("Starting write {} statistics into disk", statList.size());
 
 		for (InstanceStatisticsInfo stat : statList) {
 
 			String day = new SimpleDateFormat("yyyyMMdd")
 					.format(stat.getDate());
-			String minute = new SimpleDateFormat("MMdd").format(stat.getDate());
+			String minute = new SimpleDateFormat("HHmm").format(stat.getDate());
 
 			String filename = statisticsDirectory + "/" + day + "/"
 					+ stat.getModuleId() + "/" + stat.getIpAddress() + "/"
@@ -51,7 +54,7 @@ public class XixiMonitorService implements MonitorService {
 			try {
 				FileWriter writer = new FileWriter(filename, true);
 				writer.append(minute + " " + stat.getLastMinuteTaskCount()
-						+ " " + stat.getLastMinuteTaskATT());
+						+ " " + stat.getLastMinuteTaskATT()+"\n");
 				writer.flush();
 				writer.close();
 
@@ -61,7 +64,9 @@ public class XixiMonitorService implements MonitorService {
 		}
 		
 		logger.debug("Done writing statistics");
-
+        
 	}
+	
+	
 
 }
