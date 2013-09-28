@@ -33,6 +33,6 @@ public class DashBoard {
 	}
 
 	public ConcurrentHashMap<String, AtomicLong> getLastMinuteAverageTransactionTimeMap() {
-		return statService.getLastMinuteAverageTransactionTimeMap();
+		return statService.getLastMinuteTransactionTime();
 	}
 }

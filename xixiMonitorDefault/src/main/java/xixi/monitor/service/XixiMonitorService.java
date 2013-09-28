@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import xixi.common.annotation.EventMethod;
-import xixi.monitor.api.InstanceStatisticsInfo;
+import xixi.monitor.api.StatisticsInfoMinute;
 import xixi.monitor.api.MonitorService;
 
 public class XixiMonitorService implements MonitorService {
@@ -30,12 +30,12 @@ public class XixiMonitorService implements MonitorService {
 
 	@EventMethod(name = "collectStatistics")
 	@Override
-	public void collectStatistics(List<InstanceStatisticsInfo> statList) {
+	public void collectStatistics(List<StatisticsInfoMinute> statList) {
 
 		System.out.println("Starting write statistics into disk: " + statList.size());
 		logger.info("Starting write {} statistics into disk", statList.size());
 
-		for (InstanceStatisticsInfo stat : statList) {
+		for (StatisticsInfoMinute stat : statList) {
 
 			String day = new SimpleDateFormat("yyyyMMdd")
 					.format(stat.getDate());

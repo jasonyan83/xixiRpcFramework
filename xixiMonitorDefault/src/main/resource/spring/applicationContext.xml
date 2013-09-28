@@ -23,4 +23,8 @@
 		<property name="statisticsDirectory" value="${statisticsDirectory}" />
 	</bean>
 
+	<bean id="statisticsCalculateJob" class="xixi.monitor.service.StatisticsCalculateJob" init-method="init">
+		<property name="statisticsDirectory" value="${statisticsDirectory}" />
+	</bean>
+
 </beans>

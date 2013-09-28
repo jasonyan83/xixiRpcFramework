@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import xixi.common.annotation.XixiBean;
 
 @XixiBean(id=300103)
-public class InstanceStatisticsInfo implements Serializable {
+public class StatisticsInfoMinute implements Serializable {
 	
 	/**
 	 * 
@@ -22,7 +22,19 @@ public class InstanceStatisticsInfo implements Serializable {
 
 	private long lastMinuteTaskCount;
 	
-	private long lastMinuteTaskATT;
+	private double lastMinuteTaskATT;
+
+	private String serviceName;
+	
+	private Date date;
+	
+	public double getLastMinuteTaskATT() {
+		return lastMinuteTaskATT;
+	}
+
+	public void setLastMinuteTaskATT(double lastMinuteTaskATT) {
+		this.lastMinuteTaskATT = lastMinuteTaskATT;
+	}
 
 	public Date getDate() {
 		return date;
@@ -31,10 +43,6 @@ public class InstanceStatisticsInfo implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
-	private String serviceName;
-	
-	private Date date;
 	
 	public long getLastMinuteTaskCount() {
 		return lastMinuteTaskCount;
@@ -73,11 +81,4 @@ public class InstanceStatisticsInfo implements Serializable {
 		this.ipAddress = ipAddress;
 	}
 
-	public long getLastMinuteTaskATT() {
-		return lastMinuteTaskATT;
-	}
-
-	public void setLastMinuteTaskATT(long lastMinuteTaskATT) {
-		this.lastMinuteTaskATT = lastMinuteTaskATT;
-	}
 }

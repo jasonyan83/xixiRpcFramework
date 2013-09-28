@@ -17,9 +17,13 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import xixi.common.constants.Constants;
-import xixi.monitor.api.InstanceStatisticsInfo;
+import xixi.monitor.api.StatisticsInfoMinute;
 import xixi.monitor.api.MonitorService;
+import xixi.monitor.filter.ServerStatInfoFilter;
 
 public class StatisticsService {
 
@@ -31,18 +35,21 @@ public class StatisticsService {
 
 	private ConcurrentHashMap<String, AtomicLong> lastMinuteTransactionNumMap = new ConcurrentHashMap<String, AtomicLong>();
 
-	private ConcurrentHashMap<String, AtomicLong> lastMinuteAverageTransactionTimeMap = new ConcurrentHashMap<String, AtomicLong>();
+	private ConcurrentHashMap<String, Double> lastMinuteAverageTransactionTimeMap = new ConcurrentHashMap<String, Double>();
 
 	private  SimpleDateFormat format = new SimpleDateFormat("HHmm");
 	
 	private volatile String currentMinute = format.format(new Date()); 
 	
-	private BlockingQueue<InstanceStatisticsInfo> queue = new LinkedBlockingQueue<InstanceStatisticsInfo>();
+	private BlockingQueue<StatisticsInfoMinute> queue = new LinkedBlockingQueue<StatisticsInfoMinute>();
 	
 	private Lock lock = new ReentrantLock();
 	
 	private MonitorService monitorService;
 
+	private static final Logger logger = LoggerFactory
+			.getLogger(StatisticsService.class);
+	
 	ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor(new ThreadFactory(){
 		@Override
 		public Thread newThread(Runnable r) {
@@ -95,17 +102,12 @@ public class StatisticsService {
 			
 			AtomicLong totalNumber = transactionNum.get(service);
 			
-			Long att = totalTime.get() / totalNumber.get();
+            double att = totalTime.get() / totalNumber.get();
 			
-			AtomicLong lmatt = lastMinuteAverageTransactionTimeMap.get(service);
-			if (lmatt == null) {
-				lmatt = new AtomicLong();
-				lmatt.set(att);
-			} else {
-				lmatt.set(att);
-			}
+			lastMinuteAverageTransactionTimeMap.put(service, att);
 
-			InstanceStatisticsInfo statisticsInfo = new InstanceStatisticsInfo();
+
+			StatisticsInfoMinute statisticsInfo = new StatisticsInfoMinute();
 			statisticsInfo.setModuleId(Constants.SOURCE_MODULEID);
 			statisticsInfo.setIpAddress("TODO");
 			statisticsInfo.setServiceName(service);
@@ -114,7 +116,6 @@ public class StatisticsService {
 			statisticsInfo.setDate(new Date(previousTime));
 			
 			queue.add(statisticsInfo);
-			//monitorService.collectStatistics(staList)
 		}
 	}
 	
@@ -157,7 +158,7 @@ public class StatisticsService {
 
 	private void countAverageTranactionTime(ConcurrentHashMap<String, AtomicLong> trannsactionTimeMap,
 			ConcurrentHashMap<String, AtomicLong> transactionNumMap,
-			ConcurrentHashMap<String, AtomicLong> averageTransactionTimeMap){
+			ConcurrentHashMap<String, Double> averageTransactionTimeMap){
 		for (Entry<String, AtomicLong> entry : trannsactionTimeMap
 				.entrySet()) {
 			String service = entry.getKey();
@@ -165,16 +166,9 @@ public class StatisticsService {
 			
 			AtomicLong totalNumber = transactionNumMap.get(service);
 			
-			Long att = totalTime.get() / totalNumber.get();
+			double att = totalTime.get() / totalNumber.get();
 			
-			AtomicLong lmatt = averageTransactionTimeMap.get(service);
-			if (lmatt == null) {
-				lmatt = new AtomicLong();
-				lmatt.set(att);
-				averageTransactionTimeMap.put(service, lmatt);
-			} else {
-				lmatt.set(att);
-			}
+			averageTransactionTimeMap.put(service, att);
 		}
 	}
 
@@ -185,8 +179,10 @@ public class StatisticsService {
 	private class StatisticsTask implements Runnable{
 		@Override
 		public void run() {
-			List<InstanceStatisticsInfo> staList = new ArrayList<InstanceStatisticsInfo>();
+			logger.debug("Starting to sending out statisticsInfo.......");
+			List<StatisticsInfoMinute> staList = new ArrayList<StatisticsInfoMinute>();
 			queue.drainTo(staList);
+			logger.debug("Current statisticsInfo number is {}", staList.size());
 			monitorService.collectStatistics(staList);
 		}
 		
@@ -208,9 +204,6 @@ public class StatisticsService {
 		return lastMinuteTransactionNumMap;
 	}
 
-	public ConcurrentHashMap<String, AtomicLong> getLastMinuteAverageTransactionTimeMap() {
-		return lastMinuteAverageTransactionTimeMap;
-	}
 	
 	public MonitorService getMonitorService() {
 		return monitorService;

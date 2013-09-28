@@ -1,5 +1,7 @@
 package xixi.testModuleA.test;
 
+import java.util.Random;
+
 import xixi.rpc.exception.TimeoutException;
 import xixi.testModuleB.test.Account;
 import xixi.testModuleB.test.IAccountService;
@@ -12,6 +14,7 @@ public class LoginService {
 		Thread thread = new Thread(new Runnable(){
 
 			public void run() {
+				Random random = new Random();
 				while(true){
 					
 					try {
@@ -23,7 +26,7 @@ public class LoginService {
 							System.out.println("NULL VALUE");
 						}
 
-						Thread.sleep(3000);
+						Thread.sleep(random.nextInt(1000));
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
