@@ -2,7 +2,7 @@ package xixi.codec.api;
 
 public interface Coder {
 
-	Object decode(byte[] inData);
+	public Object decode(byte[] inData);
 	
-	byte[] encoder(Object outData);
+	public byte[] encoder(Object outData);
 }
